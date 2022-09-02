@@ -1,0 +1,38 @@
+.customize-table {
+    --easy-table-border: 1px solid #7a4c4c;
+    --easy-table-row-border: 1px solid #7a4c4c;
+
+    --easy-table-header-font-size: 14px;
+    --easy-table-header-height: 50px;
+    --easy-table-header-font-color: #ffffff;
+    /* --easy-table-header-background-color: rgb(127, 29, 29); */
+    --easy-table-header-background-color: rgba(239, 68, 68);
+
+    --easy-table-header-item-padding: 10px 15px;
+
+    --easy-table-body-even-row-font-color: #fff;
+    --easy-table-body-even-row-background-color: #7a4c4c;
+
+    --easy-table-body-row-font-color: #000000;
+    --easy-table-body-row-background-color: #f4f3f0;
+    --easy-table-body-row-font-size: 14px;
+
+    --easy-table-body-row-hover-font-color: #4f2d2d;
+    --easy-table-body-row-hover-background-color: rgb(255, 248, 248);
+
+    --easy-table-body-item-padding: 10px 15px;
+
+    --easy-table-footer-background-color: #e2e1de;
+    --easy-table-footer-font-color: rgb(127, 29, 29);
+    --easy-table-footer-font-size: 14px;
+    --easy-table-footer-padding: 0px 10px;
+    --easy-table-footer-height: 50px;
+
+    --easy-table-scrollbar-track-color: rgb(127, 29, 29);
+    --easy-table-scrollbar-color: rgb(127, 29, 29);
+    --easy-table-scrollbar-thumb-color: #7a4c4c;
+    --easy-table-scrollbar-corner-color: rgb(127, 29, 29);
+
+    /* --easy-table-loading-mask-background-color: rgb(127, 29, 29); */
+    --easy-table-loading-mask-background-color: rgba(0, 0, 0, 0.3);
+}

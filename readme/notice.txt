@@ -1,0 +1,24 @@
+inconsitent data
+
+BIN 216-00-2017-0000794 
+
+August 18, 2022
+
+todo: 
+* remove business in selected business itinerary Create and Edit.
+* add business to modal
+* implement UI and UX for mobile usage
+* implement checklist per user role, example fire department , ibplo checklist and so on.
+* add remarks in checklist
+* create role composables
+
+done:
+* remove business in selected business itinerary Create and Edit. Done.
+
+August 19, 2022
+* update users role 
+* update user settings, 
+* update user assignment 
+
+August 26 
+* implement users render datatable paging 
