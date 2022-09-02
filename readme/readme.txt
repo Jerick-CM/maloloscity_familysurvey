@@ -250,3 +250,13 @@ php artisan make:model Role_Users -mcr
 
 php artisan db:seed --class=RoleSeeder
 php artisan make:seeder RoleSeeder
+
+
+
+new 
+
+php artisan make:migration information_table
+php artisan make:migration individual_life_cycle_risk_table
+php artisan make:migration economic_risk_table
+php artisan make:migration environment_and_disaster_risk_table
+php artisan make:migration social_and_governance_risk_table
