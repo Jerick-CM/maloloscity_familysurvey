@@ -44,6 +44,6 @@ class EconomicRiskTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('individual_lifecycle_risk');
+        Schema::dropIfExists('economic_risk');
     }
 }

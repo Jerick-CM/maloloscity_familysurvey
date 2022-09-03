@@ -13,7 +13,21 @@ class EnvironmentAndDisasterRiskTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('environment_and_disaster_risk', function (Blueprint $table) {
+
+            $table->id();
+            $table->tinyInteger('information_id')->index('information_id')->foreign('information_id')->onDelete('cascade');
+
+            // 45
+            $table->tinyInteger('victim_of_housefire');
+            $table->tinyInteger('victim_of_typoon_drought');
+            $table->tinyInteger('victim_of_earthquake_volcanic_eruption');
+            $table->tinyInteger('death_of_family_via_calamity');
+            $table->tinyInteger('house_demolition');
+            $table->tinyInteger('resided_in_relocation_resettlement');
+            // 51
+
+        });
     }
 
     /**
@@ -23,6 +37,6 @@ class EnvironmentAndDisasterRiskTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('environment_and_disaster_risk');
     }
 }
