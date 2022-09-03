@@ -34,6 +34,8 @@ class EconomicRiskTable extends Migration
             $table->tinyInteger('mortgage_of_posessions');
             $table->tinyInteger('loaned_money_from_relatives');
             $table->tinyInteger('family_elder_without_pension');
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

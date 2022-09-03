@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Models\Itinerary;
+use App\Models\IndividualLifeCycleRisk;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-class ItineraryController extends Controller
+class IndividualLifeCycleRiskController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,16 +14,7 @@ class ItineraryController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Itinerary/Index', [
-            'hosting' => config('custom.url')
-        ]);
-    }
-
-    public function pull()
-    {
-        return Inertia::render('Itinerary/Pull', [
-            'hosting' => config('custom.url')
-        ]);
+        //
     }
 
     /**
@@ -34,9 +24,7 @@ class ItineraryController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Itinerary/Create', [
-            'hosting' => config('custom.url')
-        ]);
+        //
     }
 
     /**
@@ -53,10 +41,10 @@ class ItineraryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Models\Itinerary  $itinerary
+     * @param  \App\Models\IndividualLifeCycleRisk  $individualLifeCycleRisk
      * @return \Illuminate\Http\Response
      */
-    public function show(Itinerary $itinerary)
+    public function show(IndividualLifeCycleRisk $individualLifeCycleRisk)
     {
         //
     }
@@ -64,10 +52,10 @@ class ItineraryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Models\Itinerary  $itinerary
+     * @param  \App\Models\IndividualLifeCycleRisk  $individualLifeCycleRisk
      * @return \Illuminate\Http\Response
      */
-    public function edit(Itinerary $itinerary)
+    public function edit(IndividualLifeCycleRisk $individualLifeCycleRisk)
     {
         //
     }
@@ -76,10 +64,10 @@ class ItineraryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Models\Itinerary  $itinerary
+     * @param  \App\Models\IndividualLifeCycleRisk  $individualLifeCycleRisk
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Itinerary $itinerary)
+    public function update(Request $request, IndividualLifeCycleRisk $individualLifeCycleRisk)
     {
         //
     }
@@ -87,10 +75,10 @@ class ItineraryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Models\Itinerary  $itinerary
+     * @param  \App\Models\IndividualLifeCycleRisk  $individualLifeCycleRisk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Itinerary $itinerary)
+    public function destroy(IndividualLifeCycleRisk $individualLifeCycleRisk)
     {
         //
     }

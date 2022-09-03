@@ -51,6 +51,8 @@ class IndividualLifeCycleRiskTable extends Migration
             $table->tinyInteger('home_made_of_lightsalvagable_material');
             $table->tinyInteger('scarcity_of_cleanbathroom');
             //30
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

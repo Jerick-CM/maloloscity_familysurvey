@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EconomicRisk;
 use Illuminate\Http\Request;
 
-class Locationontroller extends Controller
+class EconomicRiskController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -40,10 +41,10 @@ class Locationontroller extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\EconomicRisk  $economicRisk
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(EconomicRisk $economicRisk)
     {
         //
     }
@@ -51,10 +52,10 @@ class Locationontroller extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\EconomicRisk  $economicRisk
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(EconomicRisk $economicRisk)
     {
         //
     }
@@ -63,10 +64,10 @@ class Locationontroller extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\EconomicRisk  $economicRisk
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, EconomicRisk $economicRisk)
     {
         //
     }
@@ -74,10 +75,10 @@ class Locationontroller extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\EconomicRisk  $economicRisk
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(EconomicRisk $economicRisk)
     {
         //
     }

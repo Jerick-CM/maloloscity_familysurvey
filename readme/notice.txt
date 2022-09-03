@@ -1,24 +1,11 @@
-inconsitent data
+september 2
 
-BIN 216-00-2017-0000794 
+program introduction
+completion of half of migration field data
 
-August 18, 2022
+september 3 sat
+completion of migration table
+create controller and model
 
-todo: 
-* remove business in selected business itinerary Create and Edit.
-* add business to modal
-* implement UI and UX for mobile usage
-* implement checklist per user role, example fire department , ibplo checklist and so on.
-* add remarks in checklist
-* create role composables
-
-done:
-* remove business in selected business itinerary Create and Edit. Done.
-
-August 19, 2022
-* update users role 
-* update user settings, 
-* update user assignment 
-
-August 26 
-* implement users render datatable paging 
+september 4 sunday
+create layout of survery form

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ItineraryBusiness;
+use App\Models\EnvironmentAndDisasterRisk;
 use Illuminate\Http\Request;
 
-class ItineraryBusinessController extends Controller
+class EnvironmentAndDisasterRiskController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ItineraryBusinessController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ItineraryBusiness  $itineraryBusiness
+     * @param  \App\Models\EnvironmentAndDisasterRisk  $environmentAndDisasterRisk
      * @return \Illuminate\Http\Response
      */
-    public function show(ItineraryBusiness $itineraryBusiness)
+    public function show(EnvironmentAndDisasterRisk $environmentAndDisasterRisk)
     {
         //
     }
@@ -52,10 +52,10 @@ class ItineraryBusinessController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ItineraryBusiness  $itineraryBusiness
+     * @param  \App\Models\EnvironmentAndDisasterRisk  $environmentAndDisasterRisk
      * @return \Illuminate\Http\Response
      */
-    public function edit(ItineraryBusiness $itineraryBusiness)
+    public function edit(EnvironmentAndDisasterRisk $environmentAndDisasterRisk)
     {
         //
     }
@@ -64,10 +64,10 @@ class ItineraryBusinessController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ItineraryBusiness  $itineraryBusiness
+     * @param  \App\Models\EnvironmentAndDisasterRisk  $environmentAndDisasterRisk
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ItineraryBusiness $itineraryBusiness)
+    public function update(Request $request, EnvironmentAndDisasterRisk $environmentAndDisasterRisk)
     {
         //
     }
@@ -75,10 +75,10 @@ class ItineraryBusinessController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ItineraryBusiness  $itineraryBusiness
+     * @param  \App\Models\EnvironmentAndDisasterRisk  $environmentAndDisasterRisk
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ItineraryBusiness $itineraryBusiness)
+    public function destroy(EnvironmentAndDisasterRisk $environmentAndDisasterRisk)
     {
         //
     }

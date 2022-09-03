@@ -45,6 +45,8 @@ class SocialAndGovernanceRiskTable extends Migration
             $table->tinyInteger('discrimination_in_ethnicity_gender');
             $table->tinyInteger('tribal_dispute');
             $table->tinyInteger('other_harms_to_family');
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

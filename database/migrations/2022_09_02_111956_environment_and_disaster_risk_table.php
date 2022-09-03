@@ -26,7 +26,8 @@ class EnvironmentAndDisasterRiskTable extends Migration
             $table->tinyInteger('house_demolition');
             $table->tinyInteger('resided_in_relocation_resettlement');
             // 51
-
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

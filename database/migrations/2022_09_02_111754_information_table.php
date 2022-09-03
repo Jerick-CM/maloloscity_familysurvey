@@ -13,15 +13,22 @@ class InformationTable extends Migration
      */
     public function up()
     {
-        Schema::create('information', function (Blueprint $table) {
+        Schema::create('respondents_information', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('name'); // 1,2,3
+            $table->unsignedMediumInteger('user_id');
+            $table->tinyInteger('full_name');
+            $table->tinyInteger('first_name');
+            $table->tinyInteger('middle_name');
+            $table->tinyInteger('last_name');
+            $table->tinyInteger('name_suffix');
             $table->tinyInteger('family_position');
             $table->tinyInteger('number_of_children');
             $table->tinyInteger('number_of_people_in_household');
             $table->tinyInteger('four_ps_beneficiary');
             $table->tinyInteger('four_ps_beneficiary_id');
             $table->tinyInteger('four_ps_beneficiary_date');
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -32,6 +39,6 @@ class InformationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('information_table');
+        Schema::dropIfExists('respondents_information');
     }
 }

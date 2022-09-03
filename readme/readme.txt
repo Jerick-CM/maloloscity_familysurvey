@@ -253,10 +253,17 @@ php artisan make:seeder RoleSeeder
 
 
 
-new 
+new
 
-php artisan make:migration information_table
+php artisan make:migration respondents_information_table
 php artisan make:migration individual_life_cycle_risk_table
 php artisan make:migration economic_risk_table
 php artisan make:migration environment_and_disaster_risk_table
 php artisan make:migration social_and_governance_risk_table
+
+
+php artisan make:controller RespondentsInformationController --model=RespondentsInformation
+php artisan make:controller IndividualLifeCycleRiskController --model=IndividualLifeCycleRisk
+php artisan make:controller EconomicRiskController --model=EconomicRisk
+php artisan make:controller EnvironmentAndDisasterRiskController --model=EnvironmentAndDisasterRisk
+php artisan make:controller SocialAndGovernanceRiskController --model=SocialAndGovernanceRisk
