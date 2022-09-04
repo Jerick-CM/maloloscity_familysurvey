@@ -17,23 +17,17 @@ const showingNavigationDropdown = ref(false);
             <!-- Page Heading -->
             <header class="bg-blue-900 shadow second-nav" v-if="$slots.header">
                 <div class="w-full mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <!-- <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8"> -->
                     <h2 class="font-semibold text-xl text-white leading-tight">
                         <slot name="header" />
                     </h2>
                 </div>
             </header>
 
-            <!-- Page Content -->
-            <!-- <main>
-                <slot />
-            </main> -->
-
             <div id="holder">
                 <header>
                     <div class="p-5 bg-bottom second-nav">
                         <div class="flex flex-items">
-                            <div class=" shrink-0 flex items-center">
+                            <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
                                     <BreezeApplicationLogo
                                         class="block h-9 w-auto"
@@ -66,10 +60,6 @@ const showingNavigationDropdown = ref(false);
                 </div>
                 <Footer />
             </div>
-
-            <!-- <div class="p-10 bg-bottom">
-                <div class="py-20"></div>
-            </div> -->
         </div>
     </div>
 </template>

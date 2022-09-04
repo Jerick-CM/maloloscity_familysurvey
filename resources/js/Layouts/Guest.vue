@@ -20,15 +20,16 @@ export default {
             <div class="ml-2">
                 <Link href="/login">
                     <h1 class="text-3xl text-white font-bold">
-                        Business Itinerary App
+                        Family Survey on <br />
+                        Risks and Vulnerabilities
                     </h1>
                 </Link>
             </div>
         </div>
 
-        <div class="w-full sm:max-w-md  px-2">
+        <div class="w-full sm:max-w-md px-2">
             <div
-                class="w-full sm:max-w-md  bg-white shadow-md overflow-hidden  rounded-lg  sm:rounded-lg mt-6 px-6 py-4"
+                class="w-full sm:max-w-md bg-white shadow-md overflow-hidden rounded-lg sm:rounded-lg mt-6 px-6 py-4"
             >
                 <slot />
             </div>
@@ -38,7 +39,7 @@ export default {
 
 <style scoped>
 .bg-page {
-    background-image: url("../assets/images/business-red.jpg");
+    /* background-image: url("../assets/images/business-red.jpg"); */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

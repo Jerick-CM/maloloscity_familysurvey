@@ -31,7 +31,7 @@ Route::apiResource('logs', \App\Http\Controllers\Api\LogsController::class);
 /*  api custom */
 
 Route::group(['prefix' => 'cstm', 'middleware' => 'throttle:500,1'], function () {
-    
+
     /* itineraries business pivot  */
     Route::get('/itineraries/gethistoricalbusiness/{itinerary_business_id}/{bussiness_id}', [\App\Http\Controllers\Api\ItineraryController::class, 'get_business_history']);
     Route::get('/itineraries/getbusinesshistory/{itinerary_business_id}/{bussiness_id}', [\App\Http\Controllers\Api\ItineraryController::class, 'getbusinesshistory']);

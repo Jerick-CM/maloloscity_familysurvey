@@ -23,14 +23,14 @@ use App\Models\User;
 
 Route::get('/', [AuthenticatedSessionController::class, 'create']);
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
+Route::group(['middleware' => ['permission:Access-Page-Dashboard']], function () {
+    Route::get('/survey-form', function () {
+        return Inertia::render('Forms/SurveyForm');
+    })->middleware(['auth', 'verified'])->name('survey-form');
+});
+
+
+
 
 Route::group(['middleware' => ['permission:Access-Page-Dashboard']], function () {
     Route::get('/dashboard', function () {

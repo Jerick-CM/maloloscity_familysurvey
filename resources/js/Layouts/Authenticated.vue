@@ -43,7 +43,7 @@ export default {
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
-                            <div class="shrink-0 flex items-center" >
+                            <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
                                     <BreezeApplicationLogo
                                         class="block h-9 w-auto"
@@ -79,16 +79,27 @@ export default {
                                 </BreezeNavLink>
                             </div>
                             <div
+                                v-if="permissions.includes('Access-Page-Logs')"
+                                class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
+                            >
+                                <BreezeNavLink
+                                    :href="route('logs')"
+                                    :active="route().current('logs')"
+                                >
+                                    Logs
+                                </BreezeNavLink>
+                            </div>
+                            <div
                                 v-if="
                                     permissions.includes('Access-Page-Business')
                                 "
                                 class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
                             >
                                 <BreezeNavLink
-                                    :href="route('business')"
-                                    :active="route().current('business')"
+                                    :href="route('survey-form')"
+                                    :active="route().current('survey-form')"
                                 >
-                                    Business
+                                    Survey Form
                                 </BreezeNavLink>
                             </div>
                             <div
@@ -104,17 +115,6 @@ export default {
                                     :active="route().current('itinerary')"
                                 >
                                     Itinerary
-                                </BreezeNavLink>
-                            </div>
-                            <div
-                                v-if="permissions.includes('Access-Page-Logs')"
-                                class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
-                            >
-                                <BreezeNavLink
-                                    :href="route('logs')"
-                                    :active="route().current('logs')"
-                                >
-                                    Logs
                                 </BreezeNavLink>
                             </div>
                         </div>
