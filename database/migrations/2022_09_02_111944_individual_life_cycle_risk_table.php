@@ -13,7 +13,7 @@ class IndividualLifeCycleRiskTable extends Migration
      */
     public function up()
     {
-        Schema::create('individual_lifecycle_risk', function (Blueprint $table) {
+        Schema::create('individual_lifecycle_risks', function (Blueprint $table) {
 
             $table->id();
             $table->tinyInteger('information_id')->index('information_id')->foreign('information_id')->onDelete('cascade');
@@ -63,6 +63,6 @@ class IndividualLifeCycleRiskTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('individual_lifecycle_risk');
+        Schema::dropIfExists('individual_lifecycle_risks');
     }
 }

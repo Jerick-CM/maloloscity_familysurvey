@@ -24,13 +24,16 @@ use App\Models\User;
 Route::get('/', [AuthenticatedSessionController::class, 'create']);
 
 Route::group(['middleware' => ['permission:Access-Page-Dashboard']], function () {
-    Route::get('/survey-form', function () {
-        return Inertia::render('Forms/SurveyForm');
-    })->middleware(['auth', 'verified'])->name('survey-form');
+    Route::get('/survey-form',  [App\Http\Controllers\FamilySurveyController::class, 'handleCreate'])->middleware(['auth', 'verified'])->name('survey-form');
+});
+
+Route::group(['prefix' => 'request', 'middleware' => ['permission:Access-Page-Dashboard', 'throttle:500,1']], function () {
+    Route::post('/familysurvey', [\App\Http\Controllers\Api\FamilySurveyController::class, 'store']);
 });
 
 
 
+// old
 
 Route::group(['middleware' => ['permission:Access-Page-Dashboard']], function () {
     Route::get('/dashboard', function () {

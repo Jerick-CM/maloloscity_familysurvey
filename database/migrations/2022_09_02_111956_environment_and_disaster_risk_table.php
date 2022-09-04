@@ -13,7 +13,7 @@ class EnvironmentAndDisasterRiskTable extends Migration
      */
     public function up()
     {
-        Schema::create('environment_and_disaster_risk', function (Blueprint $table) {
+        Schema::create('environment_and_disaster_risks', function (Blueprint $table) {
 
             $table->id();
             $table->tinyInteger('information_id')->index('information_id')->foreign('information_id')->onDelete('cascade');
@@ -38,6 +38,6 @@ class EnvironmentAndDisasterRiskTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('environment_and_disaster_risk');
+        Schema::dropIfExists('environment_and_disaster_risks');
     }
 }

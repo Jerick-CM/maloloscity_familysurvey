@@ -4,11 +4,12 @@ import Breadcrumb from "./../../Components/BreadCrumb/navSurvey.vue";
 
 import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
 import { ref, reactive, computed, onMounted, watch } from "vue";
-
+import useFamilySurveys from "./../../composables/familysurvey";
 import { useToast } from "vue-toastification";
 
 export default {
     data: () => ({
+        risksHeaderClass: "bg-blue-100",
         inputClass:
             "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
     }),
@@ -18,19 +19,50 @@ export default {
         Link,
         Breadcrumb,
     },
+    props: ["barangays", "municipalities"],
     setup(props, { attrs, slots, emit, expose }) {
         console.log("setup");
+        const toast = useToast();
+        const brgys = computed(() => props.barangays);
+        const filteredBrgys = ref([]);
         const checklist_form = ref([]);
-
         const checklist_4PS = ref([]);
 
-        onMounted(() => {
-            for (let i = 0; i <= 73; i++) {
-                console.log("hello worlds");
+        /* init */
+        const form = reactive({
+            province: 14,
+            municipality: null,
+            region: "III",
+            lalawigan: "BULACAN",
+        });
 
+        const { storeFamilySurvey, errors_fs } = useFamilySurveys();
+        const submitSurvey = async () => {
+            toast.info("Sending create");
+            form.four_ps_beneficiary = checklist_4PS.value;
+            form.checklist = checklist_form.value;
+            await storeFamilySurvey({ ...form }).then(() => {
+                if (errors_fs.value) {
+                    toast.error("Submit failed.");
+                } else {
+                    toast.success("Submit success.");
+                }
+            });
+        };
+        onMounted(() => {
+            form.province = 14;
+            form.municipality = 10;
+            form.zipcode = 3000;
+
+            for (let i = 0; i <= 73; i++) {
                 checklist_form.value[i] = 1;
             }
         });
+        const filterBrgys = async (munId) => {
+            filteredBrgys.value = brgys.value.filter(
+                (brgy) => brgy.parent === munId
+            );
+        };
 
         watch(
             () => checklist_form.value,
@@ -39,10 +71,21 @@ export default {
             },
             { deep: true }
         );
+
+        watch(
+            () => form.municipality,
+            (value) => {
+                filterBrgys(value);
+            }
+        );
+
         return {
             checklist_4PS,
-
             checklist_form,
+            filteredBrgys,
+            form,
+            submitSurvey,
+            errors_fs
         };
     },
 };
@@ -56,6 +99,17 @@ export default {
         </template>
         <div class="w-full mx-auto sm:px-6 lg:px-8">
             <Breadcrumb />
+            <div v-if="errors_fs">
+                <div
+                    v-for="(v, k) in errors_fs"
+                    :key="k"
+                    class="bg-red-500 text-white rounded font-bold mb-4 shadow-lg py-2 px-4 pr-0"
+                >
+                    <p v-for="error in v" :key="error" class="text-sm">
+                        {{ error }}
+                    </p>
+                </div>
+            </div>
             <form class="" @submit.prevent="submitSurvey">
                 <div class="flex flex-col 2xl:flex-row xl:flex-row lg:flex-row">
                     <div
@@ -91,6 +145,7 @@ export default {
                                     First Name
                                 </label>
                                 <input
+                                    v-model="form.first_name"
                                     :class="inputClass"
                                     type="text"
                                     placeholder="First Name"
@@ -103,6 +158,7 @@ export default {
                                     Middle Name or M.I.
                                 </label>
                                 <input
+                                    v-model="form.middle_name"
                                     :class="inputClass"
                                     type="text"
                                     placeholder="Middle Name or Middle Initial"
@@ -116,6 +172,7 @@ export default {
                                 </label>
                                 <input
                                     :class="inputClass"
+                                    v-model="form.last_name"
                                     type="text"
                                     placeholder="Last Name"
                                 />
@@ -130,6 +187,7 @@ export default {
                                 <input
                                     :class="inputClass"
                                     type="text"
+                                    v-model="form.name_suffix"
                                     placeholder="Jr., Sr. ,III"
                                 />
                             </div>
@@ -149,8 +207,9 @@ export default {
                                     Position in the Family
                                 </label>
                                 <input
+                                    v-model="form.family_position"
                                     :class="inputClass"
-                                    Ftype="text"
+                                    type="text"
                                     placeholder="Position in the Family"
                                 />
                             </div>
@@ -166,6 +225,7 @@ export default {
                                     Number of children
                                 </label>
                                 <input
+                                    v-model="form.number_of_children"
                                     :class="inputClass"
                                     type="number"
                                     placeholder="Total number of children"
@@ -182,6 +242,7 @@ export default {
                                     Number of Families in the household
                                 </label>
                                 <input
+                                    v-model="form.number_of_people_in_household"
                                     :class="inputClass"
                                     type="number"
                                     placeholder="Total families in the household"
@@ -223,6 +284,7 @@ export default {
                                         HH ID#
                                     </label>
                                     <input
+                                        v-model="form.four_ps_beneficiary_id"
                                         :class="inputClass"
                                         type="text"
                                         placeholder="HH ID#"
@@ -251,7 +313,12 @@ export default {
                     <div class="py-1 font-semibold">Kung Oo, Kailan pa?</div>
                     <div class="flex flex-wrap -mx-3">
                         <div class="w-full md:w-2/4 px-3 mb-6 md:mb-0">
-                            <input :class="inputClass" placeholder="" />
+                            <input
+                                v-model="form.four_ps_beneficiary_date"
+                                :class="inputClass"
+                                placeholder=""
+                                type="date"
+                            />
                         </div>
                     </div>
                 </div>
@@ -263,8 +330,14 @@ export default {
 
                         <div class="flex flex-wrap -mx-3">
                             <div class="w-full md:w-1/4 px-3 py-1">
-                                <label for="grid-first-name"> Rehiyon </label>
+                                <label
+                                    for="grid-first-name"
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                >
+                                    Rehiyon
+                                </label>
                                 <input
+                                    v-model="form.region"
                                     :class="inputClass"
                                     type="text"
                                     placeholder="III"
@@ -277,6 +350,7 @@ export default {
                                     Lalawigan
                                 </label>
                                 <input
+                                    v-model="form.lalawigan"
                                     :class="inputClass"
                                     type="text"
                                     placeholder="Bulacan"
@@ -288,21 +362,48 @@ export default {
                                 >
                                     Bayan/Lunsod
                                 </label>
-                                <input
-                                    :class="inputClass"
-                                    type="text"
-                                    placeholder="MALOLOS"
-                                />
+
+                                <select
+                                    v-model="form.municipality"
+                                    id="municipality"
+                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                >
+                                    <option value="0" disabled>Select</option>
+                                    <option
+                                        v-for="municipality in municipalities"
+                                        :key="municipality.id"
+                                        :value="municipality.id"
+                                    >
+                                        {{ municipality.value }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                         <div class="flex flex-wrap -mx-3">
                             <div class="w-full md:w-1/4 px-3 py-1">
-                                <label for="grid-first-name"> Barangay </label>
-                                <input
-                                    :class="inputClass"
-                                    type="text"
-                                    placeholder="Barangay"
-                                />
+                                <label
+                                    for="grid-first-name"
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                >
+                                    Barangay
+                                </label>
+
+                                <select
+                                    v-model="form.barangay"
+                                    id="barangays"
+                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                >
+                                    <option value="0" selected="" disabled>
+                                        Select
+                                    </option>
+                                    <option
+                                        v-for="barangay in filteredBrgys"
+                                        :key="barangay.id"
+                                        :value="barangay.value"
+                                    >
+                                        {{ barangay.value }}
+                                    </option>
+                                </select>
                             </div>
                             <div class="w-full md:w-1/4 px-3 py-1">
                                 <label
@@ -310,7 +411,9 @@ export default {
                                 >
                                     Sitio
                                 </label>
+
                                 <input
+                                    v-model="form.sitio"
                                     :class="inputClass"
                                     type="text"
                                     placeholder="Sitio"
@@ -323,6 +426,7 @@ export default {
                                     Purok
                                 </label>
                                 <input
+                                    v-model="form.purok"
                                     :class="inputClass"
                                     type="text"
                                     placeholder="Purok"
@@ -354,7 +458,7 @@ export default {
                         <tbody>
                             <!-- table2 30 -->
                             <!-- INDIVIDUAL LIFE CYCLE RISKS  -->
-                            <tr>
+                            <tr :class="risksHeaderClass">
                                 <td>INDIVIDUAL LIFE CYCLE RISKS</td>
                                 <td></td>
                                 <td></td>
@@ -1176,7 +1280,7 @@ export default {
                             </tr>
 
                             <!-- table 2 - 30  -->
-                            <tr>
+                            <tr :class="risksHeaderClass">
                                 <td>ECONOMIC RISK</td>
                                 <td></td>
                                 <td></td>
@@ -1546,7 +1650,7 @@ export default {
                                 </td>
                             </tr>
                             <!-- economic risk 14 rows -->
-                            <tr>
+                            <tr :class="risksHeaderClass">
                                 <td>ENVIRONMENT AND DISASTER RISKS</td>
                                 <td></td>
                                 <td></td>
@@ -1709,7 +1813,7 @@ export default {
                             </tr>
                             <!-- environmental risk 6 rows -->
                             <!-- social and governance risk 24 rows -->
-                            <tr>
+                            <tr :class="risksHeaderClass">
                                 <td>SOCIAL AND GOVERNANCE RISKS</td>
                                 <td></td>
                                 <td></td>
@@ -2481,9 +2585,17 @@ input[type="radio"]:checked + label {
 }
 
 /* tr:nth-child(even) {
-        background-color: #ccc;
-    }
-    tr:nth-child(od) {
-        background-color: #fff;
-    } */
+    background-color: rgb(243, 182, 182);
+}
+tr:nth-child(od) {
+    background-color: rgb(242, 169, 169);
+} */
+
+tr:hover {
+    background-color: coral;
+    cursor: pointer;
+}
+td {
+    padding: 2px 2px 2px 2px;
+}
 </style>

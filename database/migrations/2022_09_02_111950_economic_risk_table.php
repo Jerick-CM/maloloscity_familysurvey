@@ -13,7 +13,7 @@ class EconomicRiskTable extends Migration
      */
     public function up()
     {
-        Schema::create('economic_risk', function (Blueprint $table) {
+        Schema::create('economic_risks', function (Blueprint $table) {
 
             $table->id();
             $table->tinyInteger('information_id')->index('information_id')->foreign('information_id')->onDelete('cascade');
@@ -46,6 +46,6 @@ class EconomicRiskTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('economic_risk');
+        Schema::dropIfExists('economic_risks');
     }
 }
