@@ -8,6 +8,10 @@ import { ref, reactive, computed, onMounted, watch } from "vue";
 import { useToast } from "vue-toastification";
 
 export default {
+    data: () => ({
+        inputClass:
+            "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
+    }),
     components: {
         BreezeAuthenticatedLayout,
         Head,
@@ -16,8 +20,42 @@ export default {
     },
     setup(props, { attrs, slots, emit, expose }) {
         console.log("setup");
-        const title = ref[""];
-        return { title };
+        const checklist_form = ref([]);
+
+        const checklist_4PS = ref([]);
+        const check4ps_no = ref([]);
+        const check4ps_yes = ref([]);
+
+        const validate4PS = (data) => {
+            if (data === "yes") {
+                check4ps_no.value = false;
+            } else if (data === "no") {
+                check4ps_yes.value = false;
+            }
+        };
+
+        onMounted(() => {
+            for (let i = 0; i <= 73; i++) {
+                console.log("hello worlds");
+
+                checklist_form.value[i] = 1;
+            }
+        });
+
+        watch(
+            () => checklist_form.value,
+            (currentValue, oldValue) => {
+                console.log(checklist_form);
+            },
+            { deep: true }
+        );
+        return {
+            checklist_4PS,
+            check4ps_yes,
+            check4ps_no,
+            validate4PS,
+            checklist_form,
+        };
     },
 };
 </script>
@@ -30,573 +68,2306 @@ export default {
         </template>
         <div class="w-full mx-auto sm:px-6 lg:px-8">
             <Breadcrumb />
+            <form class="" @submit.prevent="submitSurvey">
+                <div class="my-3 bg-white rounded p-5 sm:p1">
+                    <!-- row 1 -->
+                    <div class="py-2">
+                        <div class="py-1 font-semibold">I. Pagkakakilanlan</div>
 
-            <div class="my-1 bg-white rounded p-5 sm:p1">
-                <div>I.Pagkakakilanlan</div>
-                <div>1. Pangalan</div>
-                <div>2. Posisyon sa Pamilya</div>
-                <div>3. BIlang ng Anak</div>
-                <div>4. BIlang ng pamilya sa bahay</div>
-                <div>5. 4P's Beneficiary</div>
-                <div>Kung OO Kailang pa</div>
-            </div>
-            <div class="my-1 bg-white rounded p-5 sm:p1">
-                <table
-                    class="w-full border-collapse border border-slate-500 table-fixed"
-                >
-                    <thead>
-                        <tr>
-                            <td rowspan="3" width="70%">
-                                II. MGA PANGANIB (RISK) AT VULNERABILITY NA
-                                KINAHARAP NG PAMILYA
-                            </td>
-                            <td rowspan="3">Lagyan ng ng (x) kung wala</td>
-                            <td colspan="2">Kung meron /0o, ilan?</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="2">Ngayong taon</td>
-                            <td rowspan="2">Nakalipas na taon</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- table2 30 -->
-                        <!-- INDIVIDUAL LIFE CYCLE RISKS  -->
-                        <tr>
-                            <td>INDIVIDUAL LIFE CYCLE RISKS</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>1. Pagbubuntis at panganganak</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2. Hindi nakapagpre-natal check up</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>3. Pagkalagas (abortion)</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>4. Nakunan</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                5. Pagkawala ng anak na may kapansanan ng
-                                isinilang
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>6. Hindi nakapagpost-natal check up</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        <div class="py-1 font-medium text-red-700">
+                            1. Pangalan
+                        </div>
 
-                        <tr>
-                            <td>6. Hindi nakapagpost-natal check up</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        <div class="flex flex-wrap -mx-3">
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                >
+                                    First Name
+                                </label>
+                                <input
+                                    :class="inputClass"
+                                    type="text"
+                                    placeholder="First Name"
+                                />
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                >
+                                    Middle Name or M.I.
+                                </label>
+                                <input
+                                    :class="inputClass"
+                                    type="text"
+                                    placeholder="Middle Name or Middle Initial"
+                                />
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                >
+                                    Last Name
+                                </label>
+                                <input
+                                    :class="inputClass"
+                                    type="text"
+                                    placeholder="Last Name"
+                                />
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                    for="grid-last-name"
+                                >
+                                    Name Suffix
+                                </label>
+                                <input
+                                    :class="inputClass"
+                                    type="text"
+                                    placeholder="Jr., Sr. ,III"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row 2 -->
+                    <div class="py-2">
+                        <div class="flex flex-wrap -mx-3">
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <div class="py-1 font-medium text-red-700">
+                                    2. Posisyon sa Pamilya
+                                </div>
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                    for="grid-first-name"
+                                >
+                                    Position in the Family
+                                </label>
+                                <input
+                                    :class="inputClass"
+                                    Ftype="text"
+                                    placeholder="Position in the Family"
+                                />
+                            </div>
 
-                        <tr>
-                            <td>
-                                7. Pagkakaroon ng anak na may kapansanan ng
-                                isinilang
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <div class="py-1 font-medium text-red-700">
+                                    3. Bilang ng Anak
+                                </div>
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                    for="grid-first-name"
+                                >
+                                    Number of children
+                                </label>
+                                <input
+                                    :class="inputClass"
+                                    type="number"
+                                    placeholder="Total number of children"
+                                />
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <div class="py-1 font-medium text-red-700">
+                                    4. Bilang ng pamilya sa bahay
+                                </div>
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                    for="grid-first-name"
+                                >
+                                    Number of Families in the household
+                                </label>
+                                <input
+                                    :class="inputClass"
+                                    type="number"
+                                    placeholder="Total families in the household"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- row 3 -->
+                    <div class="py-2">
+                        <div class="flex flex-wrap -mx-3">
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <div class="py-1 font-medium text-red-700">
+                                    5. 4P's Beneficiary ba?
+                                </div>
+                            </div>
 
-                        <tr>
-                            <td>8. Di nabakunahan ang mga anak o bata</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <div
+                                    class="pl-4 rounded border border-gray-200 h-10 flex items-center"
+                                >
+                                    <input
+                                        id="bordered-checkbox-1"
+                                        type="checkbox"
+                                        value=""
+                                        v-model="check4ps_yes"
+                                        name="bordered-checkbox"
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500"
+                                        @click="validate4PS('yes')"
+                                    />
+                                    <label
+                                        for="bordered-checkbox-1"
+                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900"
+                                        >Oo</label
+                                    >
+                                </div>
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <div class="flex flex-items">
+                                    <label
+                                        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                        for="grid-first-name"
+                                    >
+                                        HH ID#
+                                    </label>
+                                    <input
+                                        :class="inputClass"
+                                        type="text"
+                                        placeholder="HH ID#"
+                                    />
+                                </div>
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <div
+                                    class="pl-4 rounded border border-gray-200 h-10 flex items-center"
+                                >
+                                    <input
+                                        id="bordered-checkbox-1"
+                                        type="checkbox"
+                                        value=""
+                                        v-model="check4ps_no"
+                                        name="bordered-checkbox"
+                                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500"
+                                        @click="validate4PS('no')"
+                                    />
+                                    <label
+                                        for="bordered-checkbox-1"
+                                        class="py-4 ml-2 w-full text-sm font-medium text-gray-900"
+                                        >Hindi</label
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                        <tr>
-                            <td>
-                                9. Miyembro ng pamilya na may malubhang
-                                kapansanan dahil sa sakit o aksidente
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>10. Namatay dahils sa sakuna o aksidente</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                    <div class="py-1 font-semibold">Kung Oo, Kailan pa?</div>
+                    <div class="flex flex-wrap -mx-3">
+                        <div class="w-full md:w-2/4 px-3 mb-6 md:mb-0">
+                            <input :class="inputClass" placeholder="" />
+                        </div>
+                    </div>
+                </div>
+                <!-- Address -->
+                <div class="my-3 bg-white rounded p-5 sm:p1">
+                    <!-- row 1 -->
+                    <div class="py-2">
+                        <div class="py-1 font-semibold">Address:</div>
 
-                        <tr>
-                            <td>
-                                11. Miyembro ng pamilya na may malubha o matagal
-                                nang sakit?
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                12. Di nakatanggap ng serbisyong medikal sa
-                                health center o ospital?
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>13. Di nakabili ng kinakailangang gamot"</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                14. Miyembro ng pamilya na pumanaw dahil sa
-                                karamdaman
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                15. Di nai-enrol sa day care o pre-school ang
-                                mga anak
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>16. Di nai-enrol sa elemtarya ang anak</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        <div class="flex flex-wrap -mx-3">
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label for="grid-first-name"> Rehiyon </label>
+                                <input
+                                    :class="inputClass"
+                                    type="text"
+                                    placeholder="III"
+                                />
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                >
+                                    Lalawigan
+                                </label>
+                                <input
+                                    :class="inputClass"
+                                    type="text"
+                                    placeholder="Bulacan"
+                                />
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                >
+                                    Bayan/Lunsod
+                                </label>
+                                <input
+                                    :class="inputClass"
+                                    type="text"
+                                    placeholder="MALOLOS"
+                                />
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap -mx-3">
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label for="grid-first-name"> Barangay </label>
+                                <input
+                                    :class="inputClass"
+                                    type="text"
+                                    placeholder="Barangay"
+                                />
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                >
+                                    Sitio
+                                </label>
+                                <input
+                                    :class="inputClass"
+                                    type="text"
+                                    placeholder="Sitio"
+                                />
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                >
+                                    Purok
+                                </label>
+                                <input
+                                    :class="inputClass"
+                                    type="text"
+                                    placeholder="Purok"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                        <tr>
-                            <td>17. Di nai-enrol sa high school ang anak</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                <!-- table divider -->
+                <div class="my-3 bg-white rounded p-5 sm:p1">
+                    <table
+                        class="w-full border-collapse border border-slate-500 table-fixed md:table-fixed"
+                    >
+                        <thead>
+                            <tr>
+                                <td rowspan="3" width="70%">
+                                    II. MGA PANGANIB (RISK) AT VULNERABILITY NA
+                                    KINAHARAP NG PAMILYA
+                                </td>
+                                <td rowspan="3">Lagyan ng ng (x) kung wala</td>
+                                <td colspan="2">Kung meron /0o, ilan?</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">Ngayong taon</td>
+                                <td rowspan="2">2-5 taon na nakalipas</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- table2 30 -->
+                            <!-- INDIVIDUAL LIFE CYCLE RISKS  -->
+                            <tr>
+                                <td>INDIVIDUAL LIFE CYCLE RISKS</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>1. Pagbubuntis at panganganak</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[0]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[0]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[0]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2. Hindi nakapagpre-natal check up</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[1]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[1]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[1]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3. Pagkalagas (abortion)</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[2]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[2]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[2]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4. Nakunan</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[3]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[3]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[3]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    5. Pagkawala ng anak na may kapansanan ng
+                                    isinilang
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[4]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[4]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[4]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>6. Hindi nakapagpost-natal check up</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[5]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[5]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[5]"
+                                    />
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                18. Di nai-enrol o nahinto sa kolehiyo ang anak
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    7. Pagkakaroon ng anak na may kapansanan ng
+                                    isinilang
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[6]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[6]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[6]"
+                                    />
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                19. Tumigil sa pag-aaral o nagdrop out ng
-                                elementarya o high school ang anak
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                            <tr>
+                                <td>8. Di nabakunahan ang mga anak o bata</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[7]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[7]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[7]"
+                                    />
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>20. Nalulong sa bawal na gamot o alak</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                21. Nabuntis na menor de edad? (below 18 years
-                                old)
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    9. Miyembro ng pamilya na may malubhang
+                                    kapansanan dahil sa sakit o aksidente
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[8]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[8]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[8]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    10. Namatay dahils sa sakuna o aksidente
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[9]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[9]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[9]"
+                                    />
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                22. Naglayas o hindi umuwi ng bahay ng walang
-                                paalam sa magulang
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>23. Miyembro na nangibang bansa</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                24. Naghahanapbuhay sa ibang munisipyo o siyudad
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>25. Hiwalay sa asawa</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>26. Namatayan ng asawa</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                27. Di sapat ang pagkain ng pamilya o naranasan
-                                ang kawalan ng pagkain
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    11. Miyembro ng pamilya na may malubha o
+                                    matagal nang sakit?
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[10]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[10]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[10]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    12. Di nakatanggap ng serbisyong medikal sa
+                                    health center o ospital?
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[11]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[11]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[11]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    13. Di nakabili ng kinakailangang gamot"
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[12]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[12]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[12]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    14. Miyembro ng pamilya na pumanaw dahil sa
+                                    karamdaman
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[13]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[13]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[13]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    15. Di nai-enrol sa day care o pre-school
+                                    ang mga anak
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[14]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[14]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[14]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>16. Di nai-enrol sa elemtarya ang anak</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[15]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[15]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[15]"
+                                    />
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>28. kakulangan ng malinis na inuming tubig</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    17. Di nai-enrol sa high school ang anak
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[16]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[16]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[16]"
+                                    />
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                29. Bahay ay gawa sa light /salvaged material
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    18. Di nai-enrol o nahinto sa kolehiyo ang
+                                    anak
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[17]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[17]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[17]"
+                                    />
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>30. Kawalan ng malinis na CR o palikuran</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    19. Tumigil sa pag-aaral o nagdrop out ng
+                                    elementarya o high school ang anak
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[18]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[18]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[18]"
+                                    />
+                                </td>
+                            </tr>
 
-                        <!-- table 2 - 30  -->
-                        <tr>
-                            <td>ECONOMIC RISK</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>31.  Walang hanapbuhay</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>32.  Hanapbuhay na di akma sa tinapos na kurso</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>33.  Naranasang maaksidente habang nasa trabaho</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>34.  Di nakabayad ng utang</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>35.  Biktima ng scam</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>36.  Biktima ng illegal recruiter</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>37.  Lumipat ng tirahan sa ibang munisipyo</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>38.  Walang life insurance</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>39.  Walang health insurance</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>40.  Naghahanapbuhay pero walang SSS o GSIS</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>41.  Pagkalugi sa negosyo</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>42.  Pagsangla ng ari-arian</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>43.  Paghiram ng pera sa kamag-anak</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>44.  Kapamilya na nakakatanda na di nakkatanggap ng pension</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <!-- economic risk 14 rows -->
-                        <tr>
-                            <td>ENVIRONMENT AND DISASTER RISKS</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>45.  Biktima ng sunog</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>46.  Biktima ng bagyo o tagtuyot</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>47.  Biktima ng lindol o pagputok ng bulkan</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>48.  Nawalan ng miyembro ng pamilya sanhi ng kalamidad</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>49.  Demolisyon</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>50.  Tumira sa relocation o resettlement</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <!-- environmental risk 6 rows -->
-                        <!-- social and governance risk 24 rows -->
-                        <tr>
-                            <td>SOCIAL AND GOVERNANCE RISKS</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>51.  Biktima ng pagnanakaw sa bahay</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>52.  Nakarans ng pagnanakaw o hold-up sa daan</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>53.  Nakaranas ng sekswal na karahasan</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>54.  May alam po ba kayong "gang" ng kabataan sa barangay</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>55.  Namatayan ng kapamilya dahil sa krimen</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>56 Nakakita ng aktuwal na krimen na naganap sa komunidad</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>57.  Karahasan kaugnay sa eleksyon</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>58.  Takot at panggugulo dahil sa pulitika </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>59.  Pag-aalsa laban sa pamahalaan</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                            <tr>
+                                <td>20. Nalulong sa bawal na gamot o alak</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[19]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[19]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[19]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    21. Nabuntis na menor de edad? (below 18
+                                    years old)
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[20]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[20]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[20]"
+                                    />
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>60.  Pangugulo ng militar</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>61. Karahasan sa tahanan (pananakit ng asawa, anak etc.</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>62.  Pang-aabuso sa menor de edad</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>63.  Pagtatrabaho ng menor de edad</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>64.  Katiwalian sa pamahalaan (corruption, bribery, embezzlement etc)</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>65.  Di nakikilahok sa aktibidades ng komunidad</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>66.  Di bumoboto</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>67.  Di kasapi ng anumang organisasyon</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>68.  Pag-angkin ng lupa ng iba</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>69.  Tradisyon na nakakasama sa tao.</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    22. Naglayas o hindi umuwi ng bahay ng
+                                    walang paalam sa magulang
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[21]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[21]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[21]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>23. Miyembro na nangibang bansa</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[22]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[22]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[22]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    24. Naghahanapbuhay sa ibang munisipyo o
+                                    siyudad
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[23]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[23]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[23]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>25. Hiwalay sa asawa</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[24]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[24]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[24]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>26. Namatayan ng asawa</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[25]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[25]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[25]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    27. Di sapat ang pagkain ng pamilya o
+                                    naranasan ang kawalan ng pagkain
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[26]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[26]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[26]"
+                                    />
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td>70.  Kaguluhan o di pagkakaunawaan dahil sa relihiyon</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>71.  Nakaranas ng mabagal na judicial system</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>72.  Diskriminasyon dahil sa pinagmulan o kasarian (ethnicity, gender, etc)</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>73.  Alitan o tunggali dahil sa pagsasalungat ng tribu</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>74.  Ibang panganib na kinakaharap ng mag-anak</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                            <tr>
+                                <td>
+                                    28. kakulangan ng malinis na inuming tubig
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[27]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[27]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[27]"
+                                    />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    29. Bahay ay gawa sa light /salvaged
+                                    material
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[28]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[28]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[28]"
+                                    />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    30. Kawalan ng malinis na CR o palikuran
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[29]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[29]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[29]"
+                                    />
+                                </td>
+                            </tr>
+
+                            <!-- table 2 - 30  -->
+                            <tr>
+                                <td>ECONOMIC RISK</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>31. Walang hanapbuhay</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[30]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[30]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[30]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    32. Hanapbuhay na di akma sa tinapos na
+                                    kurso
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[31]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[31]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[31]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    33. Naranasang maaksidente habang nasa
+                                    trabaho
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[32]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[32]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[32]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>34. Di nakabayad ng utang</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[33]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[33]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[33]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>35. Biktima ng scam</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[34]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[34]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[34]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>36. Biktima ng illegal recruiter</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[35]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[35]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[35]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    37. Lumipat ng tirahan sa ibang munisipyo
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[36]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[36]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[36]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>38. Walang life insurance</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[37]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[37]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[37]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>39. Walang health insurance</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[38]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[38]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[38]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    40. Naghahanapbuhay pero walang SSS o GSIS
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[39]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[39]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[39]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>41. Pagkalugi sa negosyo</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[40]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[40]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[40]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>42. Pagsangla ng ari-arian</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[41]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[41]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[41]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>43. Paghiram ng pera sa kamag-anak</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[42]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[42]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[42]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    44. Kapamilya na nakakatanda na di
+                                    nakkatanggap ng pension
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[43]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[43]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[43]"
+                                    />
+                                </td>
+                            </tr>
+                            <!-- economic risk 14 rows -->
+                            <tr>
+                                <td>ENVIRONMENT AND DISASTER RISKS</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>45. Biktima ng sunog</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[44]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[44]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[44]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>46. Biktima ng bagyo o tagtuyot</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[45]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[45]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[45]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    47. Biktima ng lindol o pagputok ng bulkan
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[46]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[46]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[46]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    48. Nawalan ng miyembro ng pamilya sanhi ng
+                                    kalamidad
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[47]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[47]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[47]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>49. Demolisyon</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[48]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[48]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[48]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>50. Tumira sa relocation o resettlement</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[49]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[49]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[49]"
+                                    />
+                                </td>
+                            </tr>
+                            <!-- environmental risk 6 rows -->
+                            <!-- social and governance risk 24 rows -->
+                            <tr>
+                                <td>SOCIAL AND GOVERNANCE RISKS</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>51. Biktima ng pagnanakaw sa bahay</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[50]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[50]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[50]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    52. Nakaranas ng pagnanakaw o hold-up sa
+                                    daan
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[51]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[51]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[51]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>53. Nakaranas ng sekswal na karahasan</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[52]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[52]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[52]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    54. May alam po ba kayong "gang" ng kabataan
+                                    sa barangay
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[53]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[53]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[53]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    55. Namatayan ng kapamilya dahil sa krimen
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[54]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[54]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[54]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    56 Nakakita ng aktuwal na krimen na naganap
+                                    sa komunidad
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[55]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[55]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[55]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>57. Karahasan kaugnay sa eleksyon</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[56]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[56]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[56]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    58. Takot at panggugulo dahil sa pulitika
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[57]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[57]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[57]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>59. Pag-aalsa laban sa pamahalaan</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[58]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[58]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[58]"
+                                    />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>60. Pangugulo ng militar</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[59]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[59]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[59]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    61. Karahasan sa tahanan (pananakit ng
+                                    asawa, anak etc.
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[60]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[60]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[60]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>62. Pang-aabuso sa menor de edad</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[61]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[61]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[61]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>63. Pagtatrabaho ng menor de edad</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[62]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[62]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[62]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    64. Katiwalian sa pamahalaan (corruption,
+                                    bribery, embezzlement etc)
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[63]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[63]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[63]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    65. Di nakikilahok sa aktibidades ng
+                                    komunidad
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[64]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[64]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[64]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>66. Di bumoboto</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[65]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[65]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[65]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>67. Di kasapi ng anumang organisasyon</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[66]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[66]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[66]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>68. Pag-angkin ng lupa ng iba</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[67]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[67]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[67]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>69. Tradisyon na nakakasama sa tao.</td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[68]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[68]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[68]"
+                                    />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    70. Kaguluhan o di pagkakaunawaan dahil sa
+                                    relihiyon
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[69]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[69]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[69]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    71. Nakaranas ng mabagal na judicial system
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[70]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[70]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[70]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    72. Diskriminasyon dahil sa pinagmulan o
+                                    kasarian (ethnicity, gender, etc)
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[71]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[71]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[71]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    73. Alitan o tunggali dahil sa pagsasalungat
+                                    ng tribu
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[72]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[72]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[72]"
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    74. Ibang panganib na kinakaharap ng
+                                    mag-anak
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_form[73]"
+                                        checked
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="2"
+                                        v-model="checklist_form[73]"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <input
+                                        type="radio"
+                                        value="3"
+                                        v-model="checklist_form[73]"
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="w-full md:w-1/4 md:pl-2 py-2">
+                    <button
+                        type="submit"
+                        class="inline-flex justify-center py-2 px-10 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                        Submit
+                    </button>
+                </div>
+            </form>
         </div>
     </BreezeAuthenticatedLayout>
 </template>
@@ -606,4 +2377,107 @@ th,
 td {
     border: 1px solid black;
 }
+/* 
+table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed;
+}
+
+table caption {
+    font-size: 1.5em;
+    margin: 0.5em 0 0.75em;
+}
+
+table tr {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 0.35em;
+}
+
+table th,
+table td {
+    padding: 0.625em;
+    text-align: center;
+}
+
+table th {
+    font-size: 0.85em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+    table {
+        border: 0;
+    }
+
+    table caption {
+        font-size: 1.3em;
+    }
+
+    table thead {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    table tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: 0.625em;
+    }
+
+    table td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: 0.8em;
+        text-align: right;
+    }
+
+    table td::before {
+   
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    table td:last-child {
+        border-bottom: 0;
+    }
+} */
+
+input[type="radio"] + label span {
+    transition: background 0.2s, transform 0.2s;
+}
+
+input[type="radio"] + label span:hover,
+input[type="radio"] + label:hover span {
+    transform: scale(1.2);
+}
+
+input[type="radio"]:checked + label span {
+    background-color: #1f9d55;
+    box-shadow: 0px 0px 0px 2px white inset;
+}
+
+input[type="radio"]:checked + label {
+    color: #1f9d55;
+}
+
+/* tr:nth-child(even) {
+        background-color: #ccc;
+    }
+    tr:nth-child(od) {
+        background-color: #fff;
+    } */
 </style>
