@@ -23,16 +23,6 @@ export default {
         const checklist_form = ref([]);
 
         const checklist_4PS = ref([]);
-        const check4ps_no = ref([]);
-        const check4ps_yes = ref([]);
-
-        const validate4PS = (data) => {
-            if (data === "yes") {
-                check4ps_no.value = false;
-            } else if (data === "no") {
-                check4ps_yes.value = false;
-            }
-        };
 
         onMounted(() => {
             for (let i = 0; i <= 73; i++) {
@@ -51,9 +41,7 @@ export default {
         );
         return {
             checklist_4PS,
-            check4ps_yes,
-            check4ps_no,
-            validate4PS,
+
             checklist_form,
         };
     },
@@ -69,6 +57,23 @@ export default {
         <div class="w-full mx-auto sm:px-6 lg:px-8">
             <Breadcrumb />
             <form class="" @submit.prevent="submitSurvey">
+                <div class="flex flex-col 2xl:flex-row xl:flex-row lg:flex-row">
+                    <div
+                        class="w-full 2xl:w-2/4 xl:w-2/4 lg:w-2/4 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-end place-content-end"
+                    ></div>
+                    <div
+                        class="w-full 2xl:w-2/4 xl:w-2/4 lg:w-2/4 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-end place-content-end"
+                    >
+                        <div class="">
+                            <button
+                                type="submit"
+                                class="inline-flex justify-center py-2 px-10 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <div class="my-3 bg-white rounded p-5 sm:p1">
                     <!-- row 1 -->
                     <div class="py-2">
@@ -198,13 +203,9 @@ export default {
                                     class="pl-4 rounded border border-gray-200 h-10 flex items-center"
                                 >
                                     <input
-                                        id="bordered-checkbox-1"
-                                        type="checkbox"
-                                        value=""
-                                        v-model="check4ps_yes"
-                                        name="bordered-checkbox"
-                                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500"
-                                        @click="validate4PS('yes')"
+                                        type="radio"
+                                        value="1"
+                                        v-model="checklist_4PS"
                                     />
                                     <label
                                         for="bordered-checkbox-1"
@@ -233,13 +234,9 @@ export default {
                                     class="pl-4 rounded border border-gray-200 h-10 flex items-center"
                                 >
                                     <input
-                                        id="bordered-checkbox-1"
-                                        type="checkbox"
-                                        value=""
-                                        v-model="check4ps_no"
-                                        name="bordered-checkbox"
-                                        class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500"
-                                        @click="validate4PS('no')"
+                                        type="radio"
+                                        value="0"
+                                        v-model="checklist_4PS"
                                     />
                                     <label
                                         for="bordered-checkbox-1"
@@ -2359,13 +2356,22 @@ export default {
                         </tbody>
                     </table>
                 </div>
-                <div class="w-full md:w-1/4 md:pl-2 py-2">
-                    <button
-                        type="submit"
-                        class="inline-flex justify-center py-2 px-10 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                <div class="flex flex-col 2xl:flex-row xl:flex-row lg:flex-row">
+                    <div
+                        class="w-full 2xl:w-2/4 xl:w-2/4 lg:w-2/4 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-end place-content-end"
+                    ></div>
+                    <div
+                        class="w-full 2xl:w-2/4 xl:w-2/4 lg:w-2/4 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-end place-content-end"
                     >
-                        Submit
-                    </button>
+                        <div class="">
+                            <button
+                                type="submit"
+                                class="inline-flex justify-center py-2 px-10 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            >
+                                Submit
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>
