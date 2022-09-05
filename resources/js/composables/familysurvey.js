@@ -7,9 +7,9 @@ export default function useFamilySurveys() {
     const family_position = ref([]);
     const errors_fs = ref("");
 
+    const individual_lifecycle_risks = ref("");
     const economic_risks = ref("");
     const environment_and_disaster_risks = ref("");
-    const individual_lifecycle_risks = ref("");
     const social_and_governance_risks = ref("");
 
     const getFamilySurvey = async (id) => {
@@ -23,6 +23,7 @@ export default function useFamilySurveys() {
         individual_lifecycle_risks.value =
             response.data.data.individual_lifecycle_risk;
         economic_risks.value = response.data.data.economic_risk;
+
         environment_and_disaster_risks.value =
             response.data.data.environmental_and_disaster_risk;
 
@@ -52,7 +53,6 @@ export default function useFamilySurveys() {
         }
     };
 
-    
     const updateFamilySurvey = async (id) => {
         errors_fs.value = "";
         try {
@@ -60,6 +60,12 @@ export default function useFamilySurveys() {
         } catch (e) {
             if (e.response.status === 422) {
                 errors_fs.value = e.response.data.errors;
+            }
+            if (e.response.status === 500) {
+                errors_fs.value = {
+                    // message: "error 500",
+                    errors: { error: "server Error 500" },
+                };
             }
         }
     };

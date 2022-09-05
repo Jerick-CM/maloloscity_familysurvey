@@ -915,7 +915,7 @@ export default {
                                         type="radio"
                                         value="1"
                                         v-model="
-                                            individual_lifecycle_risks.death_dueto_accident_dissaster
+                                            individual_lifecycle_risks.death_dueto_accident_disaster
                                         "
                                     />
                                 </td>
@@ -924,7 +924,7 @@ export default {
                                         type="radio"
                                         value="2"
                                         v-model="
-                                            individual_lifecycle_risks.death_dueto_accident_dissaster
+                                            individual_lifecycle_risks.death_dueto_accident_disaster
                                         "
                                     />
                                 </td>
@@ -933,7 +933,7 @@ export default {
                                         type="radio"
                                         value="3"
                                         v-model="
-                                            individual_lifecycle_risks.death_dueto_accident_dissaster
+                                            individual_lifecycle_risks.death_dueto_accident_disaster
                                         "
                                     />
                                 </td>
@@ -3041,7 +3041,7 @@ th,
 td {
     border: 1px solid black;
 }
-/* 
+/*
 table {
     border: 1px solid #ccc;
     border-collapse: collapse;
@@ -3108,7 +3108,7 @@ table th {
     }
 
     table td::before {
-   
+
         content: attr(data-label);
         float: left;
         font-weight: bold;

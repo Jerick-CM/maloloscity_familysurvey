@@ -232,47 +232,108 @@ class FamilySurveyController extends Controller
             $respondent->update();
 
 
-            $individaul_lifecyle_risk =IndividualLifeCycleRisk::where('information_id',$respondent->id)->first();
+            $individaul_lifecyle_risk = IndividualLifeCycleRisk::where('information_id', $respondent->id)->first();
 
             $individaul_lifecyle_risk->pregnancy_and_birth = $request->individual_lifecycle_risk['pregnancy_and_birth'];
-            $individaul_lifecyle_risk->update();
+            $individaul_lifecyle_risk->no_prenatal_checkup = $request->individual_lifecycle_risk['no_prenatal_checkup'];
+            $individaul_lifecyle_risk->abortion = $request->individual_lifecycle_risk['abortion'];
+            $individaul_lifecyle_risk->miscarriage = $request->individual_lifecycle_risk['miscarriage'];
+            $individaul_lifecyle_risk->death_ofa_child = $request->individual_lifecycle_risk['death_ofa_child'];
 
+            $individaul_lifecyle_risk->no_postnatal_checkup = $request->individual_lifecycle_risk['no_postnatal_checkup'];
+            $individaul_lifecyle_risk->kid_with_disability = $request->individual_lifecycle_risk['kid_with_disability'];
+            $individaul_lifecyle_risk->no_vaccine_in_childhood = $request->individual_lifecycle_risk['no_vaccine_in_childhood'];
+            $individaul_lifecyle_risk->familymember_disability_dueto_accident_sickness = $request->individual_lifecycle_risk['familymember_disability_dueto_accident_sickness'];
+            $individaul_lifecyle_risk->death_dueto_accident_disaster = $request->individual_lifecycle_risk['death_dueto_accident_disaster'];
 
-            //         'pregnancy_and_birth' =>  $request->checklist[0],
-            //         'no_prenatal_checkup' =>  $request->checklist[1],
-            //         'abortion' =>  $request->checklist[2],
-            //         'miscarriage' =>  $request->checklist[3],
-            //         'death_ofa_child' =>  $request->checklist[4],
-            //         'no_postnatal_checkup' =>  $request->checklist[5],
-            //         'kid_with_disability' =>  $request->checklist[6],
-            //         'no_vaccine_in_childhood' =>  $request->checklist[7],
-            //         'familymember_disability_dueto_accident_sickness' =>  $request->checklist[8],
-            //         'death_dueto_accident_disaster' =>  $request->checklist[9],
+            $individaul_lifecyle_risk->familymember_severe_or_longtime_sickness = $request->individual_lifecycle_risk['familymember_severe_or_longtime_sickness'];
+            $individaul_lifecyle_risk->no_awarded_medicalservice_healthcenter_or_hospital = $request->individual_lifecycle_risk['no_awarded_medicalservice_healthcenter_or_hospital'];
+            $individaul_lifecyle_risk->not_able_to_buy_medicine = $request->individual_lifecycle_risk['not_able_to_buy_medicine'];
+            $individaul_lifecyle_risk->familymember_death_dueto_sickness = $request->individual_lifecycle_risk['familymember_death_dueto_sickness'];
+            $individaul_lifecyle_risk->not_ableto_enrol_in_daycare_preschool = $request->individual_lifecycle_risk['not_ableto_enrol_in_daycare_preschool'];
 
-            //         'familymember_severe_or_longtime_sickness' =>  $request->checklist[10],
-            //         'no_awarded_medicalservice_healthcenter_or_hospital' =>  $request->checklist[11],
-            //         'not_able_to_buy_medicine' =>  $request->checklist[12],
-            //         'familymember_death_dueto_sickness' =>  $request->checklist[13],
-            //         'not_ableto_enrol_in_daycare_preschool' =>  $request->checklist[14],
-            //         'not_ableto_enrol_in_elementary' =>  $request->checklist[15],
-            //         'not_ableto_enrol_in_highschool' =>  $request->checklist[16],
-            //         'not_ableto_enrol_in_college' =>  $request->checklist[17],
-            //         'stop_in_school_or_dropout_in_elementary_or_highschool' =>  $request->checklist[18],
-            //         'drug_addiction' =>  $request->checklist[19],
+            $individaul_lifecyle_risk->not_ableto_enrol_in_elementary = $request->individual_lifecycle_risk['not_ableto_enrol_in_elementary'];
+            $individaul_lifecyle_risk->not_ableto_enrol_in_highschool = $request->individual_lifecycle_risk['not_ableto_enrol_in_highschool'];
+            $individaul_lifecyle_risk->not_ableto_enrol_in_college = $request->individual_lifecycle_risk['not_ableto_enrol_in_college'];
+            $individaul_lifecyle_risk->stop_in_school_or_dropout_in_elementary_or_highschool = $request->individual_lifecycle_risk['stop_in_school_or_dropout_in_elementary_or_highschool'];
+            $individaul_lifecyle_risk->drug_addiction = $request->individual_lifecycle_risk['drug_addiction'];
 
-            //         'teen_pregnancy_below_18yearsold' =>  $request->checklist[20],
-            //         'ranaway_from_home' =>  $request->checklist[21],
-            //         'familymember_in_abroad' =>  $request->checklist[22],
-            //         'working_in_municipality_or_city' =>  $request->checklist[23],
-            //         'separated_with_husbandwife' =>  $request->checklist[24],
-            //         'death_of_husbandwife' =>  $request->checklist[25],
-            //         'insufficient_food_security' =>  $request->checklist[26],
-            //         'insufficient_clean_drinkable_water' =>  $request->checklist[27],
-            //         'home_made_of_lightsalvagable_material' =>  $request->checklist[28],
-            //         'scarcity_of_cleanbathroom' =>  $request->checklist[29],
-            //     ]
-            // );
+            $individaul_lifecyle_risk->teen_pregnancy_below_18yearsold = $request->individual_lifecycle_risk['teen_pregnancy_below_18yearsold'];
+            $individaul_lifecyle_risk->ranaway_from_home = $request->individual_lifecycle_risk['ranaway_from_home'];
+            $individaul_lifecyle_risk->familymember_in_abroad = $request->individual_lifecycle_risk['familymember_in_abroad'];
+            $individaul_lifecyle_risk->working_in_municipality_or_city = $request->individual_lifecycle_risk['working_in_municipality_or_city'];
+            $individaul_lifecyle_risk->separated_with_husbandwife = $request->individual_lifecycle_risk['separated_with_husbandwife'];
 
+            $individaul_lifecyle_risk->death_of_husbandwife = $request->individual_lifecycle_risk['death_of_husbandwife'];
+            $individaul_lifecyle_risk->insufficient_food_security = $request->individual_lifecycle_risk['insufficient_food_security'];
+            $individaul_lifecyle_risk->insufficient_clean_drinkable_water = $request->individual_lifecycle_risk['insufficient_clean_drinkable_water'];
+            $individaul_lifecyle_risk->home_made_of_lightsalvagable_material = $request->individual_lifecycle_risk['home_made_of_lightsalvagable_material'];
+            $individaul_lifecyle_risk->scarcity_of_cleanbathroom = $request->individual_lifecycle_risk['scarcity_of_cleanbathroom'];
+
+            $individaul_lifecyle_risk->save();
+
+            $economic_risk = EconomicRisk::where('information_id', $respondent->id)->first();
+
+            $economic_risk->no_work = $request->economic_risk['no_work'];
+            $economic_risk->work_notalign_to_profession = $request->economic_risk['work_notalign_to_profession'];
+            $economic_risk->experienced_workaccident = $request->economic_risk['experienced_workaccident'];
+            $economic_risk->unpaid_loans = $request->economic_risk['unpaid_loans'];
+            $economic_risk->victim_of_scamming = $request->economic_risk['victim_of_scamming'];
+
+            $economic_risk->victim_of_illegalrecruitment = $request->economic_risk['victim_of_illegalrecruitment'];
+            $economic_risk->change_of_cityaddress = $request->economic_risk['change_of_cityaddress'];
+            $economic_risk->no_lifeinsurance = $request->economic_risk['no_lifeinsurance'];
+            $economic_risk->no_healthinsurance = $request->economic_risk['no_healthinsurance'];
+            $economic_risk->working_without_sss_or_gsis = $request->economic_risk['working_without_sss_or_gsis'];
+
+            $economic_risk->bankrupt_in_business = $request->economic_risk['bankrupt_in_business'];
+            $economic_risk->mortgage_of_posessions = $request->economic_risk['mortgage_of_posessions'];
+            $economic_risk->loaned_money_from_relatives = $request->economic_risk['loaned_money_from_relatives'];
+            $economic_risk->family_elder_without_pension = $request->economic_risk['family_elder_without_pension'];
+
+            $economic_risk->save();
+
+            $environmental_disaster_risk = EnvironmentAndDisasterRisk::where('information_id', $respondent->id)->first();
+
+            $environmental_disaster_risk->victim_of_housefire = $request->environmental_and_disaster_risk['victim_of_housefire'];
+            $environmental_disaster_risk->victim_of_typoon_drought = $request->environmental_and_disaster_risk['victim_of_typoon_drought'];
+            $environmental_disaster_risk->victim_of_earthquake_volcanic_eruption = $request->environmental_and_disaster_risk['victim_of_earthquake_volcanic_eruption'];
+            $environmental_disaster_risk->death_of_family_via_calamity = $request->environmental_and_disaster_risk['death_of_family_via_calamity'];
+            $environmental_disaster_risk->house_demolition = $request->environmental_and_disaster_risk['house_demolition'];
+
+            $environmental_disaster_risk->resided_in_relocation_resettlement = $request->environmental_and_disaster_risk['resided_in_relocation_resettlement'];
+            $environmental_disaster_risk->save();
+
+            $social_governance_risk = SocialAndGovernanceRisk::where('information_id', $respondent->id)->first();
+
+            $social_governance_risk->victim_of_burglary = $request->social_and_governance_risk['victim_of_burglary'];
+            $social_governance_risk->experienced_buglary_holdup = $request->social_and_governance_risk['experienced_buglary_holdup'];
+            $social_governance_risk->experienced_sexual_assult = $request->social_and_governance_risk['experienced_sexual_assult'];
+            $social_governance_risk->qna_knowledge_with_youth_gangs = $request->social_and_governance_risk['qna_knowledge_with_youth_gangs'];
+            $social_governance_risk->death_of_family_due_to_crime = $request->social_and_governance_risk['death_of_family_due_to_crime'];
+            $social_governance_risk->witnessed_actual_crime_in_comminity = $request->social_and_governance_risk['witnessed_actual_crime_in_comminity'];
+            $social_governance_risk->election_violence = $request->social_and_governance_risk['election_violence'];
+            $social_governance_risk->fear_of_disturbance_dueto_election = $request->social_and_governance_risk['fear_of_disturbance_dueto_election'];
+            $social_governance_risk->rebellion_against_government = $request->social_and_governance_risk['rebellion_against_government'];
+            $social_governance_risk->rebellion_of_military = $request->social_and_governance_risk['rebellion_of_military'];
+
+            $social_governance_risk->violence_at_home = $request->social_and_governance_risk['violence_at_home'];
+            $social_governance_risk->violence_to_minor = $request->social_and_governance_risk['violence_to_minor'];
+            $social_governance_risk->child_labor = $request->social_and_governance_risk['child_labor'];
+            $social_governance_risk->corruption_in_government = $request->social_and_governance_risk['corruption_in_government'];
+            $social_governance_risk->nonparticipant_in_comunity_activities = $request->social_and_governance_risk['nonparticipant_in_comunity_activities'];
+            $social_governance_risk->nonvoter = $request->social_and_governance_risk['nonvoter'];
+            $social_governance_risk->non_membership_inany_organization = $request->social_and_governance_risk['non_membership_inany_organization'];
+            $social_governance_risk->claim_land_of_others = $request->social_and_governance_risk['claim_land_of_others'];
+            $social_governance_risk->harmful_tradition_to_people = $request->social_and_governance_risk['harmful_tradition_to_people'];
+            $social_governance_risk->religious_misunderstanding_dispute = $request->social_and_governance_risk['religious_misunderstanding_dispute'];
+
+            $social_governance_risk->experienced_slow_justicesystem = $request->social_and_governance_risk['experienced_slow_justicesystem'];
+            $social_governance_risk->discrimination_in_ethnicity_gender = $request->social_and_governance_risk['discrimination_in_ethnicity_gender'];
+            $social_governance_risk->tribal_dispute = $request->social_and_governance_risk['tribal_dispute'];
+            $social_governance_risk->other_harms_to_family = $request->social_and_governance_risk['other_harms_to_family'];
+
+            $social_governance_risk->save();
 
         } catch (\Exception $e) {
             DB::rollBack();
