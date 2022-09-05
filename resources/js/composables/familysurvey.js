@@ -4,15 +4,34 @@ import axios from "axios";
 export default function useFamilySurveys() {
     const familysurvey = ref([]);
     const familysurveys = ref([]);
+    const family_position = ref([]);
     const errors_fs = ref("");
 
-    const getFamilySurvey = async () => {
-        let response = await axios.get("/request/familysurvey");
-        familysurvey.value = response.data.data;
+    const economic_risks = ref("");
+    const environment_and_disaster_risks = ref("");
+    const individual_lifecycle_risks = ref("");
+    const social_and_governance_risks = ref("");
+
+    const getFamilySurvey = async (id) => {
+        let response = await axios.get("/request/familysurvey/" + id);
+        (familysurvey.value = response.data.data),
+            (family_position.value = {
+                value: response.data.data.family_position,
+                label: response.data.data.family_position,
+            });
+
+        individual_lifecycle_risks.value =
+            response.data.data.individual_lifecycle_risk;
+        economic_risks.value = response.data.data.economic_risk;
+        environment_and_disaster_risks.value =
+            response.data.data.environmental_and_disaster_risk;
+
+        social_and_governance_risks.value =
+            response.data.data.social_and_governance_risk;
     };
 
-    const getFamilySurveys = async (id) => {
-        let response = await axios.get("/request/familysurveys" + id);
+    const getFamilySurveys = async () => {
+        let response = await axios.get("/request/familysurveys");
         familysurveys.value = response.data.data;
     };
 
@@ -36,9 +55,7 @@ export default function useFamilySurveys() {
     const updateFamilySurvey = async (id) => {
         errors_fs.value = "";
         try {
-            await axios
-                .put("/request/familysurvey/" + id, familysurvey.value)
-                .then(() => {});
+            await axios.post("/request/familysurvey/" + id, familysurvey.value);
         } catch (e) {
             if (e.response.status === 422) {
                 errors_fs.value = e.response.data.errors;
@@ -83,5 +100,11 @@ export default function useFamilySurveys() {
         getFamilySurveys,
         getFamilySurvey,
         loadFromServer,
+        family_position,
+
+        economic_risks,
+        environment_and_disaster_risks,
+        individual_lifecycle_risks,
+        social_and_governance_risks,
     };
 }

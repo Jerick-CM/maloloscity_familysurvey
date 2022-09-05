@@ -69,26 +69,29 @@ class FamilySurveyController extends Controller
             IndividualLifeCycleRisk::create(
                 [
                     'information_id' =>  $RespondentsInformation->id,
+
                     'pregnancy_and_birth' =>  $request->checklist[0],
                     'no_prenatal_checkup' =>  $request->checklist[1],
                     'abortion' =>  $request->checklist[2],
                     'miscarriage' =>  $request->checklist[3],
-                    'no_postnatal_checkup' =>  $request->checklist[4],
-                    'kid_with_disability' =>  $request->checklist[5],
-                    'no_vaccine_in_childhood' =>  $request->checklist[6],
-                    'familymember_disability_dueto_accident_sickness' =>  $request->checklist[7],
-                    'death_dueto_accident_dissaster' =>  $request->checklist[8],
-                    'familymember_severe_or_longtime_sickness' =>  $request->checklist[9],
-                    'no_awarded_medicalservice_healthcenter_or_hospital' =>  $request->checklist[10],
-                    'not_able_to_buy_medicine' =>  $request->checklist[11],
-                    'familymember_death_dueto_sickness' =>  $request->checklist[12],
-                    'not_ableto_enrol_in_daycare_preschool' =>  $request->checklist[13],
-                    'not_ableto_enrol_in_elementary' =>  $request->checklist[14],
-                    'not_ableto_enrol_in_highschool' =>  $request->checklist[15],
-                    'not_ableto_enrol_in_college' =>  $request->checklist[16],
-                    'not_ableto_enrol_or_stop_in_college' =>  $request->checklist[17],
+                    'death_ofa_child' =>  $request->checklist[4],
+                    'no_postnatal_checkup' =>  $request->checklist[5],
+                    'kid_with_disability' =>  $request->checklist[6],
+                    'no_vaccine_in_childhood' =>  $request->checklist[7],
+                    'familymember_disability_dueto_accident_sickness' =>  $request->checklist[8],
+                    'death_dueto_accident_disaster' =>  $request->checklist[9],
+
+                    'familymember_severe_or_longtime_sickness' =>  $request->checklist[10],
+                    'no_awarded_medicalservice_healthcenter_or_hospital' =>  $request->checklist[11],
+                    'not_able_to_buy_medicine' =>  $request->checklist[12],
+                    'familymember_death_dueto_sickness' =>  $request->checklist[13],
+                    'not_ableto_enrol_in_daycare_preschool' =>  $request->checklist[14],
+                    'not_ableto_enrol_in_elementary' =>  $request->checklist[15],
+                    'not_ableto_enrol_in_highschool' =>  $request->checklist[16],
+                    'not_ableto_enrol_in_college' =>  $request->checklist[17],
                     'stop_in_school_or_dropout_in_elementary_or_highschool' =>  $request->checklist[18],
                     'drug_addiction' =>  $request->checklist[19],
+
                     'teen_pregnancy_below_18yearsold' =>  $request->checklist[20],
                     'ranaway_from_home' =>  $request->checklist[21],
                     'familymember_in_abroad' =>  $request->checklist[22],
@@ -182,17 +185,109 @@ class FamilySurveyController extends Controller
     }
 
 
-    public function show(RespondentsInformation $familysurvey)
+    public function show(Request $request, $id)
     {
-        return new FamilySurveyResource($familysurvey);
+        $data = RespondentsInformation::with('individual_lifecycle_risk')
+            ->with('economic_risk')
+            ->with('environmental_and_disaster_risk')
+            ->with('social_and_governance_risk')
+            ->where('id', $id)->first();
+        return response()->json(['data' => $data]);
     }
 
 
-    public function update(FamilySurveyRequest $request, RespondentsInformation $familysurvey)
+    public function update(Request $request, $id)
     {
-        $familysurvey->update($request->validated());
+        Validator::make($request->all(), [
+            'first_name' => ['required'],
+            'last_name' => ['required'],
+            'middle_name' => ['nullable'],
+            'barangay' => ['required'],
+            'family_position' => ['required'],
+        ])->validate();
 
-        return new FamilySurveyResource($familysurvey);
+        DB::beginTransaction();
+        try {
+
+            $fullname = $request->first_name . " " . $request->middle_name . " " . $request->last_name . " " . $request->name_suffix;
+
+            $respondent = RespondentsInformation::findOrfail($id);
+            $respondent->full_name = $fullname;
+            $respondent->first_name = $request->first_name;
+            $respondent->middle_name = $request->middle_name;
+            $respondent->last_name = $request->last_name;
+            $respondent->name_suffix = $request->name_suffix;
+            $respondent->family_position = $request->family_position;
+            $respondent->number_of_children = $request->number_of_children;
+            $respondent->number_of_people_in_household = $request->number_of_people_in_household;
+            $respondent->four_ps_beneficiary = $request->four_ps_beneficiary;
+            $respondent->four_ps_beneficiary_id = $request->four_ps_beneficiary_id;
+            $respondent->four_ps_beneficiary_date = $request->four_ps_beneficiary_date;
+            $respondent->region = $request->region;
+            $respondent->province = $request->lalawigan;
+            $respondent->city = $request->municipality;
+            $respondent->barangay = $request->barangay;
+            $respondent->sitio = $request->sitio;
+            $respondent->purok = $request->purok;
+            $respondent->update();
+
+
+            $individaul_lifecyle_risk =IndividualLifeCycleRisk::where('information_id',$respondent->id)->first();
+
+            $individaul_lifecyle_risk->pregnancy_and_birth = $request->individual_lifecycle_risk['pregnancy_and_birth'];
+            $individaul_lifecyle_risk->update();
+
+
+            //         'pregnancy_and_birth' =>  $request->checklist[0],
+            //         'no_prenatal_checkup' =>  $request->checklist[1],
+            //         'abortion' =>  $request->checklist[2],
+            //         'miscarriage' =>  $request->checklist[3],
+            //         'death_ofa_child' =>  $request->checklist[4],
+            //         'no_postnatal_checkup' =>  $request->checklist[5],
+            //         'kid_with_disability' =>  $request->checklist[6],
+            //         'no_vaccine_in_childhood' =>  $request->checklist[7],
+            //         'familymember_disability_dueto_accident_sickness' =>  $request->checklist[8],
+            //         'death_dueto_accident_disaster' =>  $request->checklist[9],
+
+            //         'familymember_severe_or_longtime_sickness' =>  $request->checklist[10],
+            //         'no_awarded_medicalservice_healthcenter_or_hospital' =>  $request->checklist[11],
+            //         'not_able_to_buy_medicine' =>  $request->checklist[12],
+            //         'familymember_death_dueto_sickness' =>  $request->checklist[13],
+            //         'not_ableto_enrol_in_daycare_preschool' =>  $request->checklist[14],
+            //         'not_ableto_enrol_in_elementary' =>  $request->checklist[15],
+            //         'not_ableto_enrol_in_highschool' =>  $request->checklist[16],
+            //         'not_ableto_enrol_in_college' =>  $request->checklist[17],
+            //         'stop_in_school_or_dropout_in_elementary_or_highschool' =>  $request->checklist[18],
+            //         'drug_addiction' =>  $request->checklist[19],
+
+            //         'teen_pregnancy_below_18yearsold' =>  $request->checklist[20],
+            //         'ranaway_from_home' =>  $request->checklist[21],
+            //         'familymember_in_abroad' =>  $request->checklist[22],
+            //         'working_in_municipality_or_city' =>  $request->checklist[23],
+            //         'separated_with_husbandwife' =>  $request->checklist[24],
+            //         'death_of_husbandwife' =>  $request->checklist[25],
+            //         'insufficient_food_security' =>  $request->checklist[26],
+            //         'insufficient_clean_drinkable_water' =>  $request->checklist[27],
+            //         'home_made_of_lightsalvagable_material' =>  $request->checklist[28],
+            //         'scarcity_of_cleanbathroom' =>  $request->checklist[29],
+            //     ]
+            // );
+
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json($e, 500);
+        }
+        DB::commit();
+
+        // $familysurvey->update($request->validated());
+
+        // return new FamilySurveyResource($familysurvey);
+
+        return response()->json([
+            'success' => true
+            // 'data' => $data,
+        ]);
     }
 
 

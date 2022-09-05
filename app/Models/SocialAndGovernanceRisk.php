@@ -13,6 +13,7 @@ class SocialAndGovernanceRisk extends Model
     public $timestamps = true;
     protected $fillable = [
         'information_id',
+        
         'victim_of_burglary',
         'experienced_buglary_holdup',
         'experienced_sexual_assult',

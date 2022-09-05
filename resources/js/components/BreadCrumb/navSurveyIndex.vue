@@ -47,7 +47,7 @@ export default {
                             ></path>
                         </svg>
                         <Link
-                            :href="route('survey-form')"
+                            :href="route('forms-index')"
                             class="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white"
                             >Survey</Link
                         >

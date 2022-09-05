@@ -1,15 +1,19 @@
 <script>
 import BreezeAuthenticatedLayout from "./../../Layouts/Authenticated.vue";
+import BreezeDropdown from "./../../Components/Dropdown/Dropdown.vue";
 import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
 import { ref, onMounted, reactive, watch, computed } from "vue";
+import Multiselect from "@vueform/multiselect";
 import { useToast } from "vue-toastification";
 
 import Breadcrumb from "./../../Components/BreadCrumb/navSurveyIndex.vue";
 import useFamilySurveys from "./../../composables/familysurvey";
 export default {
     components: {
-        BreezeAuthenticatedLayout,
         Breadcrumb,
+        BreezeDropdown,
+        Multiselect,
+        BreezeAuthenticatedLayout,
         Head,
         Link,
     },
@@ -238,7 +242,7 @@ export default {
                                                     "
                                                     :href="
                                                         route(
-                                                            'itinerary-edit',
+                                                            'forms-edit',
                                                             item.id
                                                         )
                                                     "
@@ -272,12 +276,6 @@ export default {
                                                     v-if="
                                                         permissions.includes(
                                                             'Action Delete Itinerary'
-                                                        )
-                                                    "
-                                                    :href="
-                                                        route(
-                                                            'itinerary-edit',
-                                                            item.id
                                                         )
                                                     "
                                                 >
@@ -350,7 +348,7 @@ export default {
                                     <div class="p-1">
                                         <Link
                                             :href="
-                                                route('itinerary-edit', item.id)
+                                                route('forms-edit', item.id)
                                             "
                                         >
                                             <button

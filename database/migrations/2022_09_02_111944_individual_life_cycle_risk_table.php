@@ -22,24 +22,26 @@ class IndividualLifeCycleRiskTable extends Migration
             $table->tinyInteger('no_prenatal_checkup');
             $table->tinyInteger('abortion');
             $table->tinyInteger('miscarriage');
+            $table->tinyInteger('death_ofa_child');
             $table->tinyInteger('no_postnatal_checkup');
             $table->tinyInteger('kid_with_disability');
             $table->tinyInteger('no_vaccine_in_childhood');
             $table->tinyInteger('familymember_disability_dueto_accident_sickness');
-            $table->tinyInteger('death_dueto_accident_dissaster');
-            $table->tinyInteger('familymember_severe_or_longtime_sickness');
+            $table->tinyInteger('death_dueto_accident_disaster');
             //10
+            $table->tinyInteger('familymember_severe_or_longtime_sickness');
             $table->tinyInteger('no_awarded_medicalservice_healthcenter_or_hospital');
             $table->tinyInteger('not_able_to_buy_medicine');
             $table->tinyInteger('familymember_death_dueto_sickness');
             $table->tinyInteger('not_ableto_enrol_in_daycare_preschool');
+            
             $table->tinyInteger('not_ableto_enrol_in_elementary');
             $table->tinyInteger('not_ableto_enrol_in_highschool');
             $table->tinyInteger('not_ableto_enrol_in_college');
-            $table->tinyInteger('not_ableto_enrol_or_stop_in_college');
+     
             $table->tinyInteger('stop_in_school_or_dropout_in_elementary_or_highschool');
-            $table->tinyInteger('drug_addiction');
             //20
+            $table->tinyInteger('drug_addiction');
             $table->tinyInteger('teen_pregnancy_below_18yearsold');
             $table->tinyInteger('ranaway_from_home');
             $table->tinyInteger('familymember_in_abroad');

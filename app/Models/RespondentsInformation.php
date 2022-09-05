@@ -33,7 +33,7 @@ class RespondentsInformation extends Model
         'purok',
     ];
 
-    public function individual_life_risk()
+    public function individual_lifecycle_risk()
     {
         return $this->hasOne(IndividualLifeCycleRisk::class, 'information_id', 'id');
     }
