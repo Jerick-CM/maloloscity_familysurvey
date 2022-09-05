@@ -44,6 +44,32 @@ Route::group(['prefix' => 'request/familysurvey', 'middleware' => ['permission:A
     Route::post('/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'update']);
 });
 
+
+Route::group(['prefix' => 'report/', 'middleware' => ['throttle:500,1']], function () {
+    Route::get('/pdf/{barangay}', [PDFController::class, 'survey_report']);
+});
+
+Route::get('/test', function () {
+
+    // $data = DB::table('individual_lifecycle_risks')
+    //     ->select(DB::raw("'sum'('pregnancy_and_birth' '=' 1) as k1"), DB::raw("'sum'('pregnancy_and_birth' '=' 2) as k2"), DB::raw("'sum'('pregnancy_and_birth' '=' 3) as k3"))
+    //     ->join('respondents_information', 'individual_lifecycle_risks.information_id', '=', 'respondents_information.id')
+    //     ->where('respondents_information.barangay', '=', 'BULIHAN')
+    //     ->get();
+
+    $data = DB::table('individual_lifecycle_risks')
+        ->select(DB::raw('sum(pregnancy_and_birth=1) as k1'), DB::raw('sum(pregnancy_and_birth=2) as k2'), DB::raw('sum(pregnancy_and_birth=3) as k3'))
+        ->join('respondents_information', 'individual_lifecycle_risks.information_id', '=', 'respondents_information.id')
+        ->where('respondents_information.barangay', '=', 'BULIHAN')
+        ->get();
+
+    dd($data);
+});
+
+
+
+
+
 // old
 
 Route::group(['middleware' => ['permission:Access-Page-Dashboard']], function () {

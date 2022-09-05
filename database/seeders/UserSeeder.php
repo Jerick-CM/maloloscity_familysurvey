@@ -117,116 +117,62 @@ class UserSeeder extends Seeder
         $user->givePermissionTo('Action Download Itinerary-Pull');
         $user->givePermissionTo('Action Print Itinerary-Pull');
 
-        /* BPLO */
-        $user = User::create([
-            'name' => 'BPLO Account',
-            'email' => 'bplo@maloloscity.gov.ph',
-            'is_admin' => 1,
-            'password' =>  Hash::make(config('custom.password_admin'))
-        ]);
-        $user->assignRole('BPLO');
 
-        /** Page Access */
-        $user->givePermissionTo('Access-Page-User');
-        $user->givePermissionTo('Access-Page-Dashboard');
-        $user->givePermissionTo('Access-Page-Business');
-        $user->givePermissionTo('Access-Page-Logs');
-        $user->givePermissionTo('Access-Page-Itinerary');
-        /** Page Actions */
 
-        /* User Permission */
-        $user->givePermissionTo('Action Create User');
-        $user->givePermissionTo('Action Delete User');
-        $user->givePermissionTo('Action Edit User');
-        $user->givePermissionTo('Action Show-All User');
-        /* Business Permission */
-        $user->givePermissionTo('Action Create Business');
-        $user->givePermissionTo('Action Edit Business');
-        /* Itinerary Permission */
-        $user->givePermissionTo('Action Delete Itinerary');
-        $user->givePermissionTo('Action Create Itinerary');
-        $user->givePermissionTo('Action Edit Itinerary');
-        $user->givePermissionTo('Action Edit-AssignTo Itinerary');
-        /* Logs Permission */
-        $user->givePermissionTo('Action Settings Checklist');
-        /* BFP */
-        $user = User::create([
-            'name' => 'BFP Account',
-            'email' => 'bfp@maloloscity.gov.ph',
-            'is_admin' => 1,
-            'password' =>  Hash::make(config('custom.password_admin'))
-        ]);
 
-        $user->assignRole('BFP');
 
-        /** Page Access */
-        $user->givePermissionTo('Access-Page-User');
-        $user->givePermissionTo('Access-Page-Dashboard');
-        $user->givePermissionTo('Access-Page-Business');
-        $user->givePermissionTo('Access-Page-Logs');
-        $user->givePermissionTo('Access-Page-Itinerary');
-        /** Page Actions */
-        /* User Permission */
-        $user->givePermissionTo('Action Create User');
-        $user->givePermissionTo('Action Delete User');
-        $user->givePermissionTo('Action Edit User');
-        $user->givePermissionTo('Action Show-All User');
-        /* Business Permission */
-        $user->givePermissionTo('Action Create Business');
-        $user->givePermissionTo('Action Edit Business');
+        $lists = [
 
-        /* Itinerary Permission */
-        $user->givePermissionTo('Action Delete Itinerary');
-        $user->givePermissionTo('Action Create Itinerary');
-        $user->givePermissionTo('Action Edit Itinerary');
-        $user->givePermissionTo('Action Edit-AssignTo Itinerary');
-        /* Logs Permission */
-        $user->givePermissionTo('Action Settings Checklist');
-        $user = User::create([
-            'name' => 'User Account 1',
-            'email' => 'user1@maloloscity.gov.ph',
-            'is_admin' => 0,
-            'password' =>  Hash::make(config('custom.password_user'))
-        ]);
+            ['email' => 'user1@maloloscity.gov.ph', 'name' => 'user1', 'password' => 'malolos123'],
+            ['email' => 'user2@maloloscity.gov.ph', 'name' => 'user2', 'password' => 'malolos123'],
+            ['email' => 'user3@maloloscity.gov.ph', 'name' => 'user3', 'password' => 'malolos123'],
+            ['email' => 'user4@maloloscity.gov.ph', 'name' => 'user4', 'password' => 'malolos123'],
+            ['email' => 'user5@maloloscity.gov.ph', 'name' => 'user5', 'password' => 'malolos123'],
 
-        $user->assignRole('USER');
+            ['email' => 'user6@maloloscity.gov.ph', 'name' => 'user6', 'password' => 'malolos123'],
+            ['email' => 'user7@maloloscity.gov.ph', 'name' => 'user7', 'password' => 'malolos123'],
+            ['email' => 'user8@maloloscity.gov.ph', 'name' => 'user8', 'password' => 'malolos123'],
+            ['email' => 'user9@maloloscity.gov.ph', 'name' => 'user9', 'password' => 'malolos123'],
+            ['email' => 'user10@maloloscity.gov.ph', 'name' => 'user10', 'password' => 'malolos123'],
 
-        /** Page Access */
-        $user->givePermissionTo('Access-Page-User');
-        $user->givePermissionTo('Access-Page-Dashboard');
-        $user->givePermissionTo('Access-Page-Business');
-        $user->givePermissionTo('Access-Page-Itinerary');
-        /** Page Actions */
-        /* User Permission */
-        $user->givePermissionTo('Action Edit User');
-        /* Business Permission */
-        $user->givePermissionTo('Action Create Business');
-        // $user->givePermissionTo('Action Edit Business');
-        /* Itinerary Permission */
-        $user->givePermissionTo('Action Edit Itinerary');
-        $user->givePermissionTo('Action Pull Itinerary');
+            ['email' => 'user11@maloloscity.gov.ph', 'name' => 'user11', 'password' => 'malolos123'],
+            ['email' => 'user12@maloloscity.gov.ph', 'name' => 'user12', 'password' => 'malolos123'],
+            ['email' => 'user13@maloloscity.gov.ph', 'name' => 'user13', 'password' => 'malolos123'],
+            ['email' => 'user14@maloloscity.gov.ph', 'name' => 'user14', 'password' => 'malolos123'],
+            ['email' => 'user15@maloloscity.gov.ph', 'name' => 'user15', 'password' => 'malolos123'],
 
-        $user = User::create([
-            'name' => 'User Account 2',
-            'email' => 'user2@maloloscity.gov.ph',
-            'is_admin' => 0,
-            'password' =>  Hash::make(config('custom.password_user'))
-        ]);
+            ['email' => 'user16@maloloscity.gov.ph', 'name' => 'user16', 'password' => 'malolos123'],
+            ['email' => 'user17@maloloscity.gov.ph', 'name' => 'user17', 'password' => 'malolos123'],
+            ['email' => 'user18@maloloscity.gov.ph', 'name' => 'user18', 'password' => 'malolos123'],
+            ['email' => 'user19@maloloscity.gov.ph', 'name' => 'user19', 'password' => 'malolos123'],
+            ['email' => 'user20@maloloscity.gov.ph', 'name' => 'user20', 'password' => 'malolos123'],
+        ];
 
-        $user->assignRole('USER');
-        /** Page Access */
-        $user->givePermissionTo('Access-Page-User');
-        $user->givePermissionTo('Access-Page-Dashboard');
-        $user->givePermissionTo('Access-Page-Business');
-        $user->givePermissionTo('Access-Page-Itinerary');
-        /** Page Actions */
-        /* User Permission */
-        $user->givePermissionTo('Action Edit User');
-        /* Business Permission */
-        $user->givePermissionTo('Action Create Business');
-        // $user->givePermissionTo('Action Edit Business');
-        /* Itinerary Permission */
-        $user->givePermissionTo('Action Edit Itinerary');
-        $user->givePermissionTo('Action Pull Itinerary');
+        foreach ($lists as $list) {
+
+            $user = User::create([
+                'name' => $list['name'],
+                'email' =>  $list['email'],
+                'is_admin' => 0,
+                'password' =>  Hash::make($list['password'],)
+            ]);
+
+            $user->assignRole('USER');
+
+            /** Page Access */
+            $user->givePermissionTo('Access-Page-User');
+            $user->givePermissionTo('Access-Page-Dashboard');
+            $user->givePermissionTo('Access-Page-Business');
+            $user->givePermissionTo('Access-Page-Itinerary');
+            /** Page Actions */
+            /* User Permission */
+            $user->givePermissionTo('Action Edit User');
+            /* Business Permission */
+            $user->givePermissionTo('Action Create Business');
+            // $user->givePermissionTo('Action Edit Business');
+            /* Itinerary Permission */
+            $user->givePermissionTo('Action Edit Itinerary');
+            $user->givePermissionTo('Action Pull Itinerary');
+        }
     }
 }

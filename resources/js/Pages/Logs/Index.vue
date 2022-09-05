@@ -370,7 +370,7 @@ export default {
                                             </button>
                                         </Link>
                                     </div>
- 
+
                                     <div class="p-1">
                                         <button
                                             @click="viewpdf(item.id)"

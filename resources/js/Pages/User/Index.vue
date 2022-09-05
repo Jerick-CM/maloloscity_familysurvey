@@ -63,8 +63,6 @@ export default {
 
         onMounted(async () => {
             await server_sided();
-            //  getUsersById(Auth_User.value.id);
-            // loading.value = false;
         });
 
         const server_sided = _.debounce(async () => {
@@ -104,6 +102,13 @@ export default {
             (value) => {
                 server_sided();
             }
+        );
+        watch(
+            () => serverOptions.value,
+            (currentValue, oldValue) => {
+                server_sided();
+            },
+            { deep: true }
         );
         return {
             form,

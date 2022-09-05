@@ -17,6 +17,7 @@ export default {
         Head,
         Link,
     },
+    props: ["hosting"],
     methods: {},
     data: () => ({
         collapseClass:
@@ -31,6 +32,7 @@ export default {
         console.log("setup");
         const Auth_user = computed(() => usePage().props.value.auth.user);
         const permissions = usePage().props.value.auth.user.PermissionList;
+        const hosting = computed(() => props.hosting);
         const toast = useToast();
         const form = reactive({});
         const { familysurveys, storeFamilySurvey, errors_fs, loadFromServer } =
@@ -58,27 +60,32 @@ export default {
             { text: "Id", value: "id" },
             { text: "Name", value: "full_name", sortable: true },
             {
+                text: "Barangay",
+                value: "barangay",
+                sortable: false,
+            },
+            {
                 text: "Family Position",
                 value: "family_position",
-                sortable: true,
+                sortable: false,
             },
             {
                 text: "Number of Children",
                 value: "number_of_children",
-                sortable: true,
+                sortable: false,
             },
             {
                 text: "Total Family in House",
                 value: "number_of_people_in_household",
-                sortable: true,
+                sortable: false,
             },
             {
-                text: "4PS Beneficiary",
-                value: "four_ps_beneficiary",
-                sortable: true,
+                text: "4P's Beneficiary",
+                value: "fourps",
+                sortable: false,
             },
-            { text: "Date / Time", value: "createddate", sortable: true },
-            { text: "Action", value: "action", sortable: true },
+            { text: "Date / Time", value: "createddate", sortable: false },
+            { text: "Action", value: "action", sortable: false },
         ]);
 
         onMounted(async () => {
@@ -95,6 +102,34 @@ export default {
             );
             loading.value = false;
         }, 500);
+
+        const fetchSelectfield = async (query, field) => {
+            let data;
+            await axios
+                .post("/request/familysurvey/getSelectfield", {
+                    searchValue: query,
+                    field: field,
+                })
+                .then((response) => {
+                    data = response.data.data.map((item) => {
+                        return {
+                            value: eval("item." + field),
+                            label: eval("item." + field),
+                        };
+                    });
+                });
+
+            return data;
+        };
+
+        const searchButton = () => {
+            server_sided();
+        };
+        const generatePDF = () => {
+            const url =
+                hosting.value + "/report/pdf/" + searchParameter.filterValue;
+            window.open(url);
+        };
 
         watch(
             () => searchParameter.searchValue,
@@ -120,6 +155,10 @@ export default {
             searchParameter,
             permissions,
             familysurveys,
+            selectedItems,
+            fetchSelectfield,
+            searchButton,
+            generatePDF,
         };
     },
 };
@@ -139,9 +178,32 @@ export default {
                         class="w-full 2xl:w-2/4 xl:w-2/4 lg:w-2/4 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-end place-content-end"
                     >
                         <div class="px-1">
+                            <button
+                                @click.prevent="generatePDF()"
+                                class="my-2 py-2 px-4 w-full 2xl:w-fit xl:w-fit lg:w-fit bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded inline-flex items-center"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="w-4 h-4 mr-2"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
+                                    />
+                                </svg>
+
+                                <span>Print Report</span>
+                            </button>
+                        </div>
+                        <div class="px-1">
                             <Link :href="route('forms-create')">
                                 <button
-                                    class="my-2 py-2 px-4 w-full 2xl:w-fit xl:w-fit lg:w-fit bg-green-300 hover:bg-green-400 text-green-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                                    class="my-2 py-2 px-4 w-full 2xl:w-fit xl:w-fit lg:w-fit bg-green-300 hover:bg-green-400 text-green-800 font-bold rounded inline-flex items-center"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -165,7 +227,132 @@ export default {
                 </div>
 
                 <div class="bg-white p-8 rounded-lg">
-                    <div class="grid grid-cols-3 gap-6 py-2">
+                    <div class="py-2 pb-8 md:grid md:grid-cols-3 md:gap-6">
+                        <div class="col-span-1 sm:col-span-1">
+                            <label
+                                for="company-website"
+                                class="block text-sm font-medium text-red-700"
+                            >
+                                Filter column:
+                            </label>
+
+                            <form class="group relative">
+                                <select
+                                    v-model="searchParameter.filterField"
+                                    class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                >
+                                    <option value="" selected>None</option>
+                                    <option value="barangay">Barangay</option>
+                                </select>
+                            </form>
+
+                            <!-- </div> -->
+                        </div>
+                        <div class="col-span-1 sm:col-span-1">
+                            <label
+                                for="company-website"
+                                class="block text-sm font-medium text-red-700"
+                            >
+                                Filter value:
+                            </label>
+
+                            <form class="group relative">
+                                <Multiselect
+                                    ref="multiselect_line_of_business"
+                                    mode="single"
+                                    v-model="searchParameter.filterValue"
+                                    class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                    placeholder=""
+                                    :filter-results="false"
+                                    :min-chars="1"
+                                    :resolve-on-load="false"
+                                    :delay="0"
+                                    :searchable="true"
+                                    :create-option="true"
+                                    :options="
+                                        async function (query) {
+                                            return await fetchSelectfield(
+                                                query,
+                                                'barangay'
+                                            );
+                                        }
+                                    "
+                                />
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Search -->
+                    <div class="py-2 pb-8 md:grid md:grid-cols-3 md:gap-6">
+                        <div class="col-span-1 sm:col-span-1">
+                            <label
+                                for="company-website"
+                                class="block text-sm font-medium text-red-700"
+                            >
+                                Search column:
+                            </label>
+
+                            <form class="group relative">
+                                <select
+                                    class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                    v-model="searchParameter.searchField"
+                                >
+                                    <option value="" selected>ALL</option>
+                                    <option value="full_name">Full Name</option>
+                                </select>
+                            </form>
+
+                            <!-- </div> -->
+                        </div>
+                        <div class="col-span-1 sm:col-span-1">
+                            <label
+                                for="company-website"
+                                class="block text-sm font-medium text-red-700"
+                            >
+                                Search value:
+                            </label>
+
+                            <div class="group relative">
+                                <svg
+                                    width="20"
+                                    height="20"
+                                    fill="currentColor"
+                                    class="absolute left-3 top-1/2 -mt-2.5 text-slate-400 pointer-events-none group-focus-within:text-blue-500"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                    />
+                                </svg>
+                                <input
+                                    v-model="searchParameter.searchValue"
+                                    class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 pl-10 ring-1 ring-slate-200 shadow-sm"
+                                    type="text"
+                                    aria-label="Search"
+                                    placeholder="Search..."
+                                />
+                            </div>
+                        </div>
+                        <div class="col-span-1 sm:col-span-1">
+                            <label
+                                for="company-website"
+                                class="block text-sm font-medium text-red-700"
+                                >&nbsp;
+                            </label>
+                            <div class="group relative">
+                                <button
+                                    type="button"
+                                    @click.prevent="searchButton"
+                                    class="bg-green-300 hover:bg-green-400 text-green-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                                >
+                                    <span>Search</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-6 py-2 hidden">
                         <div class="col-span-1 sm:col-span-1">
                             <label
                                 for="company-website"
@@ -347,9 +534,7 @@ export default {
                                 <div class="operation-wrapper flex">
                                     <div class="p-1">
                                         <Link
-                                            :href="
-                                                route('forms-edit', item.id)
-                                            "
+                                            :href="route('forms-edit', item.id)"
                                         >
                                             <button
                                                 type="button"

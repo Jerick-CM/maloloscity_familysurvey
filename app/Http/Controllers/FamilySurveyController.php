@@ -11,7 +11,11 @@ class FamilySurveyController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Forms/Index');
+
+        return Inertia::render('Forms/Index', [
+            'hosting' => config('custom.url')
+        ]);
+
     }
 
     public function handleCreate()

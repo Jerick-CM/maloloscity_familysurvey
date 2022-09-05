@@ -1,0 +1,37 @@
+php.ini
+
+post_max_size=500M
+upload_max_filesize=500M
+memory_limit=900M
+
+
+my.ini changes
+max_allowed_packet=500M
+
+
+php artisan migrate:fresh --seed
+install image magick
+https://www.imagemagick.org/script/download.php#windows
+https://ourcodeworld.com/articles/read/349/how-to-install-and-enable-the-imagick-extension-in-xampp-for-windows
+
+//test
+php.ini
+post_max_size=500M
+upload_max_filesize=500M
+max_input_time = 600
+memory_limit=900M
+max_execution_time=-1
+
+
+add php-gd
+ext-gd
+
+
+edit php.ini for phpoffice spreadsheet ant maatwebsite/excel
+extension=gd
+
+
+->in opt/lampp/etc/my.cnf
+max_allowed_packet=1000
+innodb_log_file_size = 50M
+max_allowed_packet=100M

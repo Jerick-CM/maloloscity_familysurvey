@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
+
 class RespondentsInformation extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = "respondents_information";
     public $timestamps = true;
-    protected $appends = ['createddate'];
+    protected $appends = ['createddate', 'fourps'];
     protected $fillable = [
         'user_id',
         'full_name',
@@ -32,6 +33,11 @@ class RespondentsInformation extends Model
         'sitio',
         'purok',
     ];
+
+    public function getfourpsAttribute()
+    {
+        return $this->four_ps_beneficiary == 1 ? 'Yes' : 'No';
+    }
 
     public function individual_lifecycle_risk()
     {

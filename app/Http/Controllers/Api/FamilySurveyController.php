@@ -378,12 +378,18 @@ class FamilySurveyController extends Controller
             $query->where([['full_name', 'LIKE', "%" . $word . "%"]])
                 ->orWhere([['first_name', 'LIKE', "%" . $word . "%"]])
                 ->orWhere([['last_name', 'LIKE', "%" . $word . "%"]])
-                ->orWhere([['middle_name', 'LIKE', "%" . $word . "%"]]);
+                ->orWhere([['middle_name', 'LIKE', "%" . $word . "%"]])
+                ->orWhere([['barangay', 'LIKE', "%" . $word . "%"]]);
         })->take($options['rowsPerPage']);
 
         $query =  $reqs->orderBy('id', 'DESC')->offset(($options['page'] - 1) * $limit);
         $reqs =  $query->get();
-        $count = RespondentsInformation::count();
+
+        if (isset($params['filterField'])) {
+            $count = RespondentsInformation::where($params['filterField'], $params['filterValue'])->count();
+        }else{
+            $count = RespondentsInformation::count();
+        }
 
         return response()->json([
             'data' => $reqs,
