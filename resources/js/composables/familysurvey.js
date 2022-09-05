@@ -24,6 +24,12 @@ export default function useFamilySurveys() {
             if (e.response.status === 422) {
                 errors_fs.value = e.response.data.errors;
             }
+            if (e.response.status === 500) {
+                errors_fs.value = {
+                    // message: "error 500",
+                    errors: { error: "server Error 500" },
+                };
+            }
         }
     };
 
@@ -31,7 +37,7 @@ export default function useFamilySurveys() {
         errors_fs.value = "";
         try {
             await axios
-                .put("/request/FamilySurvey/" + id, familysurvey.value)
+                .put("/request/familysurvey/" + id, familysurvey.value)
                 .then(() => {});
         } catch (e) {
             if (e.response.status === 422) {
@@ -41,7 +47,29 @@ export default function useFamilySurveys() {
     };
 
     const destroyFamilySurvey = async (id) => {
-        await axios.delete("/request/FamilySurvey/" + id);
+        await axios.delete("/request/familysurvey/" + id);
+    };
+
+    const loadFromServer = async (
+        familysurveys,
+        serverItemsLength,
+        options,
+        params
+    ) => {
+        errors_fs.value = "";
+        try {
+            let response = await axios.post("/request/familysurvey/fetch/", {
+                options: options.value,
+                params: params,
+            });
+
+            familysurveys.value = response.data.data;
+            serverItemsLength.value = response.data.totalRecords;
+        } catch (e) {
+            if (e.response.status === 422) {
+                errors_fs.value = e.response.data.errors;
+            }
+        }
     };
 
     return {
@@ -54,5 +82,6 @@ export default function useFamilySurveys() {
         storeFamilySurvey,
         getFamilySurveys,
         getFamilySurvey,
+        loadFromServer,
     };
 }

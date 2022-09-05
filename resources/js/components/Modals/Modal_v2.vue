@@ -6,7 +6,6 @@ export default {
         console.log("modal setup");
         const toggleModal = () => {
             console.log("trigger");
-            context.emit("toggle", "hello");
         };
         return {
             toggleModal,

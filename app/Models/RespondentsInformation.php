@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Carbon\Carbon;
 class RespondentsInformation extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = "respondents_information";
     public $timestamps = true;
-
+    protected $appends = ['createddate'];
     protected $fillable = [
         'user_id',
         'full_name',
@@ -50,5 +50,10 @@ class RespondentsInformation extends Model
     public function social_and_governance_risk()
     {
         return $this->hasOne(SocialAndGovernanceRisk::class, 'information_id', 'id');
+    }
+
+    public function getCreatedDateAttribute()
+    {
+        return Carbon::parse($this->created_at)->dayName . " " . Carbon::parse($this->created_at)->isoFormat(', MMM Do YYYY ');
     }
 }

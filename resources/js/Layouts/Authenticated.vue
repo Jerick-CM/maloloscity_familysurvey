@@ -96,25 +96,10 @@ export default {
                                 class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
                             >
                                 <BreezeNavLink
-                                    :href="route('survey-form')"
-                                    :active="route().current('survey-form')"
+                                    :href="route('forms-index')"
+                                    :active="route().current('forms-index')"
                                 >
                                     Survey Form
-                                </BreezeNavLink>
-                            </div>
-                            <div
-                                v-if="
-                                    permissions.includes(
-                                        'Access-Page-Itinerary'
-                                    )
-                                "
-                                class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
-                            >
-                                <BreezeNavLink
-                                    :href="route('itinerary')"
-                                    :active="route().current('itinerary')"
-                                >
-                                    Itinerary
                                 </BreezeNavLink>
                             </div>
                         </div>
@@ -233,28 +218,7 @@ export default {
                             User
                         </BreezeResponsiveNavLink>
                     </div>
-                    <div
-                        class="pt-2 pb-3 space-y-1"
-                        v-if="permissions.includes('Access-Page-Business')"
-                    >
-                        <BreezeResponsiveNavLink
-                            :href="route('business')"
-                            :active="route().current('business')"
-                        >
-                            Business
-                        </BreezeResponsiveNavLink>
-                    </div>
-                    <div
-                        class="pt-2 pb-3 space-y-1"
-                        v-if="permissions.includes('Access-Page-Itinerary')"
-                    >
-                        <BreezeResponsiveNavLink
-                            :href="route('itinerary')"
-                            :active="route().current('itinerary')"
-                        >
-                            Itinerary
-                        </BreezeResponsiveNavLink>
-                    </div>
+
                     <div
                         v-if="permissions.includes('Access-Page-Logs')"
                         class="pt-2 pb-3 space-y-1"
@@ -264,6 +228,18 @@ export default {
                             :active="route().current('logs')"
                         >
                             Logs
+                        </BreezeResponsiveNavLink>
+                    </div>
+
+                    <div
+                        v-if="permissions.includes('Access-Page-Dashboard')"
+                        class="pt-2 pb-3 space-y-1"
+                    >
+                        <BreezeResponsiveNavLink
+                            :href="route('forms-index')"
+                            :active="route().current('forms-index')"
+                        >
+                            Survey Forms
                         </BreezeResponsiveNavLink>
                     </div>
                     <!-- Responsive Settings Options -->

@@ -9,14 +9,13 @@ use App\Http\Resources\FamilySurveyResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 use App\Models\RespondentsInformation;
 use App\Models\EconomicRisk;
 use App\Models\EnvironmentAndDisasterRisk;
 use App\Models\IndividualLifeCycleRisk;
 use App\Models\SocialAndGovernanceRisk;
-
-
 
 class FamilySurveyController extends Controller
 {
@@ -28,21 +27,21 @@ class FamilySurveyController extends Controller
 
     public function store(FamilySurveyRequest $request)
     {
-        // $familysurvey = RespondentsInformation::create($request->validated());
-        // return new FamilySurveyResource($familysurvey);
 
         Validator::make($request->all(), [
             'first_name' => ['required'],
             'last_name' => ['required'],
-            'middle_name' => ['required'],
-            'first_name' => ['required'],
+            'middle_name' => ['nullable'],
+            'barangay' => ['required'],
+            'family_position' => ['required'],
+
         ])->validate();
 
         DB::beginTransaction();
 
         try {
 
-            $fullname = $request->first_name . "," . $request->middle_name . "," . $request->last_name . "," . $request->name_suffix;
+            $fullname = $request->first_name . " " . $request->middle_name . " " . $request->last_name . " " . $request->name_suffix;
 
             $RespondentsInformation = RespondentsInformation::create(
                 [
@@ -202,5 +201,45 @@ class FamilySurveyController extends Controller
         $familysurvey->delete();
 
         return response()->noContent();
+    }
+
+
+    public function fetch(Request $request)
+    {
+
+        $options = $request->options;
+        $params = $request->params;
+
+        $limit =  $options['rowsPerPage'] ? $options['rowsPerPage'] : 10;
+        $reqs = RespondentsInformation::query();
+        if (isset($params['filterField'])) {
+            $reqs =  $reqs->where($params['filterField'], $params['filterValue']);
+        }
+
+        $reqs = $reqs->where(function ($query) use ($params) {
+
+            $word = str_replace(" ", "%", $params['searchValue']);
+            $query->where([['full_name', 'LIKE', "%" . $word . "%"]])
+                ->orWhere([['first_name', 'LIKE', "%" . $word . "%"]])
+                ->orWhere([['last_name', 'LIKE', "%" . $word . "%"]])
+                ->orWhere([['middle_name', 'LIKE', "%" . $word . "%"]]);
+        })->take($options['rowsPerPage']);
+
+        $query =  $reqs->orderBy('id', 'DESC')->offset(($options['page'] - 1) * $limit);
+        $reqs =  $query->get();
+        $count = RespondentsInformation::count();
+
+        return response()->json([
+            'data' => $reqs,
+            'totalRecords' => $count,
+        ]);
+    }
+
+    public function getSearchfield(Request $request)
+    {
+        $data =  RespondentsInformation::select($request->field)->groupBy($request->field)->where([[$request->field, 'LIKE', "%" . $request->searchValue . "%"]])->get();
+        return response()->json([
+            'data' => $data,
+        ]);
     }
 }

@@ -106,14 +106,6 @@
                                 <span> {{ info.official_receipt_date }}</span>
                             </div>
 
-                            <!-- Template -->
-                            <!-- <div>
-                                <label class="text-sm text-red-500">
-                                    Business Name :
-                                </label>
-                                <span> {{ info.business_name }}</span>
-                            </div> -->
-
                             <div class="pt-2 text-base font-semibold leading-7">
                                 <button
                                     class="background-transparent font-bold uppercase px-6 py-2 text-xs outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

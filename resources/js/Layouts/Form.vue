@@ -17,27 +17,39 @@ const showingNavigationDropdown = ref(false);
                 <header>
                     <div class="p-5 bg-bottom second-nav">
                         <div class="flex flex-items">
-                            <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <BreezeApplicationLogo
-                                        class="block h-9 w-auto"
-                                    />
-                                </Link>
+                            <div
+                                class="w-full 2xl:w-1/3 xl:w-1/3 lg:w-1/3 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-start place-content-start"
+                            >
+                                <div class="flex flex-items">
+                                    <div class="shrink-0 flex items-center">
+                                        <Link :href="route('dashboard')">
+                                            <BreezeApplicationLogo
+                                                class="block h-9 w-auto"
+                                            />
+                                        </Link>
+                                    </div>
+                                    <div class="flex flex-col pl-3">
+                                        <div>
+                                            <p class="text-white">
+                                                Republic of the Philippines
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="text-white">
+                                                Province of Bulacan
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="text-white">
+                                                City of Malolos
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="flex flex-col pl-3">
-                                <div>
-                                    <p class="text-white">
-                                        Republic of the Philippines
-                                    </p>
-                                </div>
-                                <div>
-                                    <p class="text-white">
-                                        Province of Bulacan
-                                    </p>
-                                </div>
-                                <div>
-                                    <p class="text-white">City of Malolos</p>
-                                </div>
+                            <div
+                                class="w-full 2xl:w-1/3 xl:w-1/3 lg:w-1/3 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-start place-content-start"
+                            >
                                 <div class="text-white">
                                     <slot class="text-white" name="header" />
                                 </div>

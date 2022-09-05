@@ -27,8 +27,19 @@ Route::group(['middleware' => ['permission:Access-Page-Dashboard']], function ()
     Route::get('/survey-form',  [App\Http\Controllers\FamilySurveyController::class, 'handleCreate'])->middleware(['auth', 'verified'])->name('survey-form');
 });
 
-Route::group(['prefix' => 'request', 'middleware' => ['permission:Access-Page-Dashboard', 'throttle:500,1']], function () {
-    Route::post('/familysurvey', [\App\Http\Controllers\Api\FamilySurveyController::class, 'store']);
+Route::group(['middleware' => ['permission:Access-Page-Dashboard']], function () {
+    Route::get('/forms-create',  [App\Http\Controllers\FamilySurveyController::class, 'handleCreate'])->middleware(['auth', 'verified'])->name('forms-create');
+});
+
+Route::group(['middleware' => ['permission:Access-Page-Dashboard']], function () {
+    Route::get('/forms-index',  [App\Http\Controllers\FamilySurveyController::class, 'index'])->middleware(['auth', 'verified'])->name('forms-index');
+});
+
+
+Route::group(['prefix' => 'request/familysurvey', 'middleware' => ['permission:Access-Page-Dashboard', 'throttle:500,1']], function () {
+    Route::post('/', [\App\Http\Controllers\Api\FamilySurveyController::class, 'store']);
+    Route::post('/fetch', [\App\Http\Controllers\Api\FamilySurveyController::class, 'fetch']);
+    Route::post('/getSelectfield', [\App\Http\Controllers\Api\FamilySurveyController::class, 'getSearchfield']);
 });
 
 
