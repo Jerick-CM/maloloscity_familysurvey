@@ -11,7 +11,7 @@ export default {
 
 <template>
     <div
-        class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-red-900 bg-page"
+        class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-red-500 bg-page"
     >
         <div class="flex flex-items items-center">
             <div class="">

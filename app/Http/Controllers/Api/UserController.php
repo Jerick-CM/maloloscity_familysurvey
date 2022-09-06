@@ -416,11 +416,11 @@ class UserController extends Controller
 
     private function fn_give_superadmin_permission($user)
     {
+        /** Page Access */
         $user->givePermissionTo('Access-Page-User');
         $user->givePermissionTo('Access-Page-Dashboard');
-        $user->givePermissionTo('Access-Page-Business');
         $user->givePermissionTo('Access-Page-Logs');
-        $user->givePermissionTo('Access-Page-Itinerary');
+        $user->givePermissionTo('Access-Page-SurveyForm');
 
         /** Page Actions */
         $user->givePermissionTo('Action Edit Permission');
@@ -430,30 +430,20 @@ class UserController extends Controller
         $user->givePermissionTo('Action Create User');
         $user->givePermissionTo('Action Edit User');
         $user->givePermissionTo('Action Show-All User');
-        /* Business Permission */
 
-        $user->givePermissionTo('Action Delete Business');
-        $user->givePermissionTo('Action Create Business');
-        $user->givePermissionTo('Action Edit Business');
-        /* Itinerary Permission */
+        /* Survey Permission */
+        $user->givePermissionTo('Action Delete SurveyForm');
+        $user->givePermissionTo('Action Create SurveyForm');
+        $user->givePermissionTo('Action Edit SurveyForm');
 
-        $user->givePermissionTo('Action Delete Itinerary');
-        $user->givePermissionTo('Action Show-All Itinerary');
-        $user->givePermissionTo('Action Create Itinerary');
-        $user->givePermissionTo('Action Edit Itinerary');
-        $user->givePermissionTo('Action Pull Itinerary');
-        $user->givePermissionTo('Action Edit-AssignTo Itinerary');
         /* Logs Permission */
 
         /* Admin and SuperAdmin Permission */
         $user->givePermissionTo('Action Settings Roles');
-        $user->givePermissionTo('Action Settings Checklist');
+        $user->givePermissionTo('');
         $user->givePermissionTo('Action Download User');
-        $user->givePermissionTo('Action Download Business');
-        $user->givePermissionTo('Action Download Itinerary');
         $user->givePermissionTo('Action Download Logs');
-        $user->givePermissionTo('Action Download Itinerary-Pull');
-        $user->givePermissionTo('Action Print Itinerary-Pull');
+        $user->givePermissionTo('Action Download SurveyForm');
     }
 
     private function fn_give_admin_permission($user)
@@ -461,9 +451,8 @@ class UserController extends Controller
         /** Page Access */
         $user->givePermissionTo('Access-Page-User');
         $user->givePermissionTo('Access-Page-Dashboard');
-        $user->givePermissionTo('Access-Page-Business');
         $user->givePermissionTo('Access-Page-Logs');
-        $user->givePermissionTo('Access-Page-Itinerary');
+        $user->givePermissionTo('Access-Page-SurveyForm');
         /** Page Actions */
         $user->givePermissionTo('Action Edit Permission');
         /* User Permission */
@@ -471,27 +460,20 @@ class UserController extends Controller
         $user->givePermissionTo('Action Create User');
         $user->givePermissionTo('Action Edit User');
         $user->givePermissionTo('Action Show-All User');
-        /* Business Permission */
-        $user->givePermissionTo('Action Create Business');
-        $user->givePermissionTo('Action Edit Business');
-        /* Itinerary Permission */
-        $user->givePermissionTo('Action Delete Itinerary');
-        $user->givePermissionTo('Action Show-All Itinerary');
-        $user->givePermissionTo('Action Create Itinerary');
-        $user->givePermissionTo('Action Edit Itinerary');
-        $user->givePermissionTo('Action Pull Itinerary');
-        $user->givePermissionTo('Action Edit-AssignTo Itinerary');
+
         /* Logs Permission */
+
+        /* Survey Permission */
+        $user->givePermissionTo('Action Delete SurveyForm');
+        $user->givePermissionTo('Action Create SurveyForm');
+        $user->givePermissionTo('Action Edit SurveyForm');
+
 
         /* Admin and SuperAdmin Permission */
         $user->givePermissionTo('Action Settings Roles');
-        $user->givePermissionTo('Action Settings Checklist');
         $user->givePermissionTo('Action Download User');
-        $user->givePermissionTo('Action Download Business');
-        $user->givePermissionTo('Action Download Itinerary');
         $user->givePermissionTo('Action Download Logs');
-        $user->givePermissionTo('Action Download Itinerary-Pull');
-        $user->givePermissionTo('Action Print Itinerary-Pull');
+        $user->givePermissionTo('Action Download SurveyForm');
     }
 
     private function fn_give_fieldpersonnel_permission($user)
@@ -499,18 +481,14 @@ class UserController extends Controller
         /** Page Access */
         $user->givePermissionTo('Access-Page-User');
         $user->givePermissionTo('Access-Page-Dashboard');
-        $user->givePermissionTo('Access-Page-Business');
-        $user->givePermissionTo('Access-Page-Itinerary');
-        /** Page Actions */
+        $user->givePermissionTo('Access-Page-SurveyForm');
+
+        /* Survey Permission */
+        $user->givePermissionTo('Action Create SurveyForm');
+        $user->givePermissionTo('Action Edit SurveyForm');
+
         /* User Permission */
         $user->givePermissionTo('Action Edit User');
-
-        /* Business Permission */
-        $user->givePermissionTo('Action Create Business');
-        // $user->givePermissionTo('Action Edit Business');
-        /* Itinerary Permission */
-        $user->givePermissionTo('Action Edit Itinerary');
-        $user->givePermissionTo('Action Pull Itinerary');
     }
 
     private function fn_give_department_role_permission($user)
