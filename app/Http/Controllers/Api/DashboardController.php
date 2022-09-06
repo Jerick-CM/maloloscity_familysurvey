@@ -3,39 +3,39 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Business;
-use App\Models\Itinerary;
-use Illuminate\Http\Request;
-use App\Models\ItineraryBusiness;
+use App\Models\RespondentsInformation;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
+        $respondents_count = RespondentsInformation::count();
+        $respondents_per_barangay =  DB::select("SELECT count(*) as y, barangay as 'name' FROM `respondents_information` GROUP BY barangay  ORDER BY y DESC;");
+        $top10barangay =  DB::select("SELECT count(*) as y, barangay as 'name' FROM `respondents_information` GROUP BY barangay  ORDER BY y DESC Limit 10;");
 
-        $itinerary_count = ItineraryBusiness::count();
-        $itinerary_business_pending = ItineraryBusiness::whereNull('completed_time')->count();
-        $itinerary_business_completed = ItineraryBusiness::whereNotNull('completed_time')->count();
-        $business_count = Business::count();
+        $fourPs_member = RespondentsInformation::where('four_ps_beneficiary', 1)->count();
+        $fourPs_non_member = RespondentsInformation::where('four_ps_beneficiary', 0)->count();
+        // $itinerary_business_pending = RespondentsInformation::where('four_ps_beneficiary',0)->count();
+        // $itinerary_business_completed = ItineraryBusiness::whereNotNull('completed_time')->count();
 
-        $lineOfBusiness =  DB::select("SELECT count(*) as y, line_of_business as 'name' FROM `businesses` GROUP BY line_of_business  ORDER BY y DESC Limit 10;");
-        $business_in_barangay =  DB::select("SELECT count(*) as y, barangay as 'name' FROM `businesses` GROUP BY barangay  ORDER BY y DESC;");
+
+        // $business_count = Business::count();
+        // $itinerary_count = ItineraryBusiness::count();
+        // $itinerary_business_pending = ItineraryBusiness::whereNull('completed_time')->count();
+        // $itinerary_business_completed = ItineraryBusiness::whereNotNull('completed_time')->count();
+
 
         return response()->json([
             'data' => [
-                'business_barangay' => $business_in_barangay,
-                'line_of_business' => $lineOfBusiness,
-                'total_business' =>  [$business_count],
-                'total_itinerary' => $itinerary_count,
-                'pending_itinerary_business' => $itinerary_business_pending,
-                'complete_itinerary_business' => $itinerary_business_completed,
-                'completedVsPending' => [['y' => $itinerary_business_completed, 'name' => 'completed'], ['y' => $itinerary_business_pending, 'name' => 'pending']]
+                'total_respondents' => $respondents_count,
+                'respondents_per_barangay' => $respondents_per_barangay,
+                'total_respondents_chart' =>  [$respondents_count],
+                'top10barangay' => $top10barangay,
+                'four4Ps_non4Ps' => [['y' => $fourPs_member, 'name' => 'member'], ['y' => $fourPs_non_member, 'name' => 'non-member']],
+                'fourPs' => $fourPs_member,
+                'nonfourPs' => $fourPs_non_member,
             ]
         ]);
     }

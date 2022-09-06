@@ -24,20 +24,21 @@ use App\Models\User;
 Route::get('/', [AuthenticatedSessionController::class, 'create']);
 
 
-Route::group(['middleware' => ['permission:Access-Page-Dashboard']], function () {
+Route::group(['middleware' => ['permission:Access-Page-SurveyForm']], function () {
     Route::get('/forms-create',  [App\Http\Controllers\FamilySurveyController::class, 'handleCreate'])->middleware(['auth', 'verified'])->name('forms-create');
 });
 
-Route::group(['middleware' => ['permission:Access-Page-Dashboard']], function () {
+Route::group(['middleware' => ['permission:Access-Page-SurveyForm']], function () {
     Route::get('/forms-edit/{id}',  [App\Http\Controllers\FamilySurveyController::class, 'handleEdit'])->middleware(['auth', 'verified'])->name('forms-edit');
 });
 
-Route::group(['middleware' => ['permission:Access-Page-Dashboard']], function () {
+Route::group(['middleware' => ['permission:Access-Page-SurveyForm']], function () {
     Route::get('/forms-index',  [App\Http\Controllers\FamilySurveyController::class, 'index'])->middleware(['auth', 'verified'])->name('forms-index');
 });
 
-Route::group(['prefix' => 'request/familysurvey', 'middleware' => ['permission:Access-Page-Dashboard', 'throttle:500,1']], function () {
+Route::group(['prefix' => 'request/familysurvey', 'middleware' => ['throttle:500,1']], function () {
 
+    Route::get('/dashboard/get', [\App\Http\Controllers\Api\DashboardController::class, 'index']);
     Route::get('/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'show']);
 
     Route::post('/', [\App\Http\Controllers\Api\FamilySurveyController::class, 'store']);
@@ -45,13 +46,13 @@ Route::group(['prefix' => 'request/familysurvey', 'middleware' => ['permission:A
     Route::post('/getSelectfield', [\App\Http\Controllers\Api\FamilySurveyController::class, 'getSearchfield']);
     Route::post('/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'update']);
     Route::post('/delete/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'destroy']);
-
 });
 
 
-Route::group(['prefix' => 'report/', 'middleware' => ['throttle:500,1']], function () {
+Route::group(['prefix' => 'report/', 'middleware' => ['permission:Action Download SurveyForm', 'throttle:500,1']], function () {
     Route::get('/pdf/{barangay}', [PDFController::class, 'survey_report']);
 });
+
 
 
 // old

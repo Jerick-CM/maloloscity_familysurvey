@@ -313,8 +313,7 @@ export default {
                                                         for="company-website"
                                                         class="block text-sm font-medium text-gray-700"
                                                     >
-                                                        Roles : Itinerary and
-                                                        Business
+                                                        Sub Role 
                                                     </label>
                                                     <div
                                                         class="mt-1 flex rounded-md shadow-sm"

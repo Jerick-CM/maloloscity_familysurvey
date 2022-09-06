@@ -13,7 +13,6 @@ export default {
     setup(props) {
         const { errors_dash, dashboards, getdashboard_datas } = useDashboard();
         const data = ref([1, 2, 3]);
-
         const total_itineraries = ref(299);
         const chartData = computed(() => {
             return {
@@ -39,7 +38,7 @@ export default {
                     },
                 },
                 title: {
-                    text: "Itineary Completed Business Vs Pending",
+                    text: "4P's Vs Non 4P's",
                 },
                 plotOptions: {
                     pie: {
@@ -51,7 +50,7 @@ export default {
                     {
                         name: "Data",
                         colorByPoint: true,
-                        data: dashboards.value.completedVsPending,
+                        data: dashboards.value.four4Ps_non4Ps,
                     },
                 ],
                 colors: [
@@ -76,7 +75,7 @@ export default {
                     type: "bar",
                 },
                 title: {
-                    text: "Total Businesses",
+                    text: "Total Respondents",
                 },
                 plotOptions: {
                     pie: {
@@ -86,9 +85,9 @@ export default {
                 },
                 series: [
                     {
-                        name: "Total Businesses",
+                        name: "Total #",
                         colorByPoint: true,
-                        data: dashboards.value.total_business,
+                        data: dashboards.value.total_respondents_chart,
                     },
                 ],
                 colors: [
@@ -114,7 +113,7 @@ export default {
                 },
 
                 title: {
-                    text: "Top Line of Business",
+                    text: "Top 10 Most number of Respondents",
                 },
                 plotOptions: {
                     pie: {
@@ -124,9 +123,9 @@ export default {
                 },
                 series: [
                     {
-                        name: "Line of Business",
+                        name: "Top 10",
                         colorByPoint: true,
-                        data: dashboards.value.line_of_business,
+                        data: dashboards.value.top10barangay,
                     },
                 ],
                 colors: [
@@ -151,7 +150,7 @@ export default {
                 },
 
                 title: {
-                    text: "Number of Business per barangay",
+                    text: "Number of Respondents per barangay",
                 },
                 plotOptions: {
                     pie: {
@@ -161,9 +160,9 @@ export default {
                 },
                 series: [
                     {
-                        name: "Business",
+                        name: "Barangay",
                         colorByPoint: true,
-                        data: dashboards.value.business_barangay,
+                        data: dashboards.value.respondents_per_barangay,
                     },
                 ],
                 colors: [
@@ -267,16 +266,16 @@ export default {
                         >
                             <span class="py-2 text-xl">
                                 Total:
-                                {{ dashboards.total_itinerary }}</span
-                            >
+                                {{ dashboards.total_respondents }}
+                            </span>
                         </div>
                         <div
                             class="mx-1 mt-1 py-5 px-5 bg-green-700 h-20 sm:rounded-lg text-white text-center"
                         >
                             <span class="py-2 text-xl">
-                                Pending:
+                                4 P's:
                                 {{
-                                    dashboards.pending_itinerary_business
+                                    dashboards.fourPs
                                 }}</span
                             >
                         </div>
@@ -285,9 +284,9 @@ export default {
                             class="mx-1 mt-1 py-5 px-5 bg-blue-700 h-20 sm:rounded-lg text-white text-center"
                         >
                             <span class="py-5 px-5 text-xl"
-                                >Completed:
+                                >    Non - 4 P's:
                                 {{
-                                    dashboards.complete_itinerary_business
+                                    dashboards.nonfourPs
                                 }}</span
                             >
                         </div>

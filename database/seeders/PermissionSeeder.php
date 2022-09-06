@@ -22,44 +22,30 @@ class PermissionSeeder extends Seeder
         /** Page Access */
         Permission::create(['name' => 'Access-Page-User']);
         Permission::create(['name' => 'Access-Page-Dashboard']);
-        Permission::create(['name' => 'Access-Page-Business']);
         Permission::create(['name' => 'Access-Page-Logs']);
-        Permission::create(['name' => 'Access-Page-Itinerary']);
+        Permission::create(['name' => 'Access-Page-SurveyForm']);
 
         /** Page Actions */
         Permission::create(['name' => 'Action Edit Permission']);
+
+        /* Survey Permission */
+         Permission::create(['name' => 'Action Delete SurveyForm']);
+         Permission::create(['name' => 'Action Create SurveyForm']);
+         Permission::create(['name' => 'Action Edit SurveyForm']);
 
         /* User Permission */
         Permission::create(['name' => 'Action Delete User']);
         Permission::create(['name' => 'Action Create User']);
         Permission::create(['name' => 'Action Edit User']);
         Permission::create(['name' => 'Action Show-All User']);
-        /* Business Permission */
 
-        Permission::create(['name' => 'Action Delete Business']);
-        Permission::create(['name' => 'Action Create Business']);
-        Permission::create(['name' => 'Action Edit Business']);
-        
-        /* Itinerary Permission */
-
-        Permission::create(['name' => 'Action Delete Itinerary']);
-        Permission::create(['name' => 'Action Show-All Itinerary']);
-        Permission::create(['name' => 'Action Create Itinerary']);
-        Permission::create(['name' => 'Action Edit-AssignTo Itinerary']);
-        Permission::create(['name' => 'Action Edit Itinerary']);
-        Permission::create(['name' => 'Action Pull Itinerary']);
         /* Logs Permission */
 
         Permission::create(['name' => 'Action Download User']);
-        Permission::create(['name' => 'Action Download Business']);
-        Permission::create(['name' => 'Action Download Itinerary']);
+        Permission::create(['name' => 'Action Download SurveyForm']);
         Permission::create(['name' => 'Action Download Logs']);
-        Permission::create(['name' => 'Action Download Itinerary-Pull']);
-        Permission::create(['name' => 'Action Print Itinerary-Pull']);
 
         Permission::create(['name' => 'Action Settings Roles']);
-        Permission::create(['name' => 'Action Settings Checklist']);
-
 
     }
 }

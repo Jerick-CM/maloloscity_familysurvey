@@ -7,13 +7,13 @@ export default function useDashboard() {
     const errors_dash = ref([]);
 
     const getdashboard_datas = async () => {
-        let response = await axios.get("/api/cstm/dashboard");
+        let response = await axios.get("/request/familysurvey/dashboard/get");
         dashboards.value = response.data.data;
     };
 
-    const getdashboard_data = async (id) => {
-        let response = await axios.get("/api/dashboard/" + id);
-    };
+    // const getdashboard_data = async (id) => {
+    //     let response = await axios.get("/api/dashboard/" + id);
+    // };
 
     /* custom api */
 
@@ -21,7 +21,7 @@ export default function useDashboard() {
         dashboards,
         dashboard,
         errors_dash,
-        getdashboard_data,
+        // getdashboard_data,
         getdashboard_datas,
     };
 }

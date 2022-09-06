@@ -35,8 +35,12 @@ export default {
         const hosting = computed(() => props.hosting);
         const toast = useToast();
         const form = reactive({});
-        const { familysurveys, destroyFamilySurvey, errors_fs, loadFromServer } =
-            useFamilySurveys();
+        const {
+            familysurveys,
+            destroyFamilySurvey,
+            errors_fs,
+            loadFromServer,
+        } = useFamilySurveys();
 
         /* Datatable */
         const loading = ref(true);
@@ -169,7 +173,7 @@ export default {
             fetchSelectfield,
             searchButton,
             generatePDF,
-            removeSurvey
+            removeSurvey,
         };
     },
 };
@@ -188,7 +192,12 @@ export default {
                     <div
                         class="w-full 2xl:w-2/4 xl:w-2/4 lg:w-2/4 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-end place-content-end"
                     >
-                        <div class="px-1">
+                        <div
+                            class="px-1"
+                            v-if="
+                                permissions.includes('Action Download SurveyForm')
+                            "
+                        >
                             <button
                                 @click.prevent="generatePDF()"
                                 class="my-2 py-2 px-4 w-full 2xl:w-fit xl:w-fit lg:w-fit bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded inline-flex items-center"

@@ -651,12 +651,12 @@ export default {
                                                     </div>
                                                 </template>
                                             </div>
-                                            <!-- Business -->
+                                            <!-- Survey -->
 
                                             <div class="w-full px-2 py-1">
                                                 <label
                                                     class="text-gray-700 font-bold"
-                                                    >Business</label
+                                                    >Survey Form</label
                                                 >
                                                 <template
                                                     v-for="(
@@ -667,7 +667,7 @@ export default {
                                                     <div
                                                         v-if="
                                                             permission.indexOf(
-                                                                'Business'
+                                                                'Survey'
                                                             ) > -1
                                                         "
                                                         class="flex items-center my-2"
@@ -699,54 +699,7 @@ export default {
                                                     </div>
                                                 </template>
                                             </div>
-                                            <!-- Itinerary -->
 
-                                            <div class="w-full px-2 py-1">
-                                                <label
-                                                    class="text-gray-700 font-bold"
-                                                    >Itinerary</label
-                                                >
-                                                <template
-                                                    v-for="(
-                                                        permission, index
-                                                    ) in allPermissions"
-                                                    :key="index"
-                                                >
-                                                    <div
-                                                        v-if="
-                                                            permission.indexOf(
-                                                                'Itinerary'
-                                                            ) > -1
-                                                        "
-                                                        class="flex items-center my-2"
-                                                    >
-                                                        <input
-                                                            id="default-checkbox"
-                                                            type="checkbox"
-                                                            @change="
-                                                                modifyPermissions(
-                                                                    $event,
-                                                                    permission
-                                                                )
-                                                            "
-                                                            :value="permission"
-                                                            class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                                            :checked="
-                                                                item.PermissionList.includes(
-                                                                    permission
-                                                                )
-                                                            "
-                                                        />
-                                                        <label
-                                                            for="default-checkbox"
-                                                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                                            >{{
-                                                                permission
-                                                            }}</label
-                                                        >
-                                                    </div>
-                                                </template>
-                                            </div>
                                             <!-- Logs -->
 
                                             <div class="w-full px-2 py-1">

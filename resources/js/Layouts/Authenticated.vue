@@ -89,9 +89,12 @@ export default {
                                     Logs
                                 </BreezeNavLink>
                             </div>
+
                             <div
                                 v-if="
-                                    permissions.includes('Access-Page-Business')
+                                    permissions.includes(
+                                        'Access-Page-SurveyForm'
+                                    )
                                 "
                                 class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
                             >
@@ -232,7 +235,7 @@ export default {
                     </div>
 
                     <div
-                        v-if="permissions.includes('Access-Page-Dashboard')"
+                        v-if="permissions.includes('Access-Page-SurveyForm')"
                         class="pt-2 pb-3 space-y-1"
                     >
                         <BreezeResponsiveNavLink
