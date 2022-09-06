@@ -111,18 +111,81 @@ class UserController extends Controller
 
         if ($request->superadmin == 1) {
             $user->assignRole('SUPERADMIN');
-            $this->fn_give_superadmin_permission($user);
+            /** Page Access */
+            $user->givePermissionTo('Access-Page-User');
+            $user->givePermissionTo('Access-Page-Dashboard');
+            $user->givePermissionTo('Access-Page-Logs');
+            $user->givePermissionTo('Access-Page-SurveyForm');
+
+            /** Page Actions */
+            $user->givePermissionTo('Action Edit Permission');
+
+            /* User Permission */
+            $user->givePermissionTo('Action Delete User');
+            $user->givePermissionTo('Action Create User');
+            $user->givePermissionTo('Action Edit User');
+            $user->givePermissionTo('Action Show-All User');
+
+            /* Survey Permission */
+            $user->givePermissionTo('Action Delete SurveyForm');
+            $user->givePermissionTo('Action Create SurveyForm');
+            $user->givePermissionTo('Action Edit SurveyForm');
+
+            /* Logs Permission */
+
+            /* Admin and SuperAdmin Permission */
+            $user->givePermissionTo('Action Settings Roles');
+            $user->givePermissionTo('');
+            $user->givePermissionTo('Action Download User');
+            $user->givePermissionTo('Action Download Logs');
+            $user->givePermissionTo('Action Download SurveyForm');
         }
 
         if ($request->admin == 1) {
             $user->assignRole('ADMIN');
-            $this->fn_give_admin_permission($user);
+            // $this->fn_give_admin_permission($user);
+            /** Page Access */
+            $user->givePermissionTo('Access-Page-User');
+            $user->givePermissionTo('Access-Page-Dashboard');
+            $user->givePermissionTo('Access-Page-Logs');
+            $user->givePermissionTo('Access-Page-SurveyForm');
+            /** Page Actions */
+            $user->givePermissionTo('Action Edit Permission');
+            /* User Permission */
+            $user->givePermissionTo('Action Delete User');
+            $user->givePermissionTo('Action Create User');
+            $user->givePermissionTo('Action Edit User');
+            $user->givePermissionTo('Action Show-All User');
+
+            /* Logs Permission */
+
+            /* Survey Permission */
+            $user->givePermissionTo('Action Delete SurveyForm');
+            $user->givePermissionTo('Action Create SurveyForm');
+            $user->givePermissionTo('Action Edit SurveyForm');
+
+
+            /* Admin and SuperAdmin Permission */
+            $user->givePermissionTo('Action Settings Roles');
+            $user->givePermissionTo('Action Download User');
+            $user->givePermissionTo('Action Download Logs');
+            $user->givePermissionTo('Action Download SurveyForm');
         }
 
         $role = Role::find($request->role);
         $user->assignRole($role->name);
         if ($role->id == 3) {
-            $this->fn_give_fieldpersonnel_permission($user);
+            /** Page Access */
+            $user->givePermissionTo('Access-Page-User');
+            $user->givePermissionTo('Access-Page-Dashboard');
+            $user->givePermissionTo('Access-Page-SurveyForm');
+
+            /* Survey Permission */
+            $user->givePermissionTo('Action Create SurveyForm');
+            $user->givePermissionTo('Action Edit SurveyForm');
+
+            /* User Permission */
+            $user->givePermissionTo('Action Edit User');
         } else {
             $this->fn_give_department_role_permission($user);
         }
@@ -175,21 +238,84 @@ class UserController extends Controller
             if ($request->superadmin == 1) {
 
                 $user->assignRole('SUPERADMIN');
-                $this->fn_give_superadmin_permission($user);
+                /** Page Access */
+                $user->givePermissionTo('Access-Page-User');
+                $user->givePermissionTo('Access-Page-Dashboard');
+                $user->givePermissionTo('Access-Page-Logs');
+                $user->givePermissionTo('Access-Page-SurveyForm');
+
+                /** Page Actions */
+                $user->givePermissionTo('Action Edit Permission');
+
+                /* User Permission */
+                $user->givePermissionTo('Action Delete User');
+                $user->givePermissionTo('Action Create User');
+                $user->givePermissionTo('Action Edit User');
+                $user->givePermissionTo('Action Show-All User');
+
+                /* Survey Permission */
+                $user->givePermissionTo('Action Delete SurveyForm');
+                $user->givePermissionTo('Action Create SurveyForm');
+                $user->givePermissionTo('Action Edit SurveyForm');
+
+                /* Logs Permission */
+
+                /* Admin and SuperAdmin Permission */
+                $user->givePermissionTo('Action Settings Roles');
+                $user->givePermissionTo('');
+                $user->givePermissionTo('Action Download User');
+                $user->givePermissionTo('Action Download Logs');
+                $user->givePermissionTo('Action Download SurveyForm');
             }
         }
 
         if (isset($request->admin)) {
             if ($request->admin == 1) {
                 $user->assignRole('ADMIN');
-                $this->fn_give_admin_permission($user);
+                // $this->fn_give_admin_permission($user);
+                /** Page Access */
+                $user->givePermissionTo('Access-Page-User');
+                $user->givePermissionTo('Access-Page-Dashboard');
+                $user->givePermissionTo('Access-Page-Logs');
+                $user->givePermissionTo('Access-Page-SurveyForm');
+                /** Page Actions */
+                $user->givePermissionTo('Action Edit Permission');
+                /* User Permission */
+                $user->givePermissionTo('Action Delete User');
+                $user->givePermissionTo('Action Create User');
+                $user->givePermissionTo('Action Edit User');
+                $user->givePermissionTo('Action Show-All User');
+
+                /* Logs Permission */
+
+                /* Survey Permission */
+                $user->givePermissionTo('Action Delete SurveyForm');
+                $user->givePermissionTo('Action Create SurveyForm');
+                $user->givePermissionTo('Action Edit SurveyForm');
+
+
+                /* Admin and SuperAdmin Permission */
+                $user->givePermissionTo('Action Settings Roles');
+                $user->givePermissionTo('Action Download User');
+                $user->givePermissionTo('Action Download Logs');
+                $user->givePermissionTo('Action Download SurveyForm');
             }
         }
 
         $role_new = Role::find($request->role);
         $user->assignRole($role_new->name);
         if ($role_new->id == 3) {
-            $this->fn_give_fieldpersonnel_permission($user);
+            /** Page Access */
+            $user->givePermissionTo('Access-Page-User');
+            $user->givePermissionTo('Access-Page-Dashboard');
+            $user->givePermissionTo('Access-Page-SurveyForm');
+
+            /* Survey Permission */
+            $user->givePermissionTo('Action Create SurveyForm');
+            $user->givePermissionTo('Action Edit SurveyForm');
+
+            /* User Permission */
+            $user->givePermissionTo('Action Edit User');
         } else {
             $this->fn_give_department_role_permission($user);
         }
@@ -414,67 +540,6 @@ class UserController extends Controller
         ]);
     }
 
-    private function fn_give_superadmin_permission($user)
-    {
-        /** Page Access */
-        $user->givePermissionTo('Access-Page-User');
-        $user->givePermissionTo('Access-Page-Dashboard');
-        $user->givePermissionTo('Access-Page-Logs');
-        $user->givePermissionTo('Access-Page-SurveyForm');
-
-        /** Page Actions */
-        $user->givePermissionTo('Action Edit Permission');
-
-        /* User Permission */
-        $user->givePermissionTo('Action Delete User');
-        $user->givePermissionTo('Action Create User');
-        $user->givePermissionTo('Action Edit User');
-        $user->givePermissionTo('Action Show-All User');
-
-        /* Survey Permission */
-        $user->givePermissionTo('Action Delete SurveyForm');
-        $user->givePermissionTo('Action Create SurveyForm');
-        $user->givePermissionTo('Action Edit SurveyForm');
-
-        /* Logs Permission */
-
-        /* Admin and SuperAdmin Permission */
-        $user->givePermissionTo('Action Settings Roles');
-        $user->givePermissionTo('');
-        $user->givePermissionTo('Action Download User');
-        $user->givePermissionTo('Action Download Logs');
-        $user->givePermissionTo('Action Download SurveyForm');
-    }
-
-    private function fn_give_admin_permission($user)
-    {
-        /** Page Access */
-        $user->givePermissionTo('Access-Page-User');
-        $user->givePermissionTo('Access-Page-Dashboard');
-        $user->givePermissionTo('Access-Page-Logs');
-        $user->givePermissionTo('Access-Page-SurveyForm');
-        /** Page Actions */
-        $user->givePermissionTo('Action Edit Permission');
-        /* User Permission */
-        $user->givePermissionTo('Action Delete User');
-        $user->givePermissionTo('Action Create User');
-        $user->givePermissionTo('Action Edit User');
-        $user->givePermissionTo('Action Show-All User');
-
-        /* Logs Permission */
-
-        /* Survey Permission */
-        $user->givePermissionTo('Action Delete SurveyForm');
-        $user->givePermissionTo('Action Create SurveyForm');
-        $user->givePermissionTo('Action Edit SurveyForm');
-
-
-        /* Admin and SuperAdmin Permission */
-        $user->givePermissionTo('Action Settings Roles');
-        $user->givePermissionTo('Action Download User');
-        $user->givePermissionTo('Action Download Logs');
-        $user->givePermissionTo('Action Download SurveyForm');
-    }
 
     private function fn_give_fieldpersonnel_permission($user)
     {

@@ -39,7 +39,7 @@ export default {
 
 <style scoped>
 .bg-page {
-    /* background-image: url("../assets/images/business-red.jpg"); */
+    background-image: url("../assets/images/familysurvey.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
