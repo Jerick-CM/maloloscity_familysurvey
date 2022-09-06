@@ -29,7 +29,7 @@ export default {
     }),
 
     setup(props) {
-        console.log("setup");
+
         const Auth_user = computed(() => usePage().props.value.auth.user);
         const permissions = usePage().props.value.auth.user.PermissionList;
         const hosting = computed(() => props.hosting);

@@ -5,7 +5,7 @@ export default {
     setup(props, context) {
 
         const toggleModal = () => {
-            console.log("trigger");
+
         };
         return {
             toggleModal,

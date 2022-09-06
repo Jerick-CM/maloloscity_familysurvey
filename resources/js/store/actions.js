@@ -4,7 +4,7 @@ let actions = {
             .then(res => {
                 commit('CREATE_POST', res.data)
             }).catch(err => {
-            console.log(err)
+
         })
 
     },
@@ -13,7 +13,7 @@ let actions = {
             .then(res => {
                 commit('FETCH_POSTS', res.data)
             }).catch(err => {
-            console.log(err)
+
         })
     },
     deletePost({commit}, post) {
@@ -22,7 +22,7 @@ let actions = {
                 if (res.data === 'ok')
                     commit('DELETE_POST', post)
             }).catch(err => {
-            console.log(err)
+
         })
     }
 }

@@ -27082,8 +27082,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["showmodal", "data"],
   setup: function setup(props, context) {
-    console.log("modal setup");
-
     var toggleModal = function toggleModal() {
       context.emit("toggle");
     };
@@ -27148,8 +27146,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _Layouts_Form_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../../Layouts/Form.vue */ "./resources/js/Layouts/Form.vue");
+/* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["second", "third", "secondroute"]
+  props: ["second", "third", "secondroute"],
+  components: {
+    BreezeAuthenticatedLayout: _Layouts_Form_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Head: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Head,
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Link
+  }
 });
 
 /***/ }),
@@ -28096,17 +28103,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       };
     });
 
-    var onRender = function onRender() {
-      console.log("Chart rendered");
-    };
+    var onRender = function onRender() {};
 
-    var onUpdate = function onUpdate() {
-      console.log("Chart updated");
-    };
+    var onUpdate = function onUpdate() {};
 
-    var onDestroy = function onDestroy() {
-      console.log("Chart destroyed");
-    };
+    var onDestroy = function onDestroy() {};
 
     return {
       dashboards: dashboards,
@@ -28188,7 +28189,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         slots = _ref.slots,
         emit = _ref.emit,
         expose = _ref.expose;
-    console.log("setup");
     var toast = (0,vue_toastification__WEBPACK_IMPORTED_MODULE_5__.useToast)();
     var brgys = (0,vue__WEBPACK_IMPORTED_MODULE_3__.computed)(function () {
       return props.barangays;
@@ -28424,7 +28424,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         slots = _ref.slots,
         emit = _ref.emit,
         expose = _ref.expose;
-    console.log("setup");
     var toast = (0,vue_toastification__WEBPACK_IMPORTED_MODULE_5__.useToast)();
     var brgys = (0,vue__WEBPACK_IMPORTED_MODULE_3__.computed)(function () {
       return props.barangays;
@@ -28695,7 +28694,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   setup: function setup(props) {
-    console.log("setup");
     var Auth_user = (0,vue__WEBPACK_IMPORTED_MODULE_3__.computed)(function () {
       return (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_2__.usePage)().props.value.auth.user;
     });
@@ -28985,7 +28983,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Link
   },
   setup: function setup(props) {
-    console.log("setup");
     var Auth_user = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
       return (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.usePage)().props.value.auth.user;
     });
@@ -29151,7 +29148,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {},
   setup: function setup(props) {
-    console.log("setup");
     var Auth_user = (0,vue__WEBPACK_IMPORTED_MODULE_3__.computed)(function () {
       return (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.usePage)().props.value.auth.user;
     });
@@ -29288,9 +29284,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     Nav: _Components_Nav_BreadCrumb_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   setup: function setup(props) {
-    console.log("setup");
     /* init */
-
     var Auth_User = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
       return (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.usePage)().props.value.auth.user;
     });
@@ -29451,9 +29445,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   props: ["allPermissions", "user"],
   setup: function setup(props) {
-    console.log("setup");
     /* init */
-
     var toast = (0,vue_toastification__WEBPACK_IMPORTED_MODULE_7__.useToast)();
     var Auth_User = (0,vue__WEBPACK_IMPORTED_MODULE_2__.computed)(function () {
       return (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.usePage)().props.value.auth.user;
@@ -29739,7 +29731,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   setup: function setup() {
     var _ref5;
 
-    console.log("setup");
     var toast = (0,vue_toastification__WEBPACK_IMPORTED_MODULE_5__.useToast)();
     var Auth_User = (0,vue__WEBPACK_IMPORTED_MODULE_4__.ref)((0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.usePage)().props.value.auth.user);
     var permissions = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.usePage)().props.value.auth.user.PermissionList;
@@ -30841,9 +30832,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.second), 1
-      /* TEXT */
-      )];
+      return [_hoisted_7];
     }),
     _: 1
     /* STABLE */
@@ -48372,7 +48361,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.checkmark[data-v-40810cc8] {\r\n    width: 30px;\r\n    height: 30px;\r\n    border-radius: 50%;\r\n    display: block;\r\n    stroke-width: 2;\r\n    stroke: green;\r\n    stroke-miterlimit: 10;\r\n    stroke-dashoffset: 0;\r\n    margin: 10% auto;\n}\n.bg-fade-black[data-v-40810cc8] {\r\n    background-color: rgba(0, 0, 0, 0.3);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.checkmark[data-v-40810cc8] {\n    width: 30px;\n    height: 30px;\n    border-radius: 50%;\n    display: block;\n    stroke-width: 2;\n    stroke: green;\n    stroke-miterlimit: 10;\n    stroke-dashoffset: 0;\n    margin: 10% auto;\n}\n.bg-fade-black[data-v-40810cc8] {\n    background-color: rgba(0, 0, 0, 0.3);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

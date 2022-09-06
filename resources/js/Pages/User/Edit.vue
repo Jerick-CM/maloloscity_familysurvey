@@ -21,7 +21,7 @@ export default {
     },
     props: ["allPermissions", "user"],
     setup(props) {
-        console.log("setup");
+
         /* init */
         const toast = useToast();
         const Auth_User = computed(() => usePage().props.value.auth.user);

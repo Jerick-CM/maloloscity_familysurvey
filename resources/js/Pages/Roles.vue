@@ -23,7 +23,7 @@ export default {
     }),
     methods: {},
     setup(props) {
-        console.log("setup");
+
 
         const Auth_user = computed(() => usePage().props.value.auth.user);
         const toast = useToast();

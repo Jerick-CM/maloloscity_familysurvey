@@ -220,15 +220,15 @@ export default {
         });
 
         const onRender = () => {
-            console.log("Chart rendered");
+
         };
 
         const onUpdate = () => {
-            console.log("Chart updated");
+
         };
 
         const onDestroy = () => {
-            console.log("Chart destroyed");
+
         };
         return {
             dashboards,

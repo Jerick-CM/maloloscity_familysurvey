@@ -16,7 +16,7 @@ export default {
         BreezeNavLink,
     },
     setup() {
-        console.log("setup");
+
         const toast = useToast();
         const Auth_User = ref(usePage().props.value.auth.user);
         const permissions = usePage().props.value.auth.user.PermissionList;

@@ -3,7 +3,7 @@ import { ref, defineEmits } from "vue";
 export default {
     props: ["closeModal"],
     setup(props,context) {
-        console.log("modal setup");
+
         const toggleModal = () => {
 
             context.emit("toggle","hello");

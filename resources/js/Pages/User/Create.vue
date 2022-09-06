@@ -17,7 +17,7 @@ export default {
         Nav,
     },
     setup(props) {
-        console.log("setup");
+
 
         /* init */
         const Auth_User = computed(() => usePage().props.value.auth.user);
@@ -313,7 +313,7 @@ export default {
                                                         for="company-website"
                                                         class="block text-sm font-medium text-gray-700"
                                                     >
-                                                        Sub Role 
+                                                        Sub Role
                                                     </label>
                                                     <div
                                                         class="mt-1 flex rounded-md shadow-sm"

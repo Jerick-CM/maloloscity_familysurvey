@@ -1,3 +1,16 @@
+<script>
+import BreezeAuthenticatedLayout from "./../../Layouts/Form.vue";
+import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
+
+export default {
+    props: ["second", "third", "secondroute"],
+    components: {
+        BreezeAuthenticatedLayout,
+        Head,
+        Link,
+    },
+};
+</script>
 <template>
     <nav class="py-5 flex" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -38,7 +51,6 @@
                                 clip-rule="evenodd"
                             ></path>
                         </svg>
-                        {{ second }}
                     </Link>
                 </div>
             </li>
@@ -66,9 +78,3 @@
         </ol>
     </nav>
 </template>
-
-<script>
-export default {
-    props: ["second", "third","secondroute"],
-};
-</script>

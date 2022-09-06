@@ -24,7 +24,7 @@ export default {
     },
     props: ["barangays", "municipalities"],
     setup(props, { attrs, slots, emit, expose }) {
-        console.log("setup");
+
         const toast = useToast();
         const brgys = computed(() => props.barangays);
         const filteredBrgys = ref([]);
