@@ -29,7 +29,6 @@ export default {
     }),
 
     setup(props) {
-
         const Auth_user = computed(() => usePage().props.value.auth.user);
         const permissions = usePage().props.value.auth.user.PermissionList;
         const hosting = computed(() => props.hosting);
@@ -195,7 +194,9 @@ export default {
                         <div
                             class="px-1"
                             v-if="
-                                permissions.includes('Action Download SurveyForm')
+                                permissions.includes(
+                                    'Action Download SurveyForm'
+                                )
                             "
                         >
                             <button
@@ -444,7 +445,7 @@ export default {
                                                 <Link
                                                     v-if="
                                                         permissions.includes(
-                                                            'Action Edit Itinerary'
+                                                            'Action Edit SurveyForm'
                                                         )
                                                     "
                                                     :href="
@@ -557,7 +558,14 @@ export default {
                             </template>
                             <template #item-action="item">
                                 <div class="operation-wrapper flex">
-                                    <div class="p-1">
+                                    <div
+                                        class="p-1"
+                                        v-if="
+                                            permissions.includes(
+                                                'Action Edit SurveyForm'
+                                            )
+                                        "
+                                    >
                                         <Link
                                             :href="route('forms-edit', item.id)"
                                         >
