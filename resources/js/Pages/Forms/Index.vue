@@ -482,7 +482,7 @@ export default {
                                                 <Link
                                                     v-if="
                                                         permissions.includes(
-                                                            'Action Delete Itinerary'
+                                                            'Action Delete SurveyForm'
                                                         )
                                                     "
                                                 >
@@ -573,7 +573,7 @@ export default {
                                         class="p-1"
                                         v-if="
                                             permissions.includes(
-                                                'Action Delete Itinerary'
+                                                'Action Delete SurveyForm'
                                             )
                                         "
                                     >
