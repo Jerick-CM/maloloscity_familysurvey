@@ -127,7 +127,7 @@ export default function useUsers() {
         errors_permissions.value = "";
         try {
             let response = await axios.post(
-                "/api/cstm/users/updatePermissions",
+                "/users/updatePermissions",
                 data
             );
             // users.value = response.data.data;

@@ -53,6 +53,9 @@ Route::group(['prefix' => 'report/', 'middleware' => ['permission:Action Downloa
     Route::get('/pdf/{barangay}', [PDFController::class, 'survey_report']);
 });
 
+/* permission */
+Route::post('/users/updatePermissions', [\App\Http\Controllers\Api\UserController::class, 'updatePermissions']);
+
 // old
 
 Route::group(['middleware' => ['permission:Access-Page-Dashboard']], function () {

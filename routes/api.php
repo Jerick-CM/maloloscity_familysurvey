@@ -40,11 +40,6 @@ Route::group(['prefix' => 'cstm', 'middleware' => 'throttle:500,1'], function ()
     Route::get('/dashboard', [\App\Http\Controllers\Api\DashboardController::class, 'index']);
     Route::post('/user/export', [\App\Http\Controllers\Api\UserController::class, 'exportdata']);
 
-    /* exports */
-    Route::post('/itinerary/export_selected', [\App\Http\Controllers\ExportsController::class, 'export_selected']);
-    Route::post('/itinerary/export_selected_with_business', [\App\Http\Controllers\ExportsController::class, 'export_selected_with_business']);
-    Route::post('/business/export_selected_business', [\App\Http\Controllers\ExportsController::class, 'export_selected_business']);
-
     /* logs */
     Route::post('/logs/search', [\App\Http\Controllers\Api\LogsController::class, 'search']);
     Route::post('/logs/fetch', [\App\Http\Controllers\Api\LogsController::class, 'fetch']);
@@ -53,6 +48,4 @@ Route::group(['prefix' => 'cstm', 'middleware' => 'throttle:500,1'], function ()
     Route::get('/roles/user_edit', [\App\Http\Controllers\Api\RoleController::class, 'index_user_edit']);
     Route::post('/roles/update_all', [\App\Http\Controllers\Api\RoleController::class, 'update_all']);
 
-    /* permission */
-    Route::post('/users/updatePermissions', [\App\Http\Controllers\Api\UserController::class, 'updatePermissions']);
 });
