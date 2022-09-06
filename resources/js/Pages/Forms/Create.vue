@@ -99,7 +99,6 @@ export default {
             );
         };
         const toggleModal = () => {
-            console.log("trigger");
             modal_show.value = !modal_show.value;
         };
 
@@ -121,14 +120,6 @@ export default {
 
             return data;
         };
-
-        watch(
-            () => checklist_form.value,
-            (currentValue, oldValue) => {
-                console.log(checklist_form);
-            },
-            { deep: true }
-        );
 
         watch(
             () => form.municipality,
@@ -2630,7 +2621,7 @@ th,
 td {
     border: 1px solid black;
 }
-/* 
+/*
 table {
     border: 1px solid #ccc;
     border-collapse: collapse;
@@ -2697,7 +2688,7 @@ table th {
     }
 
     table td::before {
-   
+
         content: attr(data-label);
         float: left;
         font-weight: bold;

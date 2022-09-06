@@ -3,7 +3,7 @@ import { ref, defineEmits } from "vue";
 export default {
     props: ["showmodal", "info"],
     setup(props, context) {
-        console.log("modal setup");
+
         const toggleModal = () => {
             console.log("trigger");
         };

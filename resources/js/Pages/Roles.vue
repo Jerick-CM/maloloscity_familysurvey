@@ -55,7 +55,6 @@ export default {
         });
 
         const addRole = () => {
-            console.log("add");
             roles.value.push("");
             roles_form.value.push("");
         };

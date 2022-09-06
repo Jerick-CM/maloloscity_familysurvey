@@ -6,7 +6,7 @@ let actions = {
             }).catch(err => {
             console.log(err)
         })
-      
+
     },
     fetchPosts({commit}) {
         axios.get('/api/posts')

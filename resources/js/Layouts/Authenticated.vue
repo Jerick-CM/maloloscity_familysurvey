@@ -20,8 +20,7 @@ export default {
     },
     setup(props, { attrs, slots, emit, expose }) {
         const Auth_User = computed(() => usePage().props.value.auth.user);
-        console.log(Auth_User.value);
-        console.log(Auth_User.value.admin);
+
         const permissions = usePage().props.value.auth.user.PermissionList;
         const showingNavigationDropdown = ref(false);
         return {

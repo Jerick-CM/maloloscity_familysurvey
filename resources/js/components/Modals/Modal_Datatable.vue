@@ -5,12 +5,12 @@ export default {
     setup(props,context) {
         console.log("modal setup");
         const toggleModal = () => {
-            console.log("trigger");
+
             context.emit("toggle","hello");
             //     closeModal.value = false
         };
         return {
-        
+
             toggleModal,
         };
     },

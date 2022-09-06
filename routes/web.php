@@ -42,7 +42,7 @@ Route::group(['prefix' => 'request/familysurvey', 'middleware' => ['throttle:500
     Route::get('/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'show']);
 
     Route::post('/', [\App\Http\Controllers\Api\FamilySurveyController::class, 'store']);
-    Route::post('/fetch', [\App\Http\Controllers\Api\FamilySurveyController::class, 'fetch']);
+    Route::post('/fetch', [\App\Http\Controllers\FamilySurveyController::class, 'fetch']);
     Route::post('/getSelectfield', [\App\Http\Controllers\Api\FamilySurveyController::class, 'getSearchfield']);
     Route::post('/update/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'update']);
     Route::post('/delete/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'destroy']);
@@ -52,8 +52,6 @@ Route::group(['prefix' => 'request/familysurvey', 'middleware' => ['throttle:500
 Route::group(['prefix' => 'report/', 'middleware' => ['permission:Action Download SurveyForm', 'throttle:500,1']], function () {
     Route::get('/pdf/{barangay}', [PDFController::class, 'survey_report']);
 });
-
-
 
 // old
 
@@ -90,32 +88,6 @@ Route::group(['prefix' => 'user', 'middleware' => ['permission:Access-Page-User'
 });
 
 
-/* Business Page */
-Route::group(['prefix' => 'business', 'middleware' => ['permission:Access-Page-Business', 'throttle:500,1']], function () {
-    /* index */
-    Route::get('/', function () {
-        return Inertia::render('Business/Index');
-    })->middleware(['auth', 'verified'])->name('business');
-    /* edit */
-    Route::get('/edit/{id}', [BusinessController::class, 'rewrite'])->middleware(['auth', 'verified'])->name('business-edit');
-    /* create */
-    Route::get('/create', [BusinessController::class, 'index'])->middleware(['auth', 'verified'])->name('business-create');
-});
-
-/* Itinerary Page */
-Route::group(['prefix' => 'itinerary', 'middleware' => ['throttle:500,1']], function () {
-    /* index */
-    Route::get('/',  [App\Http\Controllers\ItineraryController::class, 'index'])->middleware(['auth', 'verified'])->name('itinerary');
-    /* edit */
-    Route::get('/edit/{id}', function () {
-        return Inertia::render('Itinerary/Edit');
-    })->middleware(['auth', 'verified'])->name('itinerary-edit');
-    /* pull */
-    Route::get('/pull/{id}',  [App\Http\Controllers\ItineraryController::class, 'pull'])->middleware(['auth', 'verified'])->name('itinerary-pull');
-    /* create */
-    Route::get('/create',  [App\Http\Controllers\ItineraryController::class, 'create'])->middleware(['auth', 'verified'])->name('itinerary-create');
-});
-
 /* User Page */
 Route::group(['prefix' => 'logs', 'middleware' => 'throttle:500,1'], function () {
     /* index */
@@ -123,29 +95,16 @@ Route::group(['prefix' => 'logs', 'middleware' => 'throttle:500,1'], function ()
         return Inertia::render('Logs/Index');
     })->middleware(['auth', 'verified'])->name('logs');
 });
-Route::group(['middleware' => ['permission:Action Settings Checklist', 'throttle:500,1']], function () {
-    Route::get('/checklist', function () {
-        return Inertia::render('Checklist');
-    })->middleware(['auth', 'verified'])->name('checklist');
-});
 
 Route::group(['middleware' => ['permission:Action Settings Roles', 'throttle:500,1']], function () {
     Route::get('/roles', function () {
         return Inertia::render('Roles');
     })->middleware(['auth', 'verified'])->name('roles');
 });
-
-/* Pdf */
-Route::get('generate-pdf', [PDFController::class, 'generatePDF']);
-Route::get('view-pdf/{id}', [PDFController::class, 'view_print_itinerary']);
-Route::get('view-checklist/{id}', [PDFController::class, 'view_print_checklist']);
-
 /* Msc */
 Route::get('phpinfo', function () {
     echo phpinfo();
 });
-
-Route::get('/trace/{hash}', [\App\Http\Controllers\Api\ItineraryController::class, 'trace'])->name('trace');
 
 Route::group(['prefix' => 'cstm', 'middleware' => 'throttle:500,1'], function () {
     /* roles */
@@ -158,6 +117,5 @@ Route::group(['prefix' => 'cstm', 'middleware' => 'throttle:500,1'], function ()
     Route::post('/itineraries/add_business', [\App\Http\Controllers\Api\ItineraryController::class, 'add_business']);
     Route::post('/itineraries/fetch/{id}', [\App\Http\Controllers\Api\ItineraryController::class, 'fetch']);
 });
-
 
 require __DIR__ . '/auth.php';

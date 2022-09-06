@@ -379,7 +379,9 @@ class FamilySurveyController extends Controller
         $limit =  $options['rowsPerPage'] ? $options['rowsPerPage'] : 10;
         $reqs = RespondentsInformation::query();
         if (isset($params['filterField'])) {
-            $reqs =  $reqs->where($params['filterField'], $params['filterValue']);
+            if ($params['filterField'] != "") {
+                $reqs =  $reqs->where($params['filterField'], $params['filterValue']);
+            }
         }
 
         $reqs = $reqs->where(function ($query) use ($params) {
@@ -396,7 +398,11 @@ class FamilySurveyController extends Controller
         $reqs =  $query->get();
 
         if (isset($params['filterField'])) {
-            $count = RespondentsInformation::where($params['filterField'], $params['filterValue'])->count();
+            if ($params['filterField'] != "") {
+                $count = RespondentsInformation::where($params['filterField'], $params['filterValue'])->count();
+            } else {
+                $count = RespondentsInformation::count();
+            }
         } else {
             $count = RespondentsInformation::count();
         }

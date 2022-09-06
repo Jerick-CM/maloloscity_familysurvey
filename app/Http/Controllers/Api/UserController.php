@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-// use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
@@ -186,10 +185,7 @@ class UserController extends Controller
 
             /* User Permission */
             $user->givePermissionTo('Action Edit User');
-        } else {
-            $this->fn_give_department_role_permission($user);
         }
-
         event(new Registered($user));
         return new UserResource($user);
     }
@@ -316,9 +312,8 @@ class UserController extends Controller
 
             /* User Permission */
             $user->givePermissionTo('Action Edit User');
-        } else {
-            $this->fn_give_department_role_permission($user);
         }
+
 
         $user_change = User::findOrfail($request->id);
         $user_action = User::findOrfail($request->user_id);
@@ -343,9 +338,6 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-
-
-
         $user->delete();
         return response()->noContent();
     }
@@ -538,48 +530,5 @@ class UserController extends Controller
             'data' => $reqs,
             'totalRecords' => $count,
         ]);
-    }
-
-
-    private function fn_give_fieldpersonnel_permission($user)
-    {
-        /** Page Access */
-        $user->givePermissionTo('Access-Page-User');
-        $user->givePermissionTo('Access-Page-Dashboard');
-        $user->givePermissionTo('Access-Page-SurveyForm');
-
-        /* Survey Permission */
-        $user->givePermissionTo('Action Create SurveyForm');
-        $user->givePermissionTo('Action Edit SurveyForm');
-
-        /* User Permission */
-        $user->givePermissionTo('Action Edit User');
-    }
-
-    private function fn_give_department_role_permission($user)
-    {
-        /** Page Access */
-        $user->givePermissionTo('Access-Page-User');
-        $user->givePermissionTo('Access-Page-Dashboard');
-        $user->givePermissionTo('Access-Page-Business');
-        $user->givePermissionTo('Access-Page-Logs');
-        $user->givePermissionTo('Access-Page-Itinerary');
-        /** Page Actions */
-
-        /* User Permission */
-        $user->givePermissionTo('Action Create User');
-        $user->givePermissionTo('Action Delete User');
-        $user->givePermissionTo('Action Edit User');
-        $user->givePermissionTo('Action Show-All User');
-        /* Business Permission */
-        $user->givePermissionTo('Action Create Business');
-        $user->givePermissionTo('Action Edit Business');
-        /* Itinerary Permission */
-        $user->givePermissionTo('Action Delete Itinerary');
-        $user->givePermissionTo('Action Create Itinerary');
-        $user->givePermissionTo('Action Edit Itinerary');
-        $user->givePermissionTo('Action Edit-AssignTo Itinerary');
-
-        $user->givePermissionTo('Action Settings Checklist');
     }
 }

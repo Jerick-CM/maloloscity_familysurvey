@@ -70,7 +70,6 @@ export default {
         watch(
             () => serverOptions.value,
             (currentValue, oldValue) => {
-                console.log(currentValue);
                 server_sided();
             },
             { deep: true }

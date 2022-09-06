@@ -17,7 +17,7 @@ export default function useUsers() {
 
     const getUsersById = async (id) => {
         let response = await axios.get("/api/cstm/users/" + id);
-        console.log(response.data.data);
+
         users.value = response.data.data;
     };
 
