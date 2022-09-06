@@ -13,7 +13,7 @@ class EnvironmentAndDisasterRisk extends Model
     public $timestamps = true;
     protected $fillable = [
         'information_id',
-        
+
         'victim_of_housefire',
         'victim_of_typoon_drought',
         'victim_of_earthquake_volcanic_eruption',

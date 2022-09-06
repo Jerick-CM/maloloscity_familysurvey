@@ -44,7 +44,7 @@ Route::group(['prefix' => 'request/familysurvey', 'middleware' => ['throttle:500
     Route::post('/', [\App\Http\Controllers\Api\FamilySurveyController::class, 'store']);
     Route::post('/fetch', [\App\Http\Controllers\Api\FamilySurveyController::class, 'fetch']);
     Route::post('/getSelectfield', [\App\Http\Controllers\Api\FamilySurveyController::class, 'getSearchfield']);
-    Route::post('/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'update']);
+    Route::post('/update/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'update']);
     Route::post('/delete/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'destroy']);
 });
 

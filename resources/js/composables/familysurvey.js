@@ -56,7 +56,7 @@ export default function useFamilySurveys() {
     const updateFamilySurvey = async (id) => {
         errors_fs.value = "";
         try {
-            await axios.post("/request/familysurvey/" + id, familysurvey.value);
+            await axios.post("/request/familysurvey/update/" + id, familysurvey.value);
         } catch (e) {
             if (e.response.status === 422) {
                 errors_fs.value = e.response.data.errors;
