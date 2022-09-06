@@ -71,7 +71,6 @@ export default {
             familysurvey.value.social_and_governance_risk =
                 social_and_governance_risks.value;
 
-            console.log(familysurvey);
             submission_process.value = false;
             await updateFamilySurvey(route().params.id).then(() => {
                 if (errors_fs.value) {

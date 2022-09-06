@@ -297,12 +297,7 @@ export default {
                                 >
                                     Position in the Family
                                 </label>
-                                <!-- <input
-                                    v-model="form.family_position"
-                                    :class="inputClass"
-                                    type="text"
-                                    placeholder="Position in the Family"
-                                /> -->
+
                                 <Multiselect
                                     ref="multiselect_code"
                                     mode="single"

@@ -2,31 +2,30 @@
 <html>
 
 <head>
-    <title>City Government of Malolos - Business Itinerary</title>
+    <title>City Government of Malolos - FAMILY SURVEY ON RISKS AND VULNERABILITY </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
     <div>
-
-        <?php //var_dump($ilr[0]->i1);
-        ?>
-        <?php //echo $ilr[0]['k1'];
-        ?>
         <table style="width: 100%">
             <tr>
-                <td style="width:20%"><img src="{{ public_path('images/logo.png') }}" alt="profile Pic" height="75"
-                        width="80"></td>
-                <td style="width:60%;text-align: center;">
-
-                    Republic of the Philippines</br>
-                    Province of Bulacan</br>
-                    City of Malolos</br>
+                <td style="width:25%">
+                    <img src="{{ public_path('images/logo.png') }}" alt="profile Pic" height="75" width="80">
                 </td>
-                <td style="width:10%"></td>
-                <td style="">
 
+                <td style="width:50%;text-align: center;font-size:14px;">
+                    Department od Social Welfare and Development</br>
+                    FAMILY SURVEY ON RISK AND VULNERABILITY</br>
+
+                </td>
+                <td style="width:15%">
+                </td>
+                <td style="width:10%">
+
+                    <img src="{{ public_path('images/dswd_primary.png') }}" alt="profile Pic" height="75"
+                        width="80">
                 </td>
             </tr>
         </table>
@@ -36,16 +35,21 @@
 
             </div>
             <div class="col-sm">
-
-
+                <br>
+                <span style="font-size:14px;">Country: Republic of the Philippines</span>
+                <br>
+                <span style="font-size:14px;">Province: Province of Bulacan</span>
+                <br>
+                <span style="font-size:14px;">City/Municipality : City of Malolos</span>
+                <br>
+                <span style="font-size:14px;">Barangay: {{ $barangay }}</span>
+                <br>
             </div>
             <div class="col-sm">
 
             </div>
 
         </div>
-        <br>
-        <br>
         <br>
         <table id="survey" class="w-full border-collapse border border-slate-500 table-fixed md:table-fixed">
             <thead>
@@ -1114,6 +1118,7 @@
         height: 2em;
         word-wrap: break-word;
         border: 1px solid black;
+        font-size:12px;
     }
 
     #survey th {
@@ -1121,6 +1126,7 @@
     }
 
     #survey td {
+        font-size:14px;
         border: solid 1px black
     }
 </style>

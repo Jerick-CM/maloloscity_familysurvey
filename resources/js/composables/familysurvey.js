@@ -63,7 +63,6 @@ export default function useFamilySurveys() {
             }
             if (e.response.status === 500) {
                 errors_fs.value = {
-                    // message: "error 500",
                     errors: { error: "server Error 500" },
                 };
             }
@@ -71,7 +70,7 @@ export default function useFamilySurveys() {
     };
 
     const destroyFamilySurvey = async (id) => {
-        await axios.delete("/request/familysurvey/" + id);
+        await axios.post("/request/familysurvey/delete/" + id);
     };
 
     const loadFromServer = async (

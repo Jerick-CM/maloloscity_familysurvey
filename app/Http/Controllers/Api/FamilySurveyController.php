@@ -171,16 +171,8 @@ class FamilySurveyController extends Controller
         }
         DB::commit();
 
-        // $user = User::findOrfail($request->user_id);
-        // event(new UserLogsEvent($request->user_id, Logs::TYPE_CREATE_BUSINESS, [
-        //     'email'  =>   $user->email,
-        //     'business_name'  =>   $request->business_name,
-        // ]));
-        // return new BusinessResource($RespondentsInformation);
-
         return response()->json([
             'success' => true
-            // 'data' => $data,
         ]);
     }
 
@@ -230,7 +222,6 @@ class FamilySurveyController extends Controller
             $respondent->sitio = $request->sitio;
             $respondent->purok = $request->purok;
             $respondent->update();
-
 
             $individaul_lifecyle_risk = IndividualLifeCycleRisk::where('information_id', $respondent->id)->first();
 
@@ -334,29 +325,48 @@ class FamilySurveyController extends Controller
             $social_governance_risk->other_harms_to_family = $request->social_and_governance_risk['other_harms_to_family'];
 
             $social_governance_risk->save();
-
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json($e, 500);
         }
         DB::commit();
 
-        // $familysurvey->update($request->validated());
-
-        // return new FamilySurveyResource($familysurvey);
-
         return response()->json([
             'success' => true
-            // 'data' => $data,
         ]);
     }
 
 
-    public function destroy(RespondentsInformation $familysurvey)
+    public function destroy(Request $request, $id)
     {
-        $familysurvey->delete();
+        DB::beginTransaction();
+        try {
 
-        return response()->noContent();
+            /* delete respondent */
+            $respondent = RespondentsInformation::findOrfail($id);
+            /* delete individual life cycle risk */
+            $individaul_lifecyle_risk = IndividualLifeCycleRisk::where('information_id', $respondent->id)->first();
+            $individaul_lifecyle_risk->delete();
+            /* delete economic risk */
+            $economic_risk = EconomicRisk::where('information_id', $respondent->id)->first();
+            $economic_risk->delete();
+            /* delete environmental disaster risk */
+            $environmental_disaster_risk = EnvironmentAndDisasterRisk::where('information_id', $respondent->id)->first();
+            $environmental_disaster_risk->delete();
+            /* delete social and governance risk */
+            $social_governance_risk = SocialAndGovernanceRisk::where('information_id', $respondent->id)->first();
+            $social_governance_risk->delete();
+
+            $respondent->delete();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json($e, 500);
+        }
+        DB::commit();
+
+        return response()->json([
+            'success' => true
+        ]);
     }
 
 
@@ -387,7 +397,7 @@ class FamilySurveyController extends Controller
 
         if (isset($params['filterField'])) {
             $count = RespondentsInformation::where($params['filterField'], $params['filterValue'])->count();
-        }else{
+        } else {
             $count = RespondentsInformation::count();
         }
 

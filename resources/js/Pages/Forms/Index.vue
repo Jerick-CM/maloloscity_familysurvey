@@ -35,7 +35,7 @@ export default {
         const hosting = computed(() => props.hosting);
         const toast = useToast();
         const form = reactive({});
-        const { familysurveys, storeFamilySurvey, errors_fs, loadFromServer } =
+        const { familysurveys, destroyFamilySurvey, errors_fs, loadFromServer } =
             useFamilySurveys();
 
         /* Datatable */
@@ -131,6 +131,16 @@ export default {
             window.open(url);
         };
 
+        const removeSurvey = async (id) => {
+            if (!window.confirm("Are you sure?")) {
+                return;
+            }
+            toast.info("Sending delete");
+            await destroyFamilySurvey(id);
+            await server_sided();
+            await toast.success("Delete success.");
+        };
+
         watch(
             () => searchParameter.searchValue,
             (value) => {
@@ -159,6 +169,7 @@ export default {
             fetchSelectfield,
             searchButton,
             generatePDF,
+            removeSurvey
         };
     },
 };
@@ -344,7 +355,7 @@ export default {
                                 <button
                                     type="button"
                                     @click.prevent="searchButton"
-                                    class="bg-green-300 hover:bg-green-400 text-green-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                                    class="bg-blue-300 hover:bg-blue-400 text-blue-800 font-bold py-2 px-4 rounded inline-flex items-center"
                                 >
                                     <span>Search</span>
                                 </button>
@@ -467,6 +478,11 @@ export default {
                                                     "
                                                 >
                                                     <button
+                                                        @click="
+                                                            removeSurvey(
+                                                                item.id
+                                                            )
+                                                        "
                                                         class="h-15 w-24 text-xs bg-red-700 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                                     >
                                                         <svg
@@ -553,7 +569,7 @@ export default {
                                         "
                                     >
                                         <button
-                                            @click="deleteItinerary(item.id)"
+                                            @click="removeSurvey(item.id)"
                                             class="text-xs bg-red-700 hover:bg-red-400 text-white font-bold py-2 px-4 rounded"
                                         >
                                             Delete
