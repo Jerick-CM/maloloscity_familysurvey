@@ -33,7 +33,9 @@ export default {
         const submission_process = ref(false);
         const modal_show = ref(false);
         const data = ref(false);
+
         const multiselect_familyposition = ref(null);
+
         const searchParameter = reactive({
             searchField: "",
             searchValue: "",
@@ -89,6 +91,7 @@ export default {
             form.barangay = "";
             form.sitio = "";
             form.purok = "";
+            multiselect_familyposition.value.clear();
         };
         const filterBrgys = async (munId) => {
             filteredBrgys.value = brgys.value.filter(
@@ -299,7 +302,7 @@ export default {
                                 </label>
 
                                 <Multiselect
-                                    ref="multiselect_code"
+                                    ref="multiselect_familyposition"
                                     mode="single"
                                     v-model="form.family_position"
                                     class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
