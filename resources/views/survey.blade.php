@@ -9,6 +9,11 @@
 
 <body>
     <div>
+
+        <?php //var_dump($ilr[0]->i1);
+        ?>
+        <?php //echo $ilr[0]['k1'];
+        ?>
         <table style="width: 100%">
             <tr>
                 <td style="width:20%"><img src="{{ public_path('images/logo.png') }}" alt="profile Pic" height="75"
@@ -65,49 +70,49 @@
                 <tr>
                     <td>1. Pagbubuntis at panganganak</td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i1a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i1b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i1c }}
                     </td>
                 </tr>
                 <tr>
                     <td>2. Hindi nakapagpre-natal check up</td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i2a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i2b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i2c }}
                     </td>
                 </tr>
                 <tr>
                     <td>3. Pagkalagas (abortion)</td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i3a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i3b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i3c }}
                     </td>
                 </tr>
                 <tr>
                     <td>4. Nakunan</td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i4a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i4b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i4c }}
                     </td>
                 </tr>
                 <tr>
@@ -116,25 +121,25 @@
                         isinilang
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i5a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i5b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i5c }}
                     </td>
                 </tr>
                 <tr>
                     <td>6. Hindi nakapagpost-natal check up</td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i6a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i6b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i6c }}
                     </td>
                 </tr>
 
@@ -144,26 +149,26 @@
                         isinilang
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i7a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i7b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i7c }}
                     </td>
                 </tr>
 
                 <tr>
                     <td>8. Di nabakunahan ang mga anak o bata</td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i8a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i8b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i8c }}
                     </td>
                 </tr>
 
@@ -173,13 +178,13 @@
                         kapansanan dahil sa sakit o aksidente
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i9a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i9b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i9c }}
                     </td>
                 </tr>
                 <tr>
@@ -187,13 +192,13 @@
                         10. Namatay dahils sa sakuna o aksidente
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i10a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i10b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i10c }}
                     </td>
                 </tr>
 
@@ -203,13 +208,13 @@
                         matagal nang sakit?
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i11a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i11b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i11c }}
                     </td>
                 </tr>
                 <tr>
@@ -218,13 +223,13 @@
                         health center o ospital?
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i12a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i12b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i12c }}
                     </td>
                 </tr>
                 <tr>
@@ -232,13 +237,13 @@
                         13. Di nakabili ng kinakailangang gamot"
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i13a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i13b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i13c }}
                     </td>
                 </tr>
                 <tr>
@@ -247,13 +252,13 @@
                         karamdaman
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i14a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i14b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i14c }}
                     </td>
                 </tr>
                 <tr>
@@ -262,25 +267,25 @@
                         ang mga anak
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i15a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i15b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i15c }}
                     </td>
                 </tr>
                 <tr>
                     <td>16. Di nai-enrol sa elemtarya ang anak</td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i16a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i16b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i16c }}
                     </td>
                 </tr>
 
@@ -289,13 +294,13 @@
                         17. Di nai-enrol sa high school ang anak
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i17a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i17b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i17c }}
                     </td>
                 </tr>
 
@@ -305,13 +310,13 @@
                         anak
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i18a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i18b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i18c }}
                     </td>
                 </tr>
 
@@ -321,26 +326,26 @@
                         elementarya o high school ang anak
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i19a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i19b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i19c }}
                     </td>
                 </tr>
 
                 <tr>
                     <td>20. Nalulong sa bawal na gamot o alak</td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i20a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i20b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i20c }}
                     </td>
                 </tr>
                 <tr>
@@ -349,13 +354,13 @@
                         years old)
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i21a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i21b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i21c }}
                     </td>
                 </tr>
 
@@ -365,25 +370,25 @@
                         walang paalam sa magulang
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i22a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i22b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i22c }}
                     </td>
                 </tr>
                 <tr>
                     <td>23. Miyembro na nangibang bansa</td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i23a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i23b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i23c }}
                     </td>
                 </tr>
                 <tr>
@@ -392,37 +397,37 @@
                         siyudad
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i24a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i24b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i24c }}
                     </td>
                 </tr>
                 <tr>
                     <td>25. Hiwalay sa asawa</td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i25a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i25b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i25c }}
                     </td>
                 </tr>
                 <tr>
                     <td>26. Namatayan ng asawa</td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i26a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i26b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i26c }}
                     </td>
                 </tr>
                 <tr>
@@ -431,13 +436,13 @@
                         naranasan ang kawalan ng pagkain
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i27a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i27b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i27c }}
                     </td>
                 </tr>
 
@@ -446,13 +451,13 @@
                         28. kakulangan ng malinis na inuming tubig
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i28a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i28b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i28c }}
                     </td>
                 </tr>
 
@@ -462,13 +467,13 @@
                         material
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i29a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i29b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i29c }}
                     </td>
                 </tr>
 
@@ -477,33 +482,39 @@
                         30. Kawalan ng malinis na CR o palikuran
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i30a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i30b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $ilr[0]->i30c }}
                     </td>
                 </tr>
 
                 <!-- table 2 - 30  -->
-                <tr :class="risksHeaderClass">
+                <tr>
                     <td>ECONOMIC RISK</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="text-center">
+
+                    </td>
+                    <td class="text-center">
+
+                    </td>
+                    <td class="text-center">
+
+                    </td>
                 </tr>
                 <tr>
                     <td>31. Walang hanapbuhay</td>
                     <td class="text-center">
-
+                        {{ $er[0]->e31a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e31b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e31c }}
                     </td>
                 </tr>
                 <tr>
@@ -512,13 +523,13 @@
                         kurso
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e32a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e32b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e32c }}
                     </td>
                 </tr>
                 <tr>
@@ -527,49 +538,49 @@
                         trabaho
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e33a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e33b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e33c }}
                     </td>
                 </tr>
                 <tr>
                     <td>34. Di nakabayad ng utang</td>
                     <td class="text-center">
-
+                        {{ $er[0]->e34a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e34b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e34c }}
                     </td>
                 </tr>
                 <tr>
                     <td>35. Biktima ng scam</td>
                     <td class="text-center">
-
+                        {{ $er[0]->e35a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e35b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e35c }}
                     </td>
                 </tr>
                 <tr>
                     <td>36. Biktima ng illegal recruiter</td>
                     <td class="text-center">
-
+                        {{ $er[0]->e36a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e36b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e36c }}
                     </td>
                 </tr>
                 <tr>
@@ -577,37 +588,37 @@
                         37. Lumipat ng tirahan sa ibang munisipyo
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e37a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e37b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e37c }}
                     </td>
                 </tr>
                 <tr>
                     <td>38. Walang life insurance</td>
                     <td class="text-center">
-
+                        {{ $er[0]->e38a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e38b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e38c }}
                     </td>
                 </tr>
                 <tr>
                     <td>39. Walang health insurance</td>
                     <td class="text-center">
-
+                        {{ $er[0]->e39a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e39b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e39c }}
                     </td>
                 </tr>
                 <tr>
@@ -615,49 +626,49 @@
                         40. Naghahanapbuhay pero walang SSS o GSIS
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e40a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e40b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e40c }}
                     </td>
                 </tr>
                 <tr>
                     <td>41. Pagkalugi sa negosyo</td>
                     <td class="text-center">
-
+                        {{ $er[0]->e41a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e41b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e41c }}
                     </td>
                 </tr>
                 <tr>
                     <td>42. Pagsangla ng ari-arian</td>
                     <td class="text-center">
-
+                        {{ $er[0]->e42a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e42b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e42c }}
                     </td>
                 </tr>
                 <tr>
                     <td>43. Paghiram ng pera sa kamag-anak</td>
                     <td class="text-center">
-
+                        {{ $er[0]->e43a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e43b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e43c }}
                     </td>
                 </tr>
                 <tr>
@@ -666,17 +677,17 @@
                         nakkatanggap ng pension
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e44a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e44b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $er[0]->e44c }}
                     </td>
                 </tr>
                 <!-- economic risk 14 rows -->
-                <tr :class="risksHeaderClass">
+                <tr>
                     <td>ENVIRONMENT AND DISASTER RISKS</td>
                     <td></td>
                     <td></td>
@@ -685,25 +696,25 @@
                 <tr>
                     <td>45. Biktima ng sunog</td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr45a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr45b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr45c }}
                     </td>
                 </tr>
                 <tr>
                     <td>46. Biktima ng bagyo o tagtuyot</td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr46a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr46b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr46c }}
                     </td>
                 </tr>
                 <tr>
@@ -711,13 +722,13 @@
                         47. Biktima ng lindol o pagputok ng bulkan
                     </td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr47a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr47b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr47c }}
                     </td>
                 </tr>
                 <tr>
@@ -726,42 +737,42 @@
                         kalamidad
                     </td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr48a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr48b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr48c }}
                     </td>
                 </tr>
                 <tr>
                     <td>49. Demolisyon</td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr49a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr49b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr49c }}
                     </td>
                 </tr>
                 <tr>
                     <td>50. Tumira sa relocation o resettlement</td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr50a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr50b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $edr[0]->edr50c }}
                     </td>
                 </tr>
                 <!-- environmental risk 6 rows -->
                 <!-- social and governance risk 24 rows -->
-                <tr :class="risksHeaderClass">
+                <tr>
                     <td>SOCIAL AND GOVERNANCE RISKS</td>
                     <td></td>
                     <td></td>
@@ -770,13 +781,13 @@
                 <tr>
                     <td>51. Biktima ng pagnanakaw sa bahay</td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s51a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s51b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s51c }}
                     </td>
                 </tr>
                 <tr>
@@ -785,25 +796,25 @@
                         daan
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s52a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s52b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s52c }}
                     </td>
                 </tr>
                 <tr>
                     <td>53. Nakaranas ng sekswal na karahasan</td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s53a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s53b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s53c }}
                     </td>
                 </tr>
                 <tr>
@@ -812,13 +823,13 @@
                         sa barangay
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s54a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s54b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s54c }}
                     </td>
                 </tr>
                 <tr>
@@ -826,13 +837,13 @@
                         55. Namatayan ng kapamilya dahil sa krimen
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s55a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s55b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s55c }}
                     </td>
                 </tr>
                 <tr>
@@ -841,25 +852,25 @@
                         sa komunidad
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s56a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s56b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s56c }}
                     </td>
                 </tr>
                 <tr>
                     <td>57. Karahasan kaugnay sa eleksyon</td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s57a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s57b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s57c }}
                     </td>
                 </tr>
                 <tr>
@@ -867,38 +878,38 @@
                         58. Takot at panggugulo dahil sa pulitika
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s58a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s58b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s58c }}
                     </td>
                 </tr>
                 <tr>
                     <td>59. Pag-aalsa laban sa pamahalaan</td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s59a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s59b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s59c }}
                     </td>
                 </tr>
 
                 <tr>
                     <td>60. Pangugulo ng militar</td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s60a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s60b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s60c }}
                     </td>
                 </tr>
                 <tr>
@@ -907,37 +918,37 @@
                         asawa, anak etc.
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s61a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s61b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s61c }}
                     </td>
                 </tr>
                 <tr>
                     <td>62. Pang-aabuso sa menor de edad</td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s62a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s62b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s62c }}
                     </td>
                 </tr>
                 <tr>
                     <td>63. Pagtatrabaho ng menor de edad</td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s63a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s63b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s63c }}
                     </td>
                 </tr>
                 <tr>
@@ -946,13 +957,13 @@
                         bribery, embezzlement etc)
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s64a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s64b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s64c }}
                     </td>
                 </tr>
                 <tr>
@@ -961,61 +972,61 @@
                         komunidad
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s65a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s65b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s65c }}
                     </td>
                 </tr>
                 <tr>
                     <td>66. Di bumoboto</td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s66a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s66b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s66c }}
                     </td>
                 </tr>
                 <tr>
                     <td>67. Di kasapi ng anumang organisasyon</td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s67a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s67b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s67c }}
                     </td>
                 </tr>
                 <tr>
                     <td>68. Pag-angkin ng lupa ng iba</td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s68a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s68b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s68c }}
                     </td>
                 </tr>
                 <tr>
                     <td>69. Tradisyon na nakakasama sa tao.</td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s69a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s69b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s69c }}
                     </td>
                 </tr>
 
@@ -1025,13 +1036,13 @@
                         relihiyon
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s70a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s70b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s70c }}
                     </td>
                 </tr>
                 <tr>
@@ -1039,13 +1050,13 @@
                         71. Nakaranas ng mabagal na judicial system
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s71a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s71b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s71c }}
                     </td>
                 </tr>
                 <tr>
@@ -1054,13 +1065,13 @@
                         kasarian (ethnicity, gender, etc)
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s72a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s72b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s72c }}
                     </td>
                 </tr>
                 <tr>
@@ -1069,13 +1080,13 @@
                         ng tribu
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s73a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s73b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s73c }}
                     </td>
                 </tr>
                 <tr>
@@ -1084,13 +1095,13 @@
                         mag-anak
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s74a }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s74b }}
                     </td>
                     <td class="text-center">
-
+                        {{ $sgr[0]->s74c }}
                     </td>
                 </tr>
             </tbody>
