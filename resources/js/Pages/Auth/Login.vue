@@ -1,5 +1,5 @@
 <script setup>
-import BreezeButton from '../../Components/Button.vue';
+import BreezeButton from "../../Components/Button.vue";
 import BreezeCheckbox from "../../Components/Checkbox.vue";
 import BreezeGuestLayout from "../../Layouts/Guest.vue";
 import BreezeInput from "../../Components/Input.vue";
@@ -63,18 +63,7 @@ const submit = () => {
                 />
             </div>
 
-            <!-- <div class="block mt-4">
-                <label class="flex items-center">
-                    <BreezeCheckbox name="remember" v-model:checked="form.remember" />
-                    <span class="ml-2 text-sm text-gray-600">Remember me</span>
-                </label>
-            </div> -->
-
             <div class="flex items-center justify-end mt-5">
-                <!-- <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 hover:text-gray-900">
-                    Forgot your password?
-                </Link> -->
-                <!-- class="ml-4" -->
                 <BreezeButton
                     class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
                     :class="{ 'opacity-25': form.processing }"

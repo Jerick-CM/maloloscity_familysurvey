@@ -42,12 +42,15 @@ Route::group(['prefix' => 'request/familysurvey', 'middleware' => ['throttle:500
     Route::get('/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'show']);
 
     Route::post('/', [\App\Http\Controllers\Api\FamilySurveyController::class, 'store']);
-    Route::post('/fetch', [\App\Http\Controllers\FamilySurveyController::class, 'fetch']);
+
     Route::post('/getSelectfield', [\App\Http\Controllers\Api\FamilySurveyController::class, 'getSearchfield']);
     Route::post('/update/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'update']);
     Route::post('/delete/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'destroy']);
 });
 
+Route::group(['prefix' => 'table/familysurvey', 'middleware' => ['throttle:500,1']], function () {
+    Route::post('/fetch', [\App\Http\Controllers\FamilySurveyController::class, 'fetch']);
+});
 
 Route::group(['prefix' => 'report/', 'middleware' => ['permission:Action Download SurveyForm', 'throttle:500,1']], function () {
     Route::get('/pdf/{barangay}', [PDFController::class, 'survey_report']);

@@ -520,6 +520,7 @@ export default {
                                     </div>
                                 </div>
                             </template>
+                            
                             <template #loading>
                                 <div role="status">
                                     <svg
@@ -542,20 +543,7 @@ export default {
                                     <span>Loading...</span>
                                 </div>
                             </template>
-                            <template #item-qr_hash="item">
-                                <div class="operation-wrapper flex">
-                                    <div class="p-1">
-                                        <button
-                                            @click="
-                                                view_itinerary(item.qr_hash)
-                                            "
-                                            class="text-xs bg-blue-700 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded"
-                                        >
-                                            View
-                                        </button>
-                                    </div>
-                                </div>
-                            </template>
+
                             <template #item-action="item">
                                 <div class="operation-wrapper flex">
                                     <div
