@@ -81,7 +81,7 @@ export default function useFamilySurveys() {
     ) => {
         errors_fs.value = "";
         try {
-            let response = await axios.post("/table/familysurvey/fetch/", {
+            let response = await axios.post("/table/familysurvey/fetch", {
                 options: options.value,
                 params: params,
             });

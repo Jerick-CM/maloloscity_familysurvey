@@ -520,7 +520,6 @@ export default {
                                     </div>
                                 </div>
                             </template>
-                            
                             <template #loading>
                                 <div role="status">
                                     <svg

@@ -1,6 +1,6 @@
 <script>
 import BreezeAuthenticatedLayout from "./../../Layouts/Form.vue";
-import Breadcrumb from "./../../Components/BreadCrumb/navSurveyCreate.vue";
+import Breadcrumb from "./../../Components/BreadCrumb/navSurveyEdit.vue";
 import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
 import { ref, reactive, computed, onMounted, watch } from "vue";
 import useFamilySurveys from "./../../composables/familysurvey";
@@ -23,7 +23,6 @@ export default {
     },
     props: ["barangays", "municipalities"],
     setup(props, { attrs, slots, emit, expose }) {
-
         const toast = useToast();
         const brgys = computed(() => props.barangays);
         const filteredBrgys = ref([]);
@@ -246,7 +245,7 @@ export default {
                                         fill="currentColor"
                                     />
                                 </svg>
-                                <span>Submit</span>
+                                <span>Update</span>
                             </button>
                         </div>
                     </div>
@@ -3005,7 +3004,7 @@ export default {
                                         fill="currentColor"
                                     />
                                 </svg>
-                                Submit
+                                Update
                             </button>
                         </div>
                     </div>
