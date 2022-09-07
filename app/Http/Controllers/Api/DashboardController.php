@@ -11,20 +11,12 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $respondents_count = RespondentsInformation::count();
-        $respondents_per_barangay =  DB::select("SELECT count(*) as y, barangay as 'name' FROM `respondents_information` GROUP BY barangay  ORDER BY y DESC;");
-        $top10barangay =  DB::select("SELECT count(*) as y, barangay as 'name' FROM `respondents_information` GROUP BY barangay  ORDER BY y DESC Limit 10;");
+        $respondents_count = RespondentsInformation::whereNull('respondents_information.deleted_at')->count();
+        $respondents_per_barangay =  DB::select("SELECT count(*) as y, barangay as 'name' FROM `respondents_information` where deleted_at IS NULL GROUP BY barangay  ORDER BY y DESC;");
+        $top10barangay =  DB::select("SELECT count(*) as y, barangay as 'name' FROM `respondents_information` where deleted_at IS NULL GROUP BY barangay  ORDER BY y DESC Limit 10;");
 
-        $fourPs_member = RespondentsInformation::where('four_ps_beneficiary', 1)->count();
-        $fourPs_non_member = RespondentsInformation::where('four_ps_beneficiary', 0)->count();
-        // $itinerary_business_pending = RespondentsInformation::where('four_ps_beneficiary',0)->count();
-        // $itinerary_business_completed = ItineraryBusiness::whereNotNull('completed_time')->count();
-
-
-        // $business_count = Business::count();
-        // $itinerary_count = ItineraryBusiness::count();
-        // $itinerary_business_pending = ItineraryBusiness::whereNull('completed_time')->count();
-        // $itinerary_business_completed = ItineraryBusiness::whereNotNull('completed_time')->count();
+        $fourPs_member = RespondentsInformation::where('four_ps_beneficiary', 1)->whereNull('respondents_information.deleted_at')->count();
+        $fourPs_non_member = RespondentsInformation::where('four_ps_beneficiary', 0)->whereNull('respondents_information.deleted_at')->count();
 
 
         return response()->json([
