@@ -28734,8 +28734,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         destroyFamilySurvey = _useFamilySurveys.destroyFamilySurvey,
         errors_fs = _useFamilySurveys.errors_fs,
         loadFromServer = _useFamilySurveys.loadFromServer;
-    /* Datatable */
 
+    var url = (0,vue__WEBPACK_IMPORTED_MODULE_3__.ref)("");
+    /* Datatable */
 
     var loading = (0,vue__WEBPACK_IMPORTED_MODULE_3__.ref)(true);
     var selectedItems = (0,vue__WEBPACK_IMPORTED_MODULE_3__.ref)([]);
@@ -28865,8 +28866,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
 
     var generatePDF = function generatePDF() {
-      var url = hosting.value + "/report/pdf/" + searchParameter.filterValue;
-      window.open(url);
+      if (searchParameter.filterValue == null) {
+        url.value = hosting.value + "/report/pdf/" + "all";
+      } else if (searchParameter.filterValue == "") {
+        url.value = hosting.value + "/report/pdf/" + "all";
+      } else {
+        url.value = hosting.value + "/report/pdf/" + searchParameter.filterValue;
+      }
+
+      window.open(url.value);
     };
 
     var removeSurvey = /*#__PURE__*/function () {

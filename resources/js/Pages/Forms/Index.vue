@@ -40,8 +40,9 @@ export default {
             errors_fs,
             loadFromServer,
         } = useFamilySurveys();
-
+        const url = ref("");
         /* Datatable */
+
         const loading = ref(true);
         const selectedItems = ref([]);
         const serverItemsLength = ref(0);
@@ -129,9 +130,18 @@ export default {
             server_sided();
         };
         const generatePDF = () => {
-            const url =
-                hosting.value + "/report/pdf/" + searchParameter.filterValue;
-            window.open(url);
+            if (searchParameter.filterValue == null) {
+                url.value = hosting.value + "/report/pdf/" + "all";
+            } else if (searchParameter.filterValue == "") {
+                url.value = hosting.value + "/report/pdf/" + "all";
+            } else {
+                url.value =
+                    hosting.value +
+                    "/report/pdf/" +
+                    searchParameter.filterValue;
+            }
+
+            window.open(url.value);
         };
 
         const removeSurvey = async (id) => {
