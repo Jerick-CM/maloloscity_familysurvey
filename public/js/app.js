@@ -38515,6 +38515,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(_ctx.inputClass),
         placeholder: "",
+        novalidate: "",
         type: "date"
       }, null, 2
       /* CLASS */

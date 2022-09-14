@@ -14,6 +14,7 @@ export default function useFamilySurveys() {
 
     const getFamilySurvey = async (id) => {
         let response = await axios.get("/request/familysurvey/" + id);
+        
         (familysurvey.value = response.data.data),
             (family_position.value = {
                 value: response.data.data.family_position,

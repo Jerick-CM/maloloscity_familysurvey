@@ -267,3 +267,10 @@ php artisan make:controller IndividualLifeCycleRiskController --model=Individual
 php artisan make:controller EconomicRiskController --model=EconomicRisk
 php artisan make:controller EnvironmentAndDisasterRiskController --model=EnvironmentAndDisasterRisk
 php artisan make:controller SocialAndGovernanceRiskController --model=SocialAndGovernanceRisk
+
+
+
+ composer require doctrine/dbal
+
+
+ php artisan db:seed --class=FixSeeder

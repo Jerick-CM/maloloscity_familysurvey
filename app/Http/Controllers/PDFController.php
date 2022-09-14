@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\RespondentsInformation;
 use PDF;
 use Carbon\Carbon;
 use DateTime;
@@ -16,6 +17,9 @@ class PDFController extends Controller
     {
 
         if ($barangay == 'all') {
+
+            $FourPs = RespondentsInformation::where('four_ps_beneficiary', 1)
+                ->whereNull('respondents_information.deleted_at')->count();
 
             $ilr = DB::table('individual_lifecycle_risks')
                 ->select(
@@ -355,9 +359,10 @@ class PDFController extends Controller
                 ->join('respondents_information', 'social_and_governance_risks.information_id', '=', 'respondents_information.id')
                 ->whereNull('respondents_information.deleted_at')
                 ->get();
-      
-            } else {
-
+        } else {
+            $FourPs = RespondentsInformation::where('four_ps_beneficiary', 1)
+                ->where('respondents_information.barangay', '=', $barangay)
+                ->whereNull('respondents_information.deleted_at')->count();
 
             $ilr = DB::table('individual_lifecycle_risks')
 
@@ -716,6 +721,7 @@ class PDFController extends Controller
             'er' => $er,
             'edr' => $edr,
             'sgr' => $sgr,
+            'four_ps' => $FourPs
         ];
 
         $pdf = PDF::loadView('survey', $data);

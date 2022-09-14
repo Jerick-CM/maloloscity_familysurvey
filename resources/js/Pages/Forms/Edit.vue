@@ -71,6 +71,7 @@ export default {
                 social_and_governance_risks.value;
 
             submission_process.value = false;
+            
             await updateFamilySurvey(route().params.id).then(() => {
                 if (errors_fs.value) {
                     submission_process.value = false;
@@ -465,6 +466,7 @@ export default {
                                 v-model="familysurvey.four_ps_beneficiary_date"
                                 :class="inputClass"
                                 placeholder=""
+                                novalidate
                                 type="date"
                             />
                         </div>

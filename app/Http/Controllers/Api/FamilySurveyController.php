@@ -172,7 +172,8 @@ class FamilySurveyController extends Controller
         DB::commit();
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'data' => $request->input
         ]);
     }
 
@@ -332,7 +333,8 @@ class FamilySurveyController extends Controller
         DB::commit();
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'data' => $request->all()
         ]);
     }
 
@@ -365,7 +367,8 @@ class FamilySurveyController extends Controller
         DB::commit();
 
         return response()->json([
-            'success' => true
+            'success' => true,
+
         ]);
     }
 
