@@ -41,8 +41,6 @@ class FamilySurveyController extends Controller
         ]);
     }
 
-
-
     public function fetch(Request $request)
     {
         $options = $request->options;
@@ -56,15 +54,24 @@ class FamilySurveyController extends Controller
                 $reqs =  $reqs->where($params['filterField'], $params['filterValue']);
             }
         }
-        if ($params['searchValue'] != "") {
+
+
+        if ($params['searchField'] != "") {
             $reqs = $reqs->where(function ($query) use ($params) {
                 $word = str_replace(" ", "%", $params['searchValue']);
-                $query->where([['full_name', 'LIKE', "%" . $word . "%"]])
-                    ->orWhere([['first_name', 'LIKE', "%" . $word . "%"]])
-                    ->orWhere([['last_name', 'LIKE', "%" . $word . "%"]])
-                    ->orWhere([['middle_name', 'LIKE', "%" . $word . "%"]])
-                    ->orWhere([['barangay', 'LIKE', "%" . $word . "%"]]);
+                $query->where([[$params['searchField'], 'LIKE', "%" . $word . "%"]]);
             });
+        } else {
+            if ($params['searchValue'] != "") {
+                $reqs = $reqs->where(function ($query) use ($params) {
+                    $word = str_replace(" ", "%", $params['searchValue']);
+                    $query->where([['full_name', 'LIKE', "%" . $word . "%"]])
+                        ->orWhere([['first_name', 'LIKE', "%" . $word . "%"]])
+                        ->orWhere([['last_name', 'LIKE', "%" . $word . "%"]])
+                        ->orWhere([['middle_name', 'LIKE', "%" . $word . "%"]])
+                        ->orWhere([['barangay', 'LIKE', "%" . $word . "%"]]);
+                });
+            }
         }
 
         $reqs->take($options['rowsPerPage']);
@@ -72,11 +79,6 @@ class FamilySurveyController extends Controller
             $query  = $reqs->orderBy($options['sortBy'],  strtoupper($options['sortType']));
         }
 
-        // if ($request->sortBy) {
-        //     $query  = $reqs->orderBy($request->sortBy,  strtoupper($request->sortType));
-        // } else {
-        //     $query =  $reqs->orderBy('id', 'DESC');
-        // }
 
         $query =  $reqs->offset(($options['page'] - 1) * $limit);
         $reqs =  $query->get();

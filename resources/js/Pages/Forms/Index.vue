@@ -336,6 +336,16 @@ export default {
                                 >
                                     <option value="" selected>ALL</option>
                                     <option value="full_name">Full Name</option>
+                                    <option value="first_name">
+                                        First Name
+                                    </option>
+                                    <option value="last_name">Last Name</option>
+                                    <option value="barangay">Barangay</option>
+                                    <option value="sitio">Sitio</option>
+                                    <option value="purok">Purok</option>
+                                    <option value="name_suffix">
+                                        Name Suffix
+                                    </option>
                                 </select>
                             </form>
 
