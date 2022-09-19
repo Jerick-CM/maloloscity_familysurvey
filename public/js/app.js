@@ -28167,44 +28167,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }],
         colors: ["#1aadce", "#9346dd", "#fe5288", "#0183d6", "#f4a62f", "#492970", "#f28f43", "#77a1e5", "#c42525", "#a6c96a"]
       };
-    }); // const chartTypeData = computed(() => {
-    //     return {
-    //         chart: {
-    //             type: "pie",
-    //             options3d: {
-    //                 enabled: true,
-    //                 alpha: 45,
-    //             },
-    //         },
-    //         title: {
-    //             text: "Application Type",
-    //         },
-    //         plotOptions: {
-    //             pie: {
-    //                 innerSize: 100,
-    //                 depth: 45,
-    //             },
-    //         },
-    //         series: [
-    //             {
-    //                 name: "Applications",
-    //                 data: typeData.value,
-    //             },
-    //         ],
-    //         colors: [
-    //             "#9346dd",
-    //             "#fe5288",
-    //             "#0183d6",
-    //             "#f4a62f",
-    //             "#1aadce",
-    //             "#492970",
-    //             "#f28f43",
-    //             "#77a1e5",
-    //             "#c42525",
-    //             "#a6c96a",
-    //         ],
-    //     };
-    // });
+    });
 
     var onRender = function onRender() {};
 
@@ -28218,7 +28181,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       onRender: onRender,
       onUpdate: onUpdate,
       onDestroy: onDestroy,
-      // chartTypeData,
       chartOptions_pie: chartOptions_pie,
       chartOptions_bar: chartOptions_bar,
       chartOptions_column: chartOptions_column,
@@ -28824,7 +28786,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var serverItemsLength = (0,vue__WEBPACK_IMPORTED_MODULE_3__.ref)(0);
     var serverOptions = (0,vue__WEBPACK_IMPORTED_MODULE_3__.ref)({
       page: 1,
-      rowsPerPage: 10
+      rowsPerPage: 10,
+      sortBy: "id",
+      sortType: "desc"
     });
     var searchParameter = (0,vue__WEBPACK_IMPORTED_MODULE_3__.reactive)({
       searchField: "name",
@@ -28836,7 +28800,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     var headers = (0,vue__WEBPACK_IMPORTED_MODULE_3__.ref)([{
       text: "Id",
-      value: "id"
+      value: "id",
+      sortable: true
     }, {
       text: "Name",
       value: "full_name",
@@ -28844,27 +28809,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }, {
       text: "Barangay",
       value: "barangay",
-      sortable: false
+      sortable: true
     }, {
       text: "Family Position",
       value: "family_position",
-      sortable: false
+      sortable: true
     }, {
       text: "Number of Children",
       value: "number_of_children",
-      sortable: false
+      sortable: true
     }, {
       text: "Total Family in House",
       value: "number_of_people_in_household",
-      sortable: false
+      sortable: true
     }, {
       text: "4P's Beneficiary",
-      value: "fourps",
-      sortable: false
+      value: "four_ps_beneficiary",
+      sortable: true
     }, {
       text: "Date / Time",
       value: "createddate",
-      sortable: false
+      sortable: true
     }, {
       text: "Action",
       value: "action",
@@ -28999,6 +28964,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     (0,vue__WEBPACK_IMPORTED_MODULE_3__.watch)(function () {
       return searchParameter.searchValue;
+    }, function (value) {
+      server_sided();
+    });
+    (0,vue__WEBPACK_IMPORTED_MODULE_3__.watch)(function () {
+      return searchParameter.sortBy;
     }, function (value) {
       server_sided();
     });
@@ -41093,6 +41063,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, _hoisted_49, 512
       /* NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.searchParameter.searchField]])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EasyDataTable, {
+        "must-sort": "",
         "show-index": "",
         "server-options": $setup.serverOptions,
         "onUpdate:server-options": _cache[8] || (_cache[8] = function ($event) {
@@ -41109,6 +41080,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         loading: $setup.loading,
         "rows-items": [10, 25, 50, 100]
       }, {
+        "item-four_ps_beneficiary": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (item) {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.four_ps_beneficiary == 1 ? "Yes" : "No"), 1
+          /* TEXT */
+          )];
+        }),
         expand: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (item) {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Edit "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, [$setup.permissions.includes('Action Edit SurveyForm') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Link, {
             key: 0,
@@ -44423,7 +44399,6 @@ function useFamilySurveys() {
 
               if (_context3.t0.response.status === 500) {
                 errors_fs.value = {
-                  // message: "error 500",
                   errors: {
                     error: "server Error 500"
                   }

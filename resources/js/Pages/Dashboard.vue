@@ -290,44 +290,6 @@ export default {
                 ],
             };
         });
-        // const chartTypeData = computed(() => {
-        //     return {
-        //         chart: {
-        //             type: "pie",
-        //             options3d: {
-        //                 enabled: true,
-        //                 alpha: 45,
-        //             },
-        //         },
-        //         title: {
-        //             text: "Application Type",
-        //         },
-        //         plotOptions: {
-        //             pie: {
-        //                 innerSize: 100,
-        //                 depth: 45,
-        //             },
-        //         },
-        //         series: [
-        //             {
-        //                 name: "Applications",
-        //                 data: typeData.value,
-        //             },
-        //         ],
-        //         colors: [
-        //             "#9346dd",
-        //             "#fe5288",
-        //             "#0183d6",
-        //             "#f4a62f",
-        //             "#1aadce",
-        //             "#492970",
-        //             "#f28f43",
-        //             "#77a1e5",
-        //             "#c42525",
-        //             "#a6c96a",
-        //         ],
-        //     };
-        // });
 
         const onRender = () => {};
 
@@ -340,7 +302,6 @@ export default {
             onRender,
             onUpdate,
             onDestroy,
-            // chartTypeData,
             chartOptions_pie,
             chartOptions_bar,
             chartOptions_column,
@@ -448,7 +409,9 @@ export default {
                         <div class="">
                             <vue-highcharts
                                 type="chart"
-                                :options="chartOptions_respondents_by_numberofchildren"
+                                :options="
+                                    chartOptions_respondents_by_numberofchildren
+                                "
                                 :redrawOnUpdate="true"
                                 :oneToOneUpdate="false"
                                 :animateOnUpdate="true"
@@ -461,7 +424,9 @@ export default {
                         <div class="">
                             <vue-highcharts
                                 type="chart"
-                                :options="chartOptions_respondents_by_numberoffamilies"
+                                :options="
+                                    chartOptions_respondents_by_numberoffamilies
+                                "
                                 :redrawOnUpdate="true"
                                 :oneToOneUpdate="false"
                                 :animateOnUpdate="true"

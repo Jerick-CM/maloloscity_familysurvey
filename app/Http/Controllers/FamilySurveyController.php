@@ -41,30 +41,44 @@ class FamilySurveyController extends Controller
         ]);
     }
 
-    public function fetch1(Request $request)
+
+
+    public function fetch(Request $request)
     {
         $options = $request->options;
         $params = $request->params;
 
         $limit =  $options['rowsPerPage'] ? $options['rowsPerPage'] : 10;
         $reqs = RespondentsInformation::query();
+
         if (isset($params['filterField'])) {
             if ($params['filterField'] != "") {
                 $reqs =  $reqs->where($params['filterField'], $params['filterValue']);
             }
         }
+        if ($params['searchValue'] != "") {
+            $reqs = $reqs->where(function ($query) use ($params) {
+                $word = str_replace(" ", "%", $params['searchValue']);
+                $query->where([['full_name', 'LIKE', "%" . $word . "%"]])
+                    ->orWhere([['first_name', 'LIKE', "%" . $word . "%"]])
+                    ->orWhere([['last_name', 'LIKE', "%" . $word . "%"]])
+                    ->orWhere([['middle_name', 'LIKE', "%" . $word . "%"]])
+                    ->orWhere([['barangay', 'LIKE', "%" . $word . "%"]]);
+            });
+        }
 
-        $reqs = $reqs->where(function ($query) use ($params) {
+        $reqs->take($options['rowsPerPage']);
+        if (isset($options['sortBy'])) {
+            $query  = $reqs->orderBy($options['sortBy'],  strtoupper($options['sortType']));
+        }
 
-            $word = str_replace(" ", "%", $params['searchValue']);
-            $query->where([['full_name', 'LIKE', "%" . $word . "%"]])
-                ->orWhere([['first_name', 'LIKE', "%" . $word . "%"]])
-                ->orWhere([['last_name', 'LIKE', "%" . $word . "%"]])
-                ->orWhere([['middle_name', 'LIKE', "%" . $word . "%"]])
-                ->orWhere([['barangay', 'LIKE', "%" . $word . "%"]]);
-        })->take($options['rowsPerPage']);
+        // if ($request->sortBy) {
+        //     $query  = $reqs->orderBy($request->sortBy,  strtoupper($request->sortType));
+        // } else {
+        //     $query =  $reqs->orderBy('id', 'DESC');
+        // }
 
-        $query =  $reqs->orderBy('id', 'DESC')->offset(($options['page'] - 1) * $limit);
+        $query =  $reqs->offset(($options['page'] - 1) * $limit);
         $reqs =  $query->get();
 
         if (isset($params['filterField'])) {
@@ -80,49 +94,7 @@ class FamilySurveyController extends Controller
         return response()->json([
             'data' => $reqs,
             'totalRecords' => $count,
-        ]);
-    }
-
-    public function fetch(Request $request)
-    {
-        $options = $request->options;
-        $params = $request->params;
-
-        $limit =  $options['rowsPerPage'] ? $options['rowsPerPage'] : 10;
-        $reqs = RespondentsInformation::query();
-        
-        // if (isset($params['filterField'])) {
-        //     if ($params['filterField'] != "") {
-        //         $reqs =  $reqs->where($params['filterField'], $params['filterValue']);
-        //     }
-        // }
-
-        $reqs = $reqs->where(function ($query) use ($params) {
-
-            $word = str_replace(" ", "%", $params['searchValue']);
-            $query->where([['full_name', 'LIKE', "%" . $word . "%"]])
-                ->orWhere([['first_name', 'LIKE', "%" . $word . "%"]])
-                ->orWhere([['last_name', 'LIKE', "%" . $word . "%"]])
-                ->orWhere([['middle_name', 'LIKE', "%" . $word . "%"]])
-                ->orWhere([['barangay', 'LIKE', "%" . $word . "%"]]);
-        })->take($options['rowsPerPage']);
-
-        $query =  $reqs->orderBy('id', 'DESC')->offset(($options['page'] - 1) * $limit);
-        $reqs =  $query->get();
-
-        // if (isset($params['filterField'])) {
-        //     if ($params['filterField'] != "") {
-        //         $count = RespondentsInformation::where($params['filterField'], $params['filterValue'])->count();
-        //     } else {
-        //         $count = RespondentsInformation::count();
-        //     }
-        // } else {
-        //     $count = RespondentsInformation::count();
-        // }
-        $count = RespondentsInformation::count();
-        return response()->json([
-            'data' => $reqs,
-            'totalRecords' => $count,
+            'params' => $params
         ]);
     }
 }

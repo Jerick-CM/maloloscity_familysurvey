@@ -49,6 +49,8 @@ export default {
         const serverOptions = ref({
             page: 1,
             rowsPerPage: 10,
+            sortBy: "id",
+            sortType: "desc",
         });
 
         const searchParameter = reactive({
@@ -61,34 +63,34 @@ export default {
         /* Datatable */
 
         const headers = ref([
-            { text: "Id", value: "id" },
+            { text: "Id", value: "id", sortable: true },
             { text: "Name", value: "full_name", sortable: true },
             {
                 text: "Barangay",
                 value: "barangay",
-                sortable: false,
+                sortable: true,
             },
             {
                 text: "Family Position",
                 value: "family_position",
-                sortable: false,
+                sortable: true,
             },
             {
                 text: "Number of Children",
                 value: "number_of_children",
-                sortable: false,
+                sortable: true,
             },
             {
                 text: "Total Family in House",
                 value: "number_of_people_in_household",
-                sortable: false,
+                sortable: true,
             },
             {
                 text: "4P's Beneficiary",
-                value: "fourps",
-                sortable: false,
+                value: "four_ps_beneficiary",
+                sortable: true,
             },
-            { text: "Date / Time", value: "createddate", sortable: false },
+            { text: "Date / Time", value: "createddate", sortable: true },
             { text: "Action", value: "action", sortable: false },
         ]);
 
@@ -160,7 +162,12 @@ export default {
                 server_sided();
             }
         );
-
+        watch(
+            () => searchParameter.sortBy,
+            (value) => {
+                server_sided();
+            }
+        );
         watch(
             () => serverOptions.value,
             (value) => {
@@ -435,6 +442,7 @@ export default {
                     </div>
                     <div>
                         <EasyDataTable
+                            must-sort
                             show-index
                             v-model:server-options="serverOptions"
                             v-model:items-selected="selectedItems"
@@ -446,6 +454,11 @@ export default {
                             :rows-items="[10, 25, 50, 100]"
                         >
                             <!--  -->
+                            <template #item-four_ps_beneficiary="item">
+                                {{
+                                    item.four_ps_beneficiary == 1 ? "Yes" : "No"
+                                }}
+                            </template>
                             <template #expand="item">
                                 <div class="">
                                     <div class="md:grid md:grid-rows">

@@ -14,7 +14,7 @@ export default function useFamilySurveys() {
 
     const getFamilySurvey = async (id) => {
         let response = await axios.get("/request/familysurvey/" + id);
-        
+
         (familysurvey.value = response.data.data),
             (family_position.value = {
                 value: response.data.data.family_position,
@@ -47,7 +47,6 @@ export default function useFamilySurveys() {
             }
             if (e.response.status === 500) {
                 errors_fs.value = {
-                    // message: "error 500",
                     errors: { error: "server Error 500" },
                 };
             }
@@ -57,7 +56,10 @@ export default function useFamilySurveys() {
     const updateFamilySurvey = async (id) => {
         errors_fs.value = "";
         try {
-            await axios.post("/request/familysurvey/update/" + id, familysurvey.value);
+            await axios.post(
+                "/request/familysurvey/update/" + id,
+                familysurvey.value
+            );
         } catch (e) {
             if (e.response.status === 422) {
                 errors_fs.value = e.response.data.errors;
