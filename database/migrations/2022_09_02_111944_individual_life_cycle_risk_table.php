@@ -42,7 +42,7 @@ class IndividualLifeCycleRiskTable extends Migration
             $table->tinyInteger('stop_in_school_or_dropout_in_elementary_or_highschool');
             //20
             $table->tinyInteger('drug_addiction');
-            $table->tinyInteger('teen_below_18yearsold');
+            $table->tinyInteger('teen_pregnancy_below_18yearsold');
             $table->tinyInteger('ranaway_from_home');
             $table->tinyInteger('familymember_in_abroad');
             $table->tinyInteger('working_in_municipality_or_city');

@@ -173,7 +173,7 @@ class FamilySurveyController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $request->input
+            // 'data' => $request->input
         ]);
     }
 

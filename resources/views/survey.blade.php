@@ -44,6 +44,8 @@
                 <br>
                 <span style="font-size:14px;">Barangay: {{ $barangay }}</span>
                 <br>
+                <span style="font-size:14px;">4P's Beneficiary: {{ $four_ps }}</span>
+                <br>
             </div>
             <div class="col-sm">
 
