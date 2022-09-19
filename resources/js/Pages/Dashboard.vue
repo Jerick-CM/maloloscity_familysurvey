@@ -180,17 +180,14 @@ export default {
             };
         });
 
-        const chartTypeData = computed(() => {
+        const chartOptions_respondents_by_position = computed(() => {
             return {
                 chart: {
-                    type: "pie",
-                    options3d: {
-                        enabled: true,
-                        alpha: 45,
-                    },
+                    type: "column",
                 },
+
                 title: {
-                    text: "Application Type",
+                    text: "Respondents by Family Role",
                 },
                 plotOptions: {
                     pie: {
@@ -200,16 +197,17 @@ export default {
                 },
                 series: [
                     {
-                        name: "Applications",
-                        data: typeData.value,
+                        name: "Family Position",
+                        colorByPoint: true,
+                        data: dashboards.value.respondents_by_position,
                     },
                 ],
                 colors: [
+                    "#1aadce",
                     "#9346dd",
                     "#fe5288",
                     "#0183d6",
                     "#f4a62f",
-                    "#1aadce",
                     "#492970",
                     "#f28f43",
                     "#77a1e5",
@@ -219,29 +217,138 @@ export default {
             };
         });
 
-        const onRender = () => {
+        const chartOptions_respondents_by_numberofchildren = computed(() => {
+            return {
+                chart: {
+                    type: "column",
+                },
 
-        };
+                title: {
+                    text: "Total number of children",
+                },
+                plotOptions: {
+                    pie: {
+                        innerSize: 100,
+                        depth: 45,
+                    },
+                },
+                series: [
+                    {
+                        name: "Number of Children",
+                        colorByPoint: true,
+                        data: dashboards.value.respondents_by_numberofchildren,
+                    },
+                ],
+                colors: [
+                    "#1aadce",
+                    "#9346dd",
+                    "#fe5288",
+                    "#0183d6",
+                    "#f4a62f",
+                    "#492970",
+                    "#f28f43",
+                    "#77a1e5",
+                    "#c42525",
+                    "#a6c96a",
+                ],
+            };
+        });
 
-        const onUpdate = () => {
+        const chartOptions_respondents_by_numberoffamilies = computed(() => {
+            return {
+                chart: {
+                    type: "column",
+                },
 
-        };
+                title: {
+                    text: "Respondents by Total Families in the household",
+                },
+                plotOptions: {
+                    pie: {
+                        innerSize: 100,
+                        depth: 45,
+                    },
+                },
+                series: [
+                    {
+                        name: "Total number of families ",
+                        colorByPoint: true,
+                        data: dashboards.value.respondents_by_numberoffamilies,
+                    },
+                ],
+                colors: [
+                    "#1aadce",
+                    "#9346dd",
+                    "#fe5288",
+                    "#0183d6",
+                    "#f4a62f",
+                    "#492970",
+                    "#f28f43",
+                    "#77a1e5",
+                    "#c42525",
+                    "#a6c96a",
+                ],
+            };
+        });
+        // const chartTypeData = computed(() => {
+        //     return {
+        //         chart: {
+        //             type: "pie",
+        //             options3d: {
+        //                 enabled: true,
+        //                 alpha: 45,
+        //             },
+        //         },
+        //         title: {
+        //             text: "Application Type",
+        //         },
+        //         plotOptions: {
+        //             pie: {
+        //                 innerSize: 100,
+        //                 depth: 45,
+        //             },
+        //         },
+        //         series: [
+        //             {
+        //                 name: "Applications",
+        //                 data: typeData.value,
+        //             },
+        //         ],
+        //         colors: [
+        //             "#9346dd",
+        //             "#fe5288",
+        //             "#0183d6",
+        //             "#f4a62f",
+        //             "#1aadce",
+        //             "#492970",
+        //             "#f28f43",
+        //             "#77a1e5",
+        //             "#c42525",
+        //             "#a6c96a",
+        //         ],
+        //     };
+        // });
 
-        const onDestroy = () => {
+        const onRender = () => {};
 
-        };
+        const onUpdate = () => {};
+
+        const onDestroy = () => {};
         return {
             dashboards,
             chartData,
             onRender,
             onUpdate,
             onDestroy,
-            chartTypeData,
+            // chartTypeData,
             chartOptions_pie,
             chartOptions_bar,
             chartOptions_column,
             total_itineraries,
             chartOptions_business_barangay,
+            chartOptions_respondents_by_position,
+            chartOptions_respondents_by_numberofchildren,
+            chartOptions_respondents_by_numberoffamilies,
         };
     },
 };
@@ -274,20 +381,15 @@ export default {
                         >
                             <span class="py-2 text-xl">
                                 4 P's:
-                                {{
-                                    dashboards.fourPs
-                                }}</span
+                                {{ dashboards.fourPs }}</span
                             >
                         </div>
 
                         <div
                             class="mx-1 mt-1 py-5 px-5 bg-blue-700 h-20 sm:rounded-lg text-white text-center"
                         >
-                            <span class="py-5 px-5 text-xl"
-                                >    Non - 4 P's:
-                                {{
-                                    dashboards.nonfourPs
-                                }}</span
+                            <span class="py-5 px-5 text-xl">
+                                Non - 4 P's: {{ dashboards.nonfourPs }}</span
                             >
                         </div>
                     </div>
@@ -321,6 +423,45 @@ export default {
                             <vue-highcharts
                                 type="chart"
                                 :options="chartOptions_column"
+                                :redrawOnUpdate="true"
+                                :oneToOneUpdate="false"
+                                :animateOnUpdate="true"
+                                @rendered="onRender"
+                                @update="onUpdate"
+                                @destroy="onDestroy"
+                            />
+                        </div>
+                    </div>
+                    <div class="md:grid md:grid-cols-3 py-5">
+                        <div>
+                            <vue-highcharts
+                                type="chart"
+                                :options="chartOptions_respondents_by_position"
+                                :redrawOnUpdate="true"
+                                :oneToOneUpdate="false"
+                                :animateOnUpdate="true"
+                                @rendered="onRender"
+                                @update="onUpdate"
+                                @destroy="onDestroy"
+                            />
+                        </div>
+                        <div class="">
+                            <vue-highcharts
+                                type="chart"
+                                :options="chartOptions_respondents_by_numberofchildren"
+                                :redrawOnUpdate="true"
+                                :oneToOneUpdate="false"
+                                :animateOnUpdate="true"
+                                @rendered="onRender"
+                                @update="onUpdate"
+                                @destroy="onDestroy"
+                            />
+                        </div>
+
+                        <div class="">
+                            <vue-highcharts
+                                type="chart"
+                                :options="chartOptions_respondents_by_numberoffamilies"
                                 :redrawOnUpdate="true"
                                 :oneToOneUpdate="false"
                                 :animateOnUpdate="true"

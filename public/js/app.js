@@ -28102,17 +28102,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         colors: ["#1aadce", "#9346dd", "#fe5288", "#0183d6", "#f4a62f", "#492970", "#f28f43", "#77a1e5", "#c42525", "#a6c96a"]
       };
     });
-    var chartTypeData = (0,vue__WEBPACK_IMPORTED_MODULE_3__.computed)(function () {
+    var chartOptions_respondents_by_position = (0,vue__WEBPACK_IMPORTED_MODULE_3__.computed)(function () {
       return {
         chart: {
-          type: "pie",
-          options3d: {
-            enabled: true,
-            alpha: 45
-          }
+          type: "column"
         },
         title: {
-          text: "Application Type"
+          text: "Respondents by Family Role"
         },
         plotOptions: {
           pie: {
@@ -28121,12 +28117,94 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         },
         series: [{
-          name: "Applications",
-          data: typeData.value
+          name: "Family Position",
+          colorByPoint: true,
+          data: dashboards.value.respondents_by_position
         }],
-        colors: ["#9346dd", "#fe5288", "#0183d6", "#f4a62f", "#1aadce", "#492970", "#f28f43", "#77a1e5", "#c42525", "#a6c96a"]
+        colors: ["#1aadce", "#9346dd", "#fe5288", "#0183d6", "#f4a62f", "#492970", "#f28f43", "#77a1e5", "#c42525", "#a6c96a"]
       };
     });
+    var chartOptions_respondents_by_numberofchildren = (0,vue__WEBPACK_IMPORTED_MODULE_3__.computed)(function () {
+      return {
+        chart: {
+          type: "column"
+        },
+        title: {
+          text: "Total number of children"
+        },
+        plotOptions: {
+          pie: {
+            innerSize: 100,
+            depth: 45
+          }
+        },
+        series: [{
+          name: "Number of Children",
+          colorByPoint: true,
+          data: dashboards.value.respondents_by_numberofchildren
+        }],
+        colors: ["#1aadce", "#9346dd", "#fe5288", "#0183d6", "#f4a62f", "#492970", "#f28f43", "#77a1e5", "#c42525", "#a6c96a"]
+      };
+    });
+    var chartOptions_respondents_by_numberoffamilies = (0,vue__WEBPACK_IMPORTED_MODULE_3__.computed)(function () {
+      return {
+        chart: {
+          type: "column"
+        },
+        title: {
+          text: "Respondents by Total Families in the household"
+        },
+        plotOptions: {
+          pie: {
+            innerSize: 100,
+            depth: 45
+          }
+        },
+        series: [{
+          name: "Total number of families ",
+          colorByPoint: true,
+          data: dashboards.value.respondents_by_numberoffamilies
+        }],
+        colors: ["#1aadce", "#9346dd", "#fe5288", "#0183d6", "#f4a62f", "#492970", "#f28f43", "#77a1e5", "#c42525", "#a6c96a"]
+      };
+    }); // const chartTypeData = computed(() => {
+    //     return {
+    //         chart: {
+    //             type: "pie",
+    //             options3d: {
+    //                 enabled: true,
+    //                 alpha: 45,
+    //             },
+    //         },
+    //         title: {
+    //             text: "Application Type",
+    //         },
+    //         plotOptions: {
+    //             pie: {
+    //                 innerSize: 100,
+    //                 depth: 45,
+    //             },
+    //         },
+    //         series: [
+    //             {
+    //                 name: "Applications",
+    //                 data: typeData.value,
+    //             },
+    //         ],
+    //         colors: [
+    //             "#9346dd",
+    //             "#fe5288",
+    //             "#0183d6",
+    //             "#f4a62f",
+    //             "#1aadce",
+    //             "#492970",
+    //             "#f28f43",
+    //             "#77a1e5",
+    //             "#c42525",
+    //             "#a6c96a",
+    //         ],
+    //     };
+    // });
 
     var onRender = function onRender() {};
 
@@ -28140,12 +28218,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       onRender: onRender,
       onUpdate: onUpdate,
       onDestroy: onDestroy,
-      chartTypeData: chartTypeData,
+      // chartTypeData,
       chartOptions_pie: chartOptions_pie,
       chartOptions_bar: chartOptions_bar,
       chartOptions_column: chartOptions_column,
       total_itineraries: total_itineraries,
-      chartOptions_business_barangay: chartOptions_business_barangay
+      chartOptions_business_barangay: chartOptions_business_barangay,
+      chartOptions_respondents_by_position: chartOptions_respondents_by_position,
+      chartOptions_respondents_by_numberofchildren: chartOptions_respondents_by_numberofchildren,
+      chartOptions_respondents_by_numberoffamilies: chartOptions_respondents_by_numberoffamilies
     };
   }
 });
@@ -32501,6 +32582,15 @@ var _hoisted_14 = {
   "class": ""
 };
 var _hoisted_15 = {
+  "class": "md:grid md:grid-cols-3 py-5"
+};
+var _hoisted_16 = {
+  "class": ""
+};
+var _hoisted_17 = {
+  "class": ""
+};
+var _hoisted_18 = {
   "class": "w-full"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -32557,6 +32647,39 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 8
       /* PROPS */
       , ["options", "onRendered", "onUpdate", "onDestroy"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_vue_highcharts, {
+        type: "chart",
+        options: $setup.chartOptions_respondents_by_position,
+        redrawOnUpdate: true,
+        oneToOneUpdate: false,
+        animateOnUpdate: true,
+        onRendered: $setup.onRender,
+        onUpdate: $setup.onUpdate,
+        onDestroy: $setup.onDestroy
+      }, null, 8
+      /* PROPS */
+      , ["options", "onRendered", "onUpdate", "onDestroy"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_vue_highcharts, {
+        type: "chart",
+        options: $setup.chartOptions_respondents_by_numberofchildren,
+        redrawOnUpdate: true,
+        oneToOneUpdate: false,
+        animateOnUpdate: true,
+        onRendered: $setup.onRender,
+        onUpdate: $setup.onUpdate,
+        onDestroy: $setup.onDestroy
+      }, null, 8
+      /* PROPS */
+      , ["options", "onRendered", "onUpdate", "onDestroy"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_vue_highcharts, {
+        type: "chart",
+        options: $setup.chartOptions_respondents_by_numberoffamilies,
+        redrawOnUpdate: true,
+        oneToOneUpdate: false,
+        animateOnUpdate: true,
+        onRendered: $setup.onRender,
+        onUpdate: $setup.onUpdate,
+        onDestroy: $setup.onDestroy
+      }, null, 8
+      /* PROPS */
+      , ["options", "onRendered", "onUpdate", "onDestroy"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_vue_highcharts, {
         type: "chart",
         options: $setup.chartOptions_business_barangay,
         redrawOnUpdate: true,
