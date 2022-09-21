@@ -16,14 +16,12 @@ export default {
         BreezeNavLink,
     },
     setup() {
-
         const toast = useToast();
         const Auth_User = ref(usePage().props.value.auth.user);
         const permissions = usePage().props.value.auth.user.PermissionList;
         const {
             users,
-            getUsers,
-            getUsersById,
+
             exportUserData,
             destroyUser_with_logs,
             loadFromServer,
@@ -31,15 +29,10 @@ export default {
         } = useUsers();
         const isLoading = ref(false);
         const headers = ref([
-            // {
-            //     text: "Id",
-            //     value: "id",
-            //     sortable: false,
-            // },
-            { text: "Name", value: "name", sortable: false },
-            { text: "Email", value: "email", sortable: false },
-            { text: "Role", value: "userrole", sortable: false },
-            { text: "Date/Time", value: "createddate", sortable: false },
+            { text: "Name", value: "name", sortable: true },
+            { text: "Email", value: "email", sortable: true },
+            { text: "Role", value: "userrole", sortable: true },
+            { text: "Date/Time", value: "createddate", sortable: true },
             { text: "Action", value: "action", sortable: false },
         ]);
 
@@ -50,6 +43,8 @@ export default {
         const serverOptions = ref({
             page: 1,
             rowsPerPage: 10,
+            sortBy: "id",
+            sortType: "desc",
         });
         const searchParameter = reactive({
             searchField: "name",
@@ -266,6 +261,7 @@ export default {
 
                 <div>
                     <EasyDataTable
+                        must-sort
                         show-index
                         v-model:server-options="serverOptions"
                         :server-items-length="serverItemsLength"

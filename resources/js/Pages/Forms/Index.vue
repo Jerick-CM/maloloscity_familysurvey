@@ -54,7 +54,7 @@ export default {
         });
 
         const searchParameter = reactive({
-            searchField: "name",
+            searchField: "full_name",
             searchValue: "",
             filterField: "",
             filterValue: "",
@@ -553,6 +553,7 @@ export default {
                                     </div>
                                 </div>
                             </template>
+                            
                             <template #loading>
                                 <div role="status">
                                     <svg

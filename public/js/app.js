@@ -28791,7 +28791,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       sortType: "desc"
     });
     var searchParameter = (0,vue__WEBPACK_IMPORTED_MODULE_3__.reactive)({
-      searchField: "name",
+      searchField: "full_name",
       searchValue: "",
       filterField: "",
       filterValue: ""
@@ -29821,35 +29821,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     var _useUsers = (0,_composables_user__WEBPACK_IMPORTED_MODULE_3__["default"])(),
         users = _useUsers.users,
-        getUsers = _useUsers.getUsers,
-        getUsersById = _useUsers.getUsersById,
         exportUserData = _useUsers.exportUserData,
         destroyUser_with_logs = _useUsers.destroyUser_with_logs,
         loadFromServer = _useUsers.loadFromServer,
         errors_users_table = _useUsers.errors_users_table;
 
     var isLoading = (0,vue__WEBPACK_IMPORTED_MODULE_4__.ref)(false);
-    var headers = (0,vue__WEBPACK_IMPORTED_MODULE_4__.ref)([// {
-    //     text: "Id",
-    //     value: "id",
-    //     sortable: false,
-    // },
-    {
+    var headers = (0,vue__WEBPACK_IMPORTED_MODULE_4__.ref)([{
       text: "Name",
       value: "name",
-      sortable: false
+      sortable: true
     }, {
       text: "Email",
       value: "email",
-      sortable: false
+      sortable: true
     }, {
       text: "Role",
       value: "userrole",
-      sortable: false
+      sortable: true
     }, {
       text: "Date/Time",
       value: "createddate",
-      sortable: false
+      sortable: true
     }, {
       text: "Action",
       value: "action",
@@ -29862,7 +29855,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var serverItemsLength = (0,vue__WEBPACK_IMPORTED_MODULE_4__.ref)(0);
     var serverOptions = (0,vue__WEBPACK_IMPORTED_MODULE_4__.ref)({
       page: 1,
-      rowsPerPage: 10
+      rowsPerPage: 10,
+      sortBy: "id",
+      sortType: "desc"
     });
     var searchParameter = (0,vue__WEBPACK_IMPORTED_MODULE_4__.reactive)({
       searchField: "name",
@@ -43932,6 +43927,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, 8
       /* PROPS */
       , ["href"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EasyDataTable, {
+        "must-sort": "",
         "show-index": "",
         "server-options": $setup.serverOptions,
         "onUpdate:server-options": _cache[2] || (_cache[2] = function ($event) {
