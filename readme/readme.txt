@@ -273,4 +273,8 @@ php artisan make:controller SocialAndGovernanceRiskController --model=SocialAndG
  composer require doctrine/dbal
 
 
- php artisan db:seed --class=FixSeeder
+php artisan db:seed --class=FixSeeder
+
+php artisan make:migration create_isf_and_illegal_encrouchment_table
+
+php artisan make:seeder isf_informalsettlers_Seeder
