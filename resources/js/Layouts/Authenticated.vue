@@ -104,6 +104,18 @@ export default {
                                     Survey Form
                                 </BreezeNavLink>
                             </div>
+
+                            <div
+                                v-if="permissions.includes('Access-Page-ISF')"
+                                class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
+                            >
+                                <BreezeNavLink
+                                    :href="route('isf-index')"
+                                    :active="route().current('isf-index')"
+                                >
+                                    ISF and IE Page
+                                </BreezeNavLink>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -244,6 +256,19 @@ export default {
                             Survey Forms
                         </BreezeResponsiveNavLink>
                     </div>
+
+                    <div
+                        v-if="permissions.includes('Access-Page-ISF')"
+                        class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
+                    >
+                        <BreezeNavLink
+                            :href="route('isf-index')"
+                            :active="route().current('isf-index')"
+                        >
+                            ISF and IE Page
+                        </BreezeNavLink>
+                    </div>
+
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200">
                         <div class="px-4">

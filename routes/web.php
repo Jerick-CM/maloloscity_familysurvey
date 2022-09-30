@@ -48,6 +48,13 @@ Route::group(['prefix' => 'request/familysurvey', 'middleware' => ['throttle:500
     Route::post('/delete/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'destroy']);
 });
 
+Route::group(['prefix' => 'request/isf', 'middleware' => ['throttle:500,1']], function () {
+
+    Route::get('/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'show']);
+
+});
+
+
 Route::group(['prefix' => 'table/familysurvey', 'middleware' => ['throttle:500,1']], function () {
     Route::post('/fetch', [\App\Http\Controllers\FamilySurveyController::class, 'fetch']);
 });
@@ -91,6 +98,12 @@ Route::group(['prefix' => 'user', 'middleware' => ['permission:Access-Page-User'
     Route::get('/reset-password/{id}', function () {
         return Inertia::render('User/ResetPassword');
     })->middleware(['auth', 'verified'])->name('user-reset-password');
+});
+Route::group(['prefix' => 'isf', 'middleware' => ['permission:Access-Page-ISF', 'throttle:500,1']], function () {
+    /* index */
+    Route::get('/', function () {
+        return Inertia::render('ISF/Index');
+    })->middleware(['auth', 'verified'])->name('isf-index');
 });
 
 
