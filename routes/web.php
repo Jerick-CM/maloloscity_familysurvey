@@ -51,10 +51,12 @@ Route::group(['prefix' => 'request/isf', 'middleware' => ['throttle:500,1']], fu
 
     Route::get('/{id}', [\App\Http\Controllers\Api\ISFController::class, 'show']);
     Route::post('/fetch', [\App\Http\Controllers\Api\ISFController::class, 'fetch']);
+    Route::post('/update/{id}', [\App\Http\Controllers\Api\ISFController::class, 'update']);
+
 });
 
 Route::group(['prefix' => 'table/familysurvey', 'middleware' => ['throttle:500,1']], function () {
-    Route::post('/fetch', [\App\Http\Controllers\ISFController::class, 'fetch']);
+    Route::post('/fetch', [\App\Http\Controllers\FamilySurveyController::class, 'fetch']);
 });
 
 Route::group(['prefix' => 'report/', 'middleware' => ['permission:Action Download SurveyForm', 'throttle:500,1']], function () {
@@ -85,7 +87,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['permission:Access-Page-User'
     })->middleware(['auth', 'verified'])->name('user-create');
     /* edit */
 
-    Route::get('/edit/{id}',   [App\Http\Controllers\UserController::class, 'handleEdit'])->middleware(['auth', 'verified'])->name('user-edit');
+    Route::get('/edit/{id}', [App\Http\Controllers\UserController::class, 'handleEdit'])->middleware(['auth', 'verified'])->name('user-edit');
 
     /* changepassword */
     Route::get('/change-password/{id}', function () {
@@ -96,14 +98,15 @@ Route::group(['prefix' => 'user', 'middleware' => ['permission:Access-Page-User'
     Route::get('/reset-password/{id}', function () {
         return Inertia::render('User/ResetPassword');
     })->middleware(['auth', 'verified'])->name('user-reset-password');
+
 });
 
 Route::group(['prefix' => 'isf', 'middleware' => ['permission:Access-Page-ISF', 'throttle:500,1']], function () {
+
     /* index */
     Route::get('/', function () {
         return Inertia::render('ISF/Index');
     })->middleware(['auth', 'verified'])->name('isf-index');
-
 
     /* view */
     Route::get('/view/{id}', function () {
@@ -111,10 +114,8 @@ Route::group(['prefix' => 'isf', 'middleware' => ['permission:Access-Page-ISF', 
     })->middleware(['auth', 'verified'])->name('isf-view');
 
     /* edit */
-    Route::get('/edit', function () {
-        return Inertia::render('ISF/View');
-    })->middleware(['auth', 'verified'])->name('isf-edit');
- 
+    Route::get('/edit/{id}', [App\Http\Controllers\ISFController::class, 'handleISFEdit'])->middleware(['auth', 'verified'])->name('isf-edit');
+
 });
 /* User Page */
 Route::group(['prefix' => 'logs', 'middleware' => 'throttle:500,1'], function () {

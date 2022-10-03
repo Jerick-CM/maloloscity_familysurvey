@@ -35,7 +35,47 @@ class ISFController extends Controller
     public function update(Request $request, $id)
     {
         Validator::make($request->all(), [
+            // 'first_name' => ['required'],
+            // 'last_name' => ['required'],
+            // 'middle_name' => ['nullable'],
+            // 'barangay' => ['required'],
+            // 'family_position' => ['required'],
         ])->validate();
+
+
+        DB::beginTransaction();
+        try {
+            $isf = ISF::findOrfail($id);
+
+            $isf->body_of_water_name = $request->body_of_water_name;
+            $isf->body_of_water_type = $request->body_of_water_type;
+            $isf->household_head = $request->household_head;
+            $isf->birthdate = $request->birthdate;
+            $isf->spouse_name = $request->spouse_name;
+
+            $isf->spouse_birthdate = $request->spouse_birthdate;
+            $isf->spouse_name = $request->spouse_name;
+            $isf->tenurial_status = $request->tenurial_status;
+            $isf->no_of_family_members = $request->no_of_family_members;
+            $isf->street = $request->street;
+            
+            $isf->barangay = $request->barangay;
+            $isf->latitude = $request->latitude;
+            $isf->longitude = $request->longitude;
+            $isf->balik_probinsya = $request->balik_probinsya;
+            $isf->distance_to_waterway = $request->distance_to_waterway;
+            
+            $isf->zone = $request->zone;
+            $isf->date = $request->date;
+            $isf->save();
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json($e, 500);
+        }
+        DB::commit();
+
+
 
         return response()->json([
             'success' => true,

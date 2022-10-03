@@ -29,7 +29,7 @@ export default {
     }),
 
     setup(props) {
-        
+
         const Auth_user = computed(() => usePage().props.value.auth.user);
         const permissions = usePage().props.value.auth.user.PermissionList;
         const hosting = computed(() => props.hosting);
@@ -302,7 +302,7 @@ export default {
                                 </select>
                             </form>
 
-                            <!-- </div> -->
+                      
                         </div>
                         <div class="col-span-1 sm:col-span-1">
                             <label
@@ -501,7 +501,7 @@ export default {
                                                     "
                                                     :href="
                                                         route(
-                                                            'forms-edit',
+                                                            'isf-edit',
                                                             item.id
                                                         )
                                                     "
@@ -626,7 +626,7 @@ export default {
                                         "
                                     >
                                         <Link
-                                            :href="route('forms-edit', item.id)"
+                                            :href="route('isf-edit', item.id)"
                                         >
                                             <button
                                                 type="button"

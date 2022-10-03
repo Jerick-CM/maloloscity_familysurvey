@@ -36,8 +36,8 @@ export default function useISF_illegal_encroachment() {
         errors_isf.value = "";
         try {
             await axios.post(
-                "/request/familysurvey/update/" + id,
-                familysurvey.value
+                "/request/isf/update/" + id,
+                isf.value
             );
         } catch (e) {
             if (e.response.status === 422) {

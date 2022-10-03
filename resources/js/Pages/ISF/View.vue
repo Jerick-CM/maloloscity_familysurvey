@@ -63,26 +63,6 @@ export default {
             modal_show.value = !modal_show.value;
         };
 
-        const fetchSelectfield = async (query, field) => {
-            let data;
-            await axios
-                .post("/request/familysurvey/getSelectfield", {
-                    searchValue: query,
-                    field: field,
-                    ISF,
-                })
-                .then((response) => {
-                    data = response.data.data.map((item) => {
-                        return {
-                            value: eval("item." + field),
-                            label: eval("item." + field),
-                        };
-                    });
-                });
-
-            return data;
-        };
-
         watch(
             () => form.municipality,
             (value) => {
@@ -126,12 +106,15 @@ export default {
                     </p>
                 </div>
             </div>
-
+            <!-- row 1 -->
             <div class="my-3 bg-white rounded p-5 sm:p1">
-                <div class="py-1 font-semibold">I. Pagkakakilanlan</div>
+                <div class="py-1 font-semibold">I.</div>
 
-                <div class="py-1 font-medium text-red-700">1. Pangalan</div>
+                <div class="py-1 font-medium text-red-700">
+                    1. Water ways and filing date
+                </div>
 
+                <!-- row 1 water -->
                 <div class="flex flex-wrap -mx-3">
                     <div class="w-full md:w-1/4 px-3 py-1">
                         <label
@@ -143,33 +126,208 @@ export default {
                             v-model="isf.body_of_water_name"
                             :class="inputClass"
                             type="text"
-                            placeholder="First Name"
+                            placeholder=""
                         />
                     </div>
                     <div class="w-full md:w-1/4 px-3 py-1">
                         <label
                             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                         >
-                            Middle Name or M.I.
+                            Body of Water Type
                         </label>
                         <input
                             v-model="isf.body_of_water_type"
                             :class="inputClass"
                             type="text"
-                            placeholder="Middle Name or Middle Initial"
+                            placeholder=""
                         />
                     </div>
                     <div class="w-full md:w-1/4 px-3 py-1">
                         <label
                             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                         >
-                            Last Name
+                            Distance to Waterways
                         </label>
                         <input
                             :class="inputClass"
                             v-model="isf.distance_to_waterway"
                             type="text"
-                            placeholder="Last Name"
+                            placeholder=""
+                        />
+                    </div>
+                    <div class="w-full md:w-1/4 px-3 py-1">
+                        <label
+                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        >
+                            Filing Date
+                        </label>
+                        <input
+                            :class="inputClass"
+                            v-model="isf.date"
+                            type="text"
+                            placeholder=""
+                        />
+                    </div>
+                </div>
+
+                <!-- row 2 name and info -->
+                <div class="py-1 font-medium text-red-700">
+                    2. Personal Info
+                </div>
+                <div class="flex flex-wrap -mx-3">
+                    <div class="w-full md:w-1/4 px-3 py-1">
+                        <label
+                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        >
+                            Household Head
+                        </label>
+                        <input
+                            v-model="isf.household_head"
+                            :class="inputClass"
+                            type="text"
+                            placeholder=""
+                        />
+                    </div>
+                    <div class="w-full md:w-1/4 px-3 py-1">
+                        <label
+                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        >
+                            Birth date (YYYY/MM/DD)
+                        </label>
+                        <input
+                            v-model="isf.birthdate"
+                            :class="inputClass"
+                            type="text"
+                            placeholder=""
+                        />
+                    </div>
+                    <div class="w-full md:w-1/4 px-3 py-1">
+                        <label
+                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        >
+                            Spouse Name
+                        </label>
+                        <input
+                            :class="inputClass"
+                            v-model="isf.spouse_name"
+                            type="text"
+                            placeholder=""
+                        />
+                    </div>
+                    <div class="w-full md:w-1/4 px-3 py-1">
+                        <label
+                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        >
+                            Spouse Birthdate (YYYY/MM/DD)
+                        </label>
+                        <input
+                            :class="inputClass"
+                            v-model="isf.spouse_birthdate"
+                            type="text"
+                            placeholder="Distance to waterways"
+                        />
+                    </div>
+                </div>
+
+                <!-- row 3 family and info -->
+                <div class="py-1 font-medium text-red-700">
+                    3. Address and Geographical Location
+                </div>
+                <div class="flex flex-wrap -mx-3">
+                    <div class="w-full md:w-1/4 px-3 py-1">
+                        <label
+                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        >
+                            Street
+                        </label>
+                        <input
+                            v-model="isf.street"
+                            :class="inputClass"
+                            type="text"
+                            placeholder="Street"
+                        />
+                    </div>
+                    <div class="w-full md:w-1/4 px-3 py-1">
+                        <label
+                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        >
+                            Barangay
+                        </label>
+                        <input
+                            :class="inputClass"
+                            v-model="isf.barangay"
+                            type="text"
+                            placeholder="Barangay"
+                        />
+                    </div>
+                    <div class="w-full md:w-1/4 px-3 py-1">
+                        <label
+                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        >
+                            Latitude
+                        </label>
+                        <input
+                            v-model="isf.latitude"
+                            :class="inputClass"
+                            type="text"
+                            placeholder=""
+                        />
+                    </div>
+                    <div class="w-full md:w-1/4 px-3 py-1">
+                        <label
+                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        >
+                            Longitude
+                        </label>
+                        <input
+                            v-model="isf.longitude"
+                            :class="inputClass"
+                            type="text"
+                            placeholder=""
+                        />
+                    </div>
+                </div>
+
+                <!-- row 4  -->
+                <div class="py-1 font-medium text-red-700">4. Status </div>
+                <div class="flex flex-wrap -mx-3">
+                    <div class="w-full md:w-1/4 px-3 py-1">
+                        <label
+                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        >
+                            Balik Probinsya
+                        </label>
+                        <input
+                            v-model="isf.household_head"
+                            :class="inputClass"
+                            type="text"
+                            placeholder=""
+                        />
+                    </div>
+                    <div class="w-full md:w-1/4 px-3 py-1">
+                        <label
+                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        >
+                            Number of Family Members
+                        </label>
+                        <input
+                            :class="inputClass"
+                            v-model="isf.no_of_family_members"
+                            type="text"
+                            placeholder=""
+                        />
+                    </div>
+                    <div class="w-full md:w-1/4 px-3 py-1">
+                        <label
+                            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                        >
+                            Tenurial Status
+                        </label>
+                        <input
+                            :class="inputClass"
+                            v-model="isf.tenurial_status"
+                            type="text"
+                            placeholder=""
                         />
                     </div>
                 </div>
@@ -183,84 +341,6 @@ th,
 td {
     border: 1px solid black;
 }
-/*
-table {
-    border: 1px solid #ccc;
-    border-collapse: collapse;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    table-layout: fixed;
-}
-
-table caption {
-    font-size: 1.5em;
-    margin: 0.5em 0 0.75em;
-}
-
-table tr {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    padding: 0.35em;
-}
-
-table th,
-table td {
-    padding: 0.625em;
-    text-align: center;
-}
-
-table th {
-    font-size: 0.85em;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-}
-
-@media screen and (max-width: 600px) {
-    table {
-        border: 0;
-    }
-
-    table caption {
-        font-size: 1.3em;
-    }
-
-    table thead {
-        border: none;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
-
-    table tr {
-        border-bottom: 3px solid #ddd;
-        display: block;
-        margin-bottom: 0.625em;
-    }
-
-    table td {
-        border-bottom: 1px solid #ddd;
-        display: block;
-        font-size: 0.8em;
-        text-align: right;
-    }
-
-    table td::before {
-
-        content: attr(data-label);
-        float: left;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-
-    table td:last-child {
-        border-bottom: 0;
-    }
-} */
 
 input[type="radio"] + label span {
     transition: background 0.2s, transform 0.2s;
