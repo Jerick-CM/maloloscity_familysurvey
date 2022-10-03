@@ -23,7 +23,6 @@ use App\Models\User;
 
 Route::get('/', [AuthenticatedSessionController::class, 'create']);
 
-
 Route::group(['middleware' => ['permission:Access-Page-SurveyForm']], function () {
     Route::get('/forms-create',  [App\Http\Controllers\FamilySurveyController::class, 'handleCreate'])->middleware(['auth', 'verified'])->name('forms-create');
 });
@@ -50,13 +49,13 @@ Route::group(['prefix' => 'request/familysurvey', 'middleware' => ['throttle:500
 
 Route::group(['prefix' => 'request/isf', 'middleware' => ['throttle:500,1']], function () {
 
-    Route::get('/{id}', [\App\Http\Controllers\Api\FamilySurveyController::class, 'show']);
+    Route::get('/{id}', [\App\Http\Controllers\Api\ISFController::class, 'show']);
+    Route::post('/fetch', [\App\Http\Controllers\Api\ISFController::class, 'fetch']);
 
 });
 
-
 Route::group(['prefix' => 'table/familysurvey', 'middleware' => ['throttle:500,1']], function () {
-    Route::post('/fetch', [\App\Http\Controllers\FamilySurveyController::class, 'fetch']);
+    Route::post('/fetch', [\App\Http\Controllers\ISFController::class, 'fetch']);
 });
 
 Route::group(['prefix' => 'report/', 'middleware' => ['permission:Action Download SurveyForm', 'throttle:500,1']], function () {
@@ -99,6 +98,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['permission:Access-Page-User'
         return Inertia::render('User/ResetPassword');
     })->middleware(['auth', 'verified'])->name('user-reset-password');
 });
+
 Route::group(['prefix' => 'isf', 'middleware' => ['permission:Access-Page-ISF', 'throttle:500,1']], function () {
     /* index */
     Route::get('/', function () {
@@ -120,7 +120,9 @@ Route::group(['middleware' => ['permission:Action Settings Roles', 'throttle:500
         return Inertia::render('Roles');
     })->middleware(['auth', 'verified'])->name('roles');
 });
+
 /* Msc */
+
 Route::get('phpinfo', function () {
     echo phpinfo();
 });

@@ -6,8 +6,8 @@ import { ref, onMounted, reactive, watch, computed } from "vue";
 import Multiselect from "@vueform/multiselect";
 import { useToast } from "vue-toastification";
 
-import Breadcrumb from "./../../Components/BreadCrumb/navSurveyIndex.vue";
-import useFamilySurveys from "./../../composables/familysurvey";
+import Breadcrumb from "./../../Components/BreadCrumb/navISFIndex.vue";
+import useISF from "./../../composables/isf_and_illegalencroachments";
 export default {
     components: {
         Breadcrumb,
@@ -34,12 +34,7 @@ export default {
         const hosting = computed(() => props.hosting);
         const toast = useToast();
         const form = reactive({});
-        const {
-            familysurveys,
-            destroyFamilySurvey,
-            errors_fs,
-            loadFromServer,
-        } = useFamilySurveys();
+        const { isfs, destroyISF, errors_isf, loadFromServer } = useISF();
         const url = ref("");
         /* Datatable */
 
@@ -54,7 +49,7 @@ export default {
         });
 
         const searchParameter = reactive({
-            searchField: "full_name",
+            searchField: "household_head",
             searchValue: "",
             filterField: "",
             filterValue: "",
@@ -64,33 +59,54 @@ export default {
 
         const headers = ref([
             { text: "Id", value: "id", sortable: true },
-            { text: "Name", value: "full_name", sortable: true },
+            { text: "Household Head", value: "household_head", sortable: true },
             {
                 text: "Barangay",
                 value: "barangay",
                 sortable: true,
             },
             {
-                text: "Family Position",
-                value: "family_position",
+                text: "Balik Probinsya",
+                value: "balik_probinsya",
                 sortable: true,
             },
             {
-                text: "Number of Children",
-                value: "number_of_children",
+                text: "Tenurial Status",
+                value: "tenurial_status",
                 sortable: true,
             },
             {
-                text: "Total Family in House",
-                value: "number_of_people_in_household",
+                text: "Body of Water Name",
+                value: "body_of_water_name",
                 sortable: true,
             },
             {
-                text: "4P's Beneficiary",
-                value: "four_ps_beneficiary",
+                text: "Body of Water Name Type",
+                value: "body_of_water_type",
                 sortable: true,
             },
-            { text: "Date / Time", value: "createddate", sortable: true },
+            {
+                text: "Street",
+                value: "street",
+                sortable: true,
+            },
+            {
+                text: "No. of Family Members",
+                value: "no_of_family_members",
+                sortable: true,
+            },
+
+            {
+                text: "Longitude",
+                value: "longitude",
+                sortable: true,
+            },
+            {
+                text: "Latitude",
+                value: "latitude",
+                sortable: true,
+            },
+            { text: "Date / Time", value: "date", sortable: true },
             { text: "Action", value: "action", sortable: false },
         ]);
 
@@ -101,7 +117,7 @@ export default {
         const server_sided = _.debounce(async () => {
             loading.value = true;
             await loadFromServer(
-                familysurveys,
+                isfs,
                 serverItemsLength,
                 serverOptions,
                 searchParameter
@@ -112,7 +128,7 @@ export default {
         const fetchSelectfield = async (query, field) => {
             let data;
             await axios
-                .post("/request/familysurvey/getSelectfield", {
+                .post("/request/isfs/getSelectfield", {
                     searchValue: query,
                     field: field,
                 })
@@ -151,7 +167,7 @@ export default {
                 return;
             }
             toast.info("Sending delete");
-            await destroyFamilySurvey(id);
+            await destroyISF(id);
             await server_sided();
             await toast.success("Delete success.");
         };
@@ -184,7 +200,7 @@ export default {
             serverOptions,
             searchParameter,
             permissions,
-            familysurveys,
+            isfs,
             selectedItems,
             fetchSelectfield,
             searchButton,
@@ -196,11 +212,12 @@ export default {
 </script>
 <template>
     <BreezeAuthenticatedLayout>
-        <Head title="Family Survey" />
-        <template #header> Family Survey </template>
+        <Head title="ISF and Illegal Encroachments" />
+        <template #header> ISF and Illegal Encroachments </template>
         <div class="">
             <div class="pb-10 py-2 w-full mx-auto sm:px-6 lg:px-8">
                 <Breadcrumb />
+
                 <div class="flex flex-col 2xl:flex-row xl:flex-row lg:flex-row">
                     <div
                         class="py-2 w-full 2xl:w-2/4 xl:w-2/4 lg:w-2/4 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-start place-content-start"
@@ -458,7 +475,7 @@ export default {
                             v-model:items-selected="selectedItems"
                             :server-items-length="serverItemsLength"
                             :headers="headers"
-                            :items="familysurveys"
+                            :items="isfs"
                             table-class-name="customize-table"
                             :loading="loading"
                             :rows-items="[10, 25, 50, 100]"
@@ -553,7 +570,7 @@ export default {
                                     </div>
                                 </div>
                             </template>
-                            
+
                             <template #loading>
                                 <div role="status">
                                     <svg
@@ -576,7 +593,17 @@ export default {
                                     <span>Loading...</span>
                                 </div>
                             </template>
+                            <template #item-no_of_family_members="item">
+                                <div class="text-right">
+                                    {{ item.no_of_family_members }}
+                                </div>
 
+                                <!-- <div class="operation-wrapper flex">
+                                    <div class="p-1">
+                                        {{ no_of_family_members }}
+                                    </div>
+                                </div> -->
+                            </template>
                             <template #item-action="item">
                                 <div class="operation-wrapper flex">
                                     <div

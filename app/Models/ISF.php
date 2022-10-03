@@ -10,27 +10,25 @@ use Carbon\Carbon;
 class ISF extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = "respondents_information";
+    protected $table = "isf_and_illegal_encroachment";
     public $timestamps = true;
-    protected $appends = ['createddate', 'fourps'];
     protected $fillable = [
-        'user_id',
-        'full_name',
-        'first_name',
-        'middle_name',
-        'last_name',
-        'name_suffix',
-        'family_position',
-        'number_of_children',
-        'number_of_people_in_household',
-        'four_ps_beneficiary',
-        'four_ps_beneficiary_id',
-        'four_ps_beneficiary_date',
-        'region',
-        'province',
-        'city',
+        'id',
+        'body_of_water_name',
+        'body_of_water_type',
+        'household_head',
+        'birthdate',
+        'spouse_name',
+        'spouse_birthdate',
+        'tenurial_status',
+        'no_of_family_members',
+        'street',
         'barangay',
-        'sitio',
-        'purok',
+        'latitude',
+        'longitude',
+        'balik_probinsya',
+        'distance_to_waterway',
+        'zone',
+        'date',
     ];
 }

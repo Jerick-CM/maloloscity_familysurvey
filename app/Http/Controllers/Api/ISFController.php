@@ -68,13 +68,8 @@ class ISFController extends Controller
         }
 
         $reqs = $reqs->where(function ($query) use ($params) {
-
             $word = str_replace(" ", "%", $params['searchValue']);
-            $query->where([['full_name', 'LIKE', "%" . $word . "%"]])
-                ->orWhere([['first_name', 'LIKE', "%" . $word . "%"]])
-                ->orWhere([['last_name', 'LIKE', "%" . $word . "%"]])
-                ->orWhere([['middle_name', 'LIKE', "%" . $word . "%"]])
-                ->orWhere([['barangay', 'LIKE', "%" . $word . "%"]]);
+            $query->where([['household_head', 'LIKE', "%" . $word . "%"]]);
         })->take($options['rowsPerPage']);
 
         $query =  $reqs->orderBy('id', 'DESC')->offset(($options['page'] - 1) * $limit);

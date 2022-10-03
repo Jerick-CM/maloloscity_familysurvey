@@ -1,7 +1,7 @@
 import { ref, reactive } from "vue";
 import axios from "axios";
 
-export default function useFamilySurveys() {
+export default function useISF_illegal_encroachment() {
     const isf = ref([]);
     const isfs = ref([]);
     const errors_isf = ref("");
@@ -63,7 +63,7 @@ export default function useFamilySurveys() {
     ) => {
         errors_isf.value = "";
         try {
-            let response = await axios.post("/table/familysurvey/fetch", {
+            let response = await axios.post("/request/isf/fetch", {
                 options: options.value,
                 params: params,
             });
