@@ -52,7 +52,7 @@ export default function useISF_illegal_encroachment() {
     };
 
     const destroyISF = async (id) => {
-        await axios.post("/request/familysurvey/delete/" + id);
+        await axios.post("/request/isf/delete/" + id);
     };
 
     const loadFromServer = async (

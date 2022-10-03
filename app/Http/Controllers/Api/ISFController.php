@@ -86,7 +86,11 @@ class ISFController extends Controller
 
     public function destroy(Request $request, $id)
     {
-     
+        /* delete isf */
+        $respondent = ISF::findOrfail($id);
+        $respondent->delete();
+
+
     }
 
 

@@ -163,7 +163,7 @@ export default {
             window.open(url.value);
         };
 
-        const removeSurvey = async (id) => {
+        const removeISF = async (id) => {
             if (!window.confirm("Are you sure?")) {
                 return;
             }
@@ -206,7 +206,7 @@ export default {
             fetchSelectfield,
             searchButton,
             generatePDF,
-            removeSurvey,
+            removeISF,
         };
     },
 };
@@ -540,7 +540,7 @@ export default {
                                                 >
                                                     <button
                                                         @click="
-                                                            removeSurvey(
+                                                            removeISF(
                                                                 item.id
                                                             )
                                                         "
@@ -645,7 +645,7 @@ export default {
                                         "
                                     >
                                         <button
-                                            @click="removeSurvey(item.id)"
+                                            @click="removeISF(item.id)"
                                             class="text-xs bg-red-700 hover:bg-red-400 text-white font-bold py-2 px-4 rounded"
                                         >
                                             Delete

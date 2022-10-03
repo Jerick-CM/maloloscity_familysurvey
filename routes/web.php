@@ -52,6 +52,7 @@ Route::group(['prefix' => 'request/isf', 'middleware' => ['throttle:500,1']], fu
     Route::get('/{id}', [\App\Http\Controllers\Api\ISFController::class, 'show']);
     Route::post('/fetch', [\App\Http\Controllers\Api\ISFController::class, 'fetch']);
     Route::post('/update/{id}', [\App\Http\Controllers\Api\ISFController::class, 'update']);
+    Route::post('/delete/{id}', [\App\Http\Controllers\Api\ISFController::class, 'destroy']);
 
 });
 
