@@ -51,7 +51,6 @@ Route::group(['prefix' => 'request/isf', 'middleware' => ['throttle:500,1']], fu
 
     Route::get('/{id}', [\App\Http\Controllers\Api\ISFController::class, 'show']);
     Route::post('/fetch', [\App\Http\Controllers\Api\ISFController::class, 'fetch']);
-
 });
 
 Route::group(['prefix' => 'table/familysurvey', 'middleware' => ['throttle:500,1']], function () {
@@ -104,9 +103,19 @@ Route::group(['prefix' => 'isf', 'middleware' => ['permission:Access-Page-ISF', 
     Route::get('/', function () {
         return Inertia::render('ISF/Index');
     })->middleware(['auth', 'verified'])->name('isf-index');
+
+
+    /* view */
+    Route::get('/view/{id}', function () {
+        return Inertia::render('ISF/View');
+    })->middleware(['auth', 'verified'])->name('isf-view');
+
+    /* edit */
+    Route::get('/edit', function () {
+        return Inertia::render('ISF/View');
+    })->middleware(['auth', 'verified'])->name('isf-edit');
+ 
 });
-
-
 /* User Page */
 Route::group(['prefix' => 'logs', 'middleware' => 'throttle:500,1'], function () {
     /* index */

@@ -7,12 +7,12 @@ export default function useISF_illegal_encroachment() {
     const errors_isf = ref("");
 
     const getISF = async (id) => {
-        let response = await axios.get("/request/familysurvey/" + id);
+        let response = await axios.get("/request/isf/" + id);
         isf.value = response.data.data;
     };
 
     const getISFs = async () => {
-        let response = await axios.get("/request/familysurveys");
+        let response = await axios.get("/request/isf");
         isfs.value = response.data.data;
     };
 

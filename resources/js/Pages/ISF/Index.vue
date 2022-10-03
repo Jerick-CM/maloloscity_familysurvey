@@ -29,6 +29,7 @@ export default {
     }),
 
     setup(props) {
+        
         const Auth_user = computed(() => usePage().props.value.auth.user);
         const permissions = usePage().props.value.auth.user.PermissionList;
         const hosting = computed(() => props.hosting);
@@ -495,7 +496,7 @@ export default {
                                                 <Link
                                                     v-if="
                                                         permissions.includes(
-                                                            'Action Edit SurveyForm'
+                                                            'Action Edit ISF'
                                                         )
                                                     "
                                                     :href="
@@ -533,7 +534,7 @@ export default {
                                                 <Link
                                                     v-if="
                                                         permissions.includes(
-                                                            'Action Delete SurveyForm'
+                                                            'Action Delete ISF'
                                                         )
                                                     "
                                                 >
@@ -597,20 +598,30 @@ export default {
                                 <div class="text-right">
                                     {{ item.no_of_family_members }}
                                 </div>
-
-                                <!-- <div class="operation-wrapper flex">
-                                    <div class="p-1">
-                                        {{ no_of_family_members }}
-                                    </div>
-                                </div> -->
                             </template>
                             <template #item-action="item">
                                 <div class="operation-wrapper flex">
+
+                                    <div
+                                        class="p-1"                                 
+                                    >
+                                        <Link
+                                            :href="route('isf-view', item.id)"
+                                        >
+                                            <button
+                                                type="button"
+                                                class="text-xs bg-green-700 hover:bg-green-400 text-white font-bold py-2 px-4 rounded"
+                                            >
+                                                View
+                                            </button>
+                                        </Link>
+                                    </div>
+
                                     <div
                                         class="p-1"
                                         v-if="
                                             permissions.includes(
-                                                'Action Edit SurveyForm'
+                                                'Action Edit ISF'
                                             )
                                         "
                                     >
@@ -629,7 +640,7 @@ export default {
                                         class="p-1"
                                         v-if="
                                             permissions.includes(
-                                                'Action Delete SurveyForm'
+                                                'Action Delete ISF'
                                             )
                                         "
                                     >

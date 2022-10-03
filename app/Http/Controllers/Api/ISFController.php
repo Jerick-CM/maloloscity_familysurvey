@@ -26,18 +26,15 @@ class ISFController extends Controller
 
     }
 
-
     public function show(Request $request, $id)
     {
-        $data = ISF::first();
+        $data = ISF::where('id', $id)->first();
         return response()->json(['data' => $data]);
     }
-
 
     public function update(Request $request, $id)
     {
         Validator::make($request->all(), [
-
         ])->validate();
 
         return response()->json([
