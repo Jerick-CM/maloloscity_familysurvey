@@ -19,7 +19,7 @@ export default function useISF_illegal_encroachment() {
     const storeISF = async (data) => {
         errors_isf.value = "";
         try {
-            await axios.post("/request/isf", data);
+            await axios.post("/request/isf/", data);
         } catch (e) {
             if (e.response.status === 422) {
                 errors_isf.value = e.response.data.errors;
