@@ -23,6 +23,57 @@ class ISFController extends Controller
 
     public function store(ISFRequest $request)
     {
+        Validator::make($request->all(), [
+            'first_name' => ['nullable'],
+            'last_name' => ['nullable'],
+            'middle_name' => ['nullable'],
+        ])->validate();
+
+        DB::beginTransaction();
+        try {
+
+            $fullname = $request->first_name . " " . $request->middle_name . " " . $request->last_name . " " . $request->name_suffix;
+            $spouse_fullname = $request->spouse_first_name . " " . $request->spouse_middle_name . " " . $request->spouse_last_name . " " . $request->spouse_name_suffix;
+
+            $ISF = ISF::create(
+                [
+
+                    'full_name' => $fullname,
+                    'first_name' => $request->first_name,
+                    'middle_name' => $request->middle_name,
+                    'last_name' => $request->last_name,
+                    'name_suffix' => $request->name_suffix,
+                    'household_head' => $fullname,
+
+                    'body_of_water_name' => $request->body_of_water_name,
+                    'body_of_water_type' => $request->body_of_water_type,
+                    'birthdate' => $request->birthdate,
+                    'spouse_name' => $spouse_fullname,
+                    'birthdate' => $request->birthdate,
+                    'spouse_birthdate' => $request->spouse_birthdate,
+                    'tenurial_status' => $request->tenurial_status,
+                    'no_of_family_members' => $request->no_of_family_members,
+                    'street' => $request->street,
+                    'barangay' => $request->barangay,
+                    'latitude' => $request->latitude,
+                    'longitude' => $request->longitude,
+                    'balik_probinsya' => $request->balik_probinsya,
+                    'distance_to_waterway' => $request->distance_to_waterway,
+                    'zone' => $request->zone,
+                    'date' => $request->date,
+                ]
+            );
+            
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json($e, 500);
+        }
+        DB::commit();
+
+        return response()->json([
+            'success' => true,
+            // 'data' => $request->input
+        ]);
     }
 
     public function show(Request $request, $id)

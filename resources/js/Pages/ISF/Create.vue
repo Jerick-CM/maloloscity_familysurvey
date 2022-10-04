@@ -31,7 +31,13 @@ export default {
         const modal_show = ref(false);
         const data = ref(false);
 
-        const multiselect_familyposition = ref(null);
+        const multiselect_street = ref(null);
+        const multiselect_balik_probinsya = ref(null);
+        const multiselect_tenurial_status = ref(null);
+        const multiselect_zone = ref(null);
+        const multiselect_body_of_water_name = ref(null);
+        const multiselect_body_of_water_type = ref(null);
+        const multiselect_distance_to_waterway = ref(null);
 
         const searchParameter = reactive({
             searchField: "",
@@ -47,22 +53,11 @@ export default {
             region: "III",
         });
 
-        // const { storeFamilySurvey, errors_isf } = useFamilySurveys();
-        const {
-            isf,
-            getISF,
-            destroyISF,
-            errors_isf,
-            loadFromServer,
-            updateISF,
-        } = useISF();
-
-        const submitSurvey = async () => {
+        const { errors_isf, storeISF } = useISF();
+        const submitISF = async () => {
             toast.info("Sending create");
             submission_process.value = true;
-            form.four_ps_beneficiary = checklist_4PS.value;
-            form.checklist = checklist_form.value;
-            await storeFamilySurvey({ ...form }).then(() => {
+            await storeISF({ ...form }).then(() => {
                 if (errors_isf.value) {
                     submission_process.value = false;
                     toast.error("Submit failed.");
@@ -70,7 +65,6 @@ export default {
                     modal_show.value = true;
                     submission_process.value = false;
                     toast.success("Submit success.");
-
                     clearFields();
                 }
             });
@@ -81,15 +75,31 @@ export default {
             form.municipality = 10;
             form.zipcode = 3000;
             form.lalawigan = "BULACAN";
-
-            for (let i = 0; i <= 73; i++) {
-                checklist_form.value[i] = 1;
-            }
         });
 
         const clearFields = () => {
+            form.date = "";
+
             form.first_name = "";
-            multiselect_familyposition.value.clear();
+            form.middle_name = "";
+            form.last_name = "";
+
+            form.spouse_first_name = "";
+            form.spouse_middle_name = "";
+            form.spouse_last_name = "";
+
+            form.barangay = "";
+            form.latitude = "";
+            form.longitude = "";
+            form.no_of_family_members = "";
+
+            multiselect_street.value.clear();
+            multiselect_balik_probinsya.value.clear();
+            multiselect_tenurial_status.value.clear();
+            multiselect_zone.value.clear();
+            multiselect_body_of_water_name.value.clear();
+            multiselect_body_of_water_type.value.clear();
+            multiselect_distance_to_waterway.value.clear();
         };
         const filterBrgys = async (munId) => {
             filteredBrgys.value = brgys.value.filter(
@@ -129,14 +139,22 @@ export default {
         return {
             filteredBrgys,
             form,
-            submitSurvey,
+            submitISF,
             errors_isf,
             submission_process,
             toggleModal,
             data,
             modal_show,
-            multiselect_familyposition,
+
             fetchSelectfield,
+
+            multiselect_street,
+            multiselect_balik_probinsya,
+            multiselect_tenurial_status,
+            multiselect_zone,
+            multiselect_body_of_water_name,
+            multiselect_body_of_water_type,
+            multiselect_distance_to_waterway,
         };
     },
 };
@@ -378,11 +396,27 @@ export default {
                             >
                                 Street
                             </label>
-                            <input
+
+                            <Multiselect
+                                ref="multiselect_street"
+                                mode="single"
                                 v-model="form.street"
-                                :class="inputClass"
-                                type="text"
-                                placeholder="Street"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="
+                                    async function (query) {
+                                        return await fetchSelectfield(
+                                            query,
+                                            'street'
+                                        );
+                                    }
+                                "
                             />
                         </div>
                         <div class="w-full md:w-1/4 px-3 py-1">
@@ -408,13 +442,6 @@ export default {
                                     {{ barangay.value }}
                                 </option>
                             </select>
-
-                            <!-- <input
-                                :class="inputClass"
-                                v-model="isf.barangay"
-                                type="text"
-                                placeholder="Barangay"
-                            /> -->
                         </div>
                         <div class="w-full md:w-1/4 px-3 py-1">
                             <label
@@ -453,13 +480,30 @@ export default {
                             >
                                 Balik Probinsya
                             </label>
-                            <input
-                                v-model="form.household_head"
-                                :class="inputClass"
-                                type="text"
+
+                            <Multiselect
+                                ref="multiselect_balik_probinsya"
+                                mode="single"
+                                v-model="form.balik_probinsya"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="
+                                    async function (query) {
+                                        return await fetchSelectfield(
+                                            query,
+                                            'balik_probinsya'
+                                        );
+                                    }
+                                "
                             />
                         </div>
+
                         <div class="w-full md:w-1/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -473,17 +517,64 @@ export default {
                                 placeholder=""
                             />
                         </div>
+
                         <div class="w-full md:w-1/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                             >
                                 Tenurial Status
                             </label>
-                            <input
-                                :class="inputClass"
+
+                            <Multiselect
+                                ref="multiselect_tenurial_status"
+                                mode="single"
                                 v-model="form.tenurial_status"
-                                type="text"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="
+                                    async function (query) {
+                                        return await fetchSelectfield(
+                                            query,
+                                            'tenurial_status'
+                                        );
+                                    }
+                                "
+                            />
+                        </div>
+
+                        <div class="w-full md:w-1/4 px-3 py-1">
+                            <label
+                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            >
+                                Zone
+                            </label>
+
+                            <Multiselect
+                                ref="multiselect_zone"
+                                mode="single"
+                                v-model="form.zone"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="
+                                    async function (query) {
+                                        return await fetchSelectfield(
+                                            query,
+                                            'zone'
+                                        );
+                                    }
+                                "
                             />
                         </div>
                     </div>
@@ -498,11 +589,27 @@ export default {
                             >
                                 Body of Water Name
                             </label>
-                            <input
+
+                            <Multiselect
+                                ref="multiselect_body_of_water_name"
+                                mode="single"
                                 v-model="form.body_of_water_name"
-                                :class="inputClass"
-                                type="text"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="
+                                    async function (query) {
+                                        return await fetchSelectfield(
+                                            query,
+                                            'body_of_water_name'
+                                        );
+                                    }
+                                "
                             />
                         </div>
                         <div class="w-full md:w-1/4 px-3 py-1">
@@ -511,11 +618,27 @@ export default {
                             >
                                 Body of Water Type
                             </label>
-                            <input
+
+                            <Multiselect
+                                ref="multiselect_body_of_water_type"
+                                mode="single"
                                 v-model="form.body_of_water_type"
-                                :class="inputClass"
-                                type="text"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="
+                                    async function (query) {
+                                        return await fetchSelectfield(
+                                            query,
+                                            'body_of_water_type'
+                                        );
+                                    }
+                                "
                             />
                         </div>
                         <div class="w-full md:w-1/4 px-3 py-1">
@@ -524,11 +647,27 @@ export default {
                             >
                                 Distance to Waterways
                             </label>
-                            <input
-                                :class="inputClass"
+
+                            <Multiselect
+                                ref="multiselect_distance_to_waterway"
+                                mode="single"
                                 v-model="form.distance_to_waterway"
-                                type="text"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="
+                                    async function (query) {
+                                        return await fetchSelectfield(
+                                            query,
+                                            'distance_to_waterway'
+                                        );
+                                    }
+                                "
                             />
                         </div>
                     </div>

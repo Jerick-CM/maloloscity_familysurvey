@@ -50,9 +50,12 @@ Route::group(['prefix' => 'request/familysurvey', 'middleware' => ['throttle:500
 Route::group(['prefix' => 'request/isf', 'middleware' => ['throttle:500,1']], function () {
 
     Route::get('/{id}', [\App\Http\Controllers\Api\ISFController::class, 'show']);
+    Route::post('/', [\App\Http\Controllers\Api\ISFController::class, 'store']);
     Route::post('/fetch', [\App\Http\Controllers\Api\ISFController::class, 'fetch']);
     Route::post('/update/{id}', [\App\Http\Controllers\Api\ISFController::class, 'update']);
     Route::post('/delete/{id}', [\App\Http\Controllers\Api\ISFController::class, 'destroy']);
+
+    Route::post('/getSelectfield', [\App\Http\Controllers\Api\ISFController::class, 'getSearchfield']);
 
 });
 
@@ -119,6 +122,7 @@ Route::group(['prefix' => 'isf', 'middleware' => ['permission:Access-Page-ISF', 
     Route::get('/edit/{id}', [App\Http\Controllers\ISFController::class, 'handleISFEdit'])->middleware(['auth', 'verified'])->name('isf-edit');
 
 });
+
 /* User Page */
 Route::group(['prefix' => 'logs', 'middleware' => 'throttle:500,1'], function () {
     /* index */
@@ -134,7 +138,6 @@ Route::group(['middleware' => ['permission:Action Settings Roles', 'throttle:500
 });
 
 /* Msc */
-
 Route::get('phpinfo', function () {
     echo phpinfo();
 });

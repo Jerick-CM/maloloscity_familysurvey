@@ -29,7 +29,7 @@ export default {
         const submission_process = ref(false);
         const modal_show = ref(false);
         const data = ref(false);
-        const multiselect_familyposition = ref(null);
+     
         const searchParameter = reactive({
             searchField: "",
             searchValue: "",
