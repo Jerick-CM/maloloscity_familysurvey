@@ -23,7 +23,6 @@ class ISFController extends Controller
 
     public function store(ISFRequest $request)
     {
-
     }
 
     public function show(Request $request, $id)
@@ -58,17 +57,16 @@ class ISFController extends Controller
             $isf->tenurial_status = $request->tenurial_status;
             $isf->no_of_family_members = $request->no_of_family_members;
             $isf->street = $request->street;
-            
+
             $isf->barangay = $request->barangay;
             $isf->latitude = $request->latitude;
             $isf->longitude = $request->longitude;
             $isf->balik_probinsya = $request->balik_probinsya;
             $isf->distance_to_waterway = $request->distance_to_waterway;
-            
+
             $isf->zone = $request->zone;
             $isf->date = $request->date;
             $isf->save();
-
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json($e, 500);
@@ -90,7 +88,10 @@ class ISFController extends Controller
         $respondent = ISF::findOrfail($id);
         $respondent->delete();
 
+        return response()->json([
+            'success' => true,
 
+        ]);
     }
 
 

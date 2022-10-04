@@ -6,8 +6,8 @@ import { ref, reactive, computed, onMounted, watch } from "vue";
 import useISF from "./../../composables/isf_and_illegalencroachments";
 import { useToast } from "vue-toastification";
 import Modal from "./../../Components/Modals/Modal_Create.vue";
-
 import Multiselect from "@vueform/multiselect";
+
 export default {
     data: () => ({
         risksHeaderClass: "bg-blue-100",
@@ -108,9 +108,9 @@ export default {
 </script>
 
 <template>
-    <Head title="ISF and Illegal Encroachments" />
+    <Head title="Informal Settler Families (ISF) and Illegal Encroachments" />
     <BreezeAuthenticatedLayout>
-        <template #header> ISF and Illegal Encroachments </template>
+        <template #header> Informal Settler Families (ISF) and Illegal Encroachments </template>
 
         <div class="w-full mx-auto sm:px-6 lg:px-8">
             <Breadcrumb />

@@ -67,8 +67,6 @@ Route::group(['prefix' => 'report/', 'middleware' => ['permission:Action Downloa
 /* permission */
 Route::post('/users/updatePermissions', [\App\Http\Controllers\Api\UserController::class, 'updatePermissions']);
 
-// old
-
 Route::group(['middleware' => ['permission:Access-Page-Dashboard']], function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
@@ -109,6 +107,9 @@ Route::group(['prefix' => 'isf', 'middleware' => ['permission:Access-Page-ISF', 
         return Inertia::render('ISF/Index');
     })->middleware(['auth', 'verified'])->name('isf-index');
 
+    /* create */
+    Route::get('/create', [App\Http\Controllers\ISFController::class, 'handleISFCreate'])->middleware(['auth', 'verified'])->name('isf-create');
+
     /* view */
     Route::get('/view/{id}', function () {
         return Inertia::render('ISF/View');
@@ -148,6 +149,7 @@ Route::group(['prefix' => 'cstm', 'middleware' => 'throttle:500,1'], function ()
     Route::post('/itineraries', [\App\Http\Controllers\Api\ItineraryController::class, 'store']);
     Route::post('/itineraries/add_business', [\App\Http\Controllers\Api\ItineraryController::class, 'add_business']);
     Route::post('/itineraries/fetch/{id}', [\App\Http\Controllers\Api\ItineraryController::class, 'fetch']);
+
 });
 
 require __DIR__ . '/auth.php';

@@ -29,7 +29,6 @@ export default {
     }),
 
     setup(props) {
-
         const Auth_user = computed(() => usePage().props.value.auth.user);
         const permissions = usePage().props.value.auth.user.PermissionList;
         const hosting = computed(() => props.hosting);
@@ -37,6 +36,7 @@ export default {
         const form = reactive({});
         const { isfs, destroyISF, errors_isf, loadFromServer } = useISF();
         const url = ref("");
+
         /* Datatable */
 
         const loading = ref(true);
@@ -59,8 +59,13 @@ export default {
         /* Datatable */
 
         const headers = ref([
-            { text: "Id", value: "id", sortable: true },
+            // { text: "Id", value: "id", sortable: true },
             { text: "Household Head", value: "household_head", sortable: true },
+            {
+                text: "Street",
+                value: "street",
+                sortable: true,
+            },
             {
                 text: "Barangay",
                 value: "barangay",
@@ -76,37 +81,33 @@ export default {
                 value: "tenurial_status",
                 sortable: true,
             },
-            {
-                text: "Body of Water Name",
-                value: "body_of_water_name",
-                sortable: true,
-            },
-            {
-                text: "Body of Water Name Type",
-                value: "body_of_water_type",
-                sortable: true,
-            },
-            {
-                text: "Street",
-                value: "street",
-                sortable: true,
-            },
+            // {
+            //     text: "Body of Water Name",
+            //     value: "body_of_water_name",
+            //     sortable: true,
+            // },
+            // {
+            //     text: "Body of Water Name Type",
+            //     value: "body_of_water_type",
+            //     sortable: true,
+            // },
+
             {
                 text: "No. of Family Members",
                 value: "no_of_family_members",
                 sortable: true,
             },
 
-            {
-                text: "Longitude",
-                value: "longitude",
-                sortable: true,
-            },
-            {
-                text: "Latitude",
-                value: "latitude",
-                sortable: true,
-            },
+            // {
+            //     text: "Longitude",
+            //     value: "longitude",
+            //     sortable: true,
+            // },
+            // {
+            //     text: "Latitude",
+            //     value: "latitude",
+            //     sortable: true,
+            // },
             { text: "Date / Time", value: "date", sortable: true },
             { text: "Action", value: "action", sortable: false },
         ]);
@@ -214,7 +215,7 @@ export default {
 <template>
     <BreezeAuthenticatedLayout>
         <Head title="ISF and Illegal Encroachments" />
-        <template #header> ISF and Illegal Encroachments </template>
+        <template #header>Informal Settler Families (ISF) and Illegal Encroachments </template>
         <div class="">
             <div class="pb-10 py-2 w-full mx-auto sm:px-6 lg:px-8">
                 <Breadcrumb />
@@ -257,7 +258,7 @@ export default {
                             </button>
                         </div>
                         <div class="px-1">
-                            <Link :href="route('forms-create')">
+                            <Link :href="route('isf-create')">
                                 <button
                                     class="my-2 py-2 px-4 w-full 2xl:w-fit xl:w-fit lg:w-fit bg-green-300 hover:bg-green-400 text-green-800 font-bold rounded inline-flex items-center"
                                 >
@@ -275,7 +276,10 @@ export default {
                                             d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
                                         />
                                     </svg>
-                                    <span>Create Family Survey</span>
+                                    <span
+                                        >Create ISF and Illegal
+                                        Encroachment</span
+                                    >
                                 </button>
                             </Link>
                         </div>
@@ -301,8 +305,6 @@ export default {
                                     <option value="barangay">Barangay</option>
                                 </select>
                             </form>
-
-                      
                         </div>
                         <div class="col-span-1 sm:col-span-1">
                             <label
@@ -481,7 +483,6 @@ export default {
                             :loading="loading"
                             :rows-items="[10, 25, 50, 100]"
                         >
-                            <!--  -->
                             <template #item-four_ps_beneficiary="item">
                                 {{
                                     item.four_ps_beneficiary == 1 ? "Yes" : "No"
@@ -491,6 +492,45 @@ export default {
                                 <div class="">
                                     <div class="md:grid md:grid-rows">
                                         <div class="flex flex-items">
+                                            <div class="py-1 px-1">
+                                                <Link
+                                                    :href="
+                                                        route(
+                                                            'isf-view',
+                                                            item.id
+                                                        )
+                                                    "
+                                                >
+                                                    <button
+                                                        class="h-15 w-24 text-xs bg-blue-700 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded"
+                                                    >
+                                                        <svg
+                                                            class="w-6 h-6"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            viewBox="0 0 24 24"
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                        >
+                                                            <path
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                                            ></path>
+                                                            <path
+                                                                stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                                            ></path>
+                                                        </svg>
+
+                                                        <span class="text-lg"
+                                                            >View</span
+                                                        >
+                                                    </button>
+                                                </Link>
+                                            </div>
                                             <!-- Edit -->
                                             <div class="py-1 px-1">
                                                 <Link
@@ -540,9 +580,7 @@ export default {
                                                 >
                                                     <button
                                                         @click="
-                                                            removeISF(
-                                                                item.id
-                                                            )
+                                                            removeISF(item.id)
                                                         "
                                                         class="h-15 w-24 text-xs bg-red-700 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                                     >
@@ -601,16 +639,13 @@ export default {
                             </template>
                             <template #item-action="item">
                                 <div class="operation-wrapper flex">
-
-                                    <div
-                                        class="p-1"                                 
-                                    >
+                                    <div class="p-1">
                                         <Link
                                             :href="route('isf-view', item.id)"
                                         >
                                             <button
                                                 type="button"
-                                                class="text-xs bg-green-700 hover:bg-green-400 text-white font-bold py-2 px-4 rounded"
+                                                class="text-xs bg-blue-700 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded"
                                             >
                                                 View
                                             </button>

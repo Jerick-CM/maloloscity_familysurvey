@@ -85,9 +85,9 @@ export default {
 </script>
 
 <template>
-    <Head title="ISF and Illegal Encroachments" />
+    <Head title="Informal Settler Families (ISF) and Illegal Encroachments" />
     <BreezeAuthenticatedLayout>
-        <template #header> ISF and Illegal Encroachments </template>
+        <template #header> Informal Settler Families (ISF) and Illegal Encroachments</template>
 
         <div class="w-full mx-auto sm:px-6 lg:px-8">
             <Breadcrumb />
@@ -108,7 +108,7 @@ export default {
             </div>
             <!-- row 1 -->
             <div class="my-3 bg-white rounded p-5 sm:p1">
-                <div class="py-1 font-semibold">I.</div>
+                <!-- <div class="py-1 font-semibold">I.</div> -->
 
                 <div class="py-1 font-medium text-red-700">
                     1. Water ways and filing date
@@ -172,7 +172,7 @@ export default {
 
                 <!-- row 2 name and info -->
                 <div class="py-1 font-medium text-red-700">
-                    2. Personal Info
+                    2. Personal Information
                 </div>
                 <div class="flex flex-wrap -mx-3">
                     <div class="w-full md:w-1/4 px-3 py-1">
