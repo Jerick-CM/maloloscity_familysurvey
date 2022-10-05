@@ -32,12 +32,21 @@ export default {
         const modal_show = ref(false);
         const data = ref(false);
 
+        const multiselect_street = ref(null);
+        const multiselect_balik_probinsya = ref(null);
+        const multiselect_tenurial_status = ref(null);
+        const multiselect_zone = ref(null);
+        const multiselect_body_of_water_name = ref(null);
+        const multiselect_body_of_water_type = ref(null);
+        const multiselect_distance_to_waterway = ref(null);
+
         const searchParameter = reactive({
             searchField: "",
             searchValue: "",
             filterField: "",
             filterValue: "",
         });
+
         /* init */
         const form = reactive({
             province: 14,
@@ -52,6 +61,13 @@ export default {
             errors_isf,
             loadFromServer,
             updateISF,
+            street,
+            balik_probinsya,
+            tenurial_status,
+            zone,
+            body_of_water_name,
+            body_of_water_type,
+            distance_to_waterway,
         } = useISF();
 
         onMounted(async () => {
@@ -75,10 +91,66 @@ export default {
         watch(
             () => form.municipality,
             (value) => {
-                console.log("hello");
                 filterBrgys(value);
             }
         );
+
+        watch(
+            () => street.value,
+            (currentValue, oldValue) => {
+                isf.value.street = currentValue.value;
+            },
+            { deep: true }
+        );
+
+        watch(
+            () => balik_probinsya.value,
+            (currentValue, oldValue) => {
+                isf.value.balik_probinsya = currentValue.value;
+            },
+            { deep: true }
+        );
+
+        watch(
+            () => tenurial_status.value,
+            (currentValue, oldValue) => {
+                isf.value.tenurial_status = currentValue.value;
+            },
+            { deep: true }
+        );
+
+        watch(
+            () => zone.value,
+            (currentValue, oldValue) => {
+                isf.value.zone = currentValue.value;
+            },
+            { deep: true }
+        );
+
+        watch(
+            () => body_of_water_name.value,
+            (currentValue, oldValue) => {
+                isf.value.body_of_water_name = currentValue.value;
+            },
+            { deep: true }
+        );
+
+        watch(
+            () => body_of_water_type.value,
+            (currentValue, oldValue) => {
+                isf.value.body_of_water_type = currentValue.value;
+            },
+            { deep: true }
+        );
+
+        watch(
+            () => distance_to_waterway.value,
+            (currentValue, oldValue) => {
+                isf.value.distance_to_waterway = currentValue.value;
+            },
+            { deep: true }
+        );
+
         const editISF = async () => {
             toast.info("Sending update");
             await updateISF(route().params.id).then(() => {
@@ -92,6 +164,25 @@ export default {
                 }
             });
         };
+
+        const fetchSelectfield = async (query, field) => {
+            let data;
+            await axios
+                .post("/request/isf/getSelectfield", {
+                    searchValue: query,
+                    field: field,
+                })
+                .then((response) => {
+                    data = response.data.data.map((item) => {
+                        return {
+                            value: eval("item." + field),
+                            label: eval("item." + field),
+                        };
+                    });
+                });
+
+            return data;
+        };
         return {
             filteredBrgys,
             form,
@@ -102,6 +193,21 @@ export default {
             modal_show,
             isf,
             editISF,
+            multiselect_street,
+            multiselect_balik_probinsya,
+            multiselect_tenurial_status,
+            multiselect_zone,
+            multiselect_body_of_water_name,
+            multiselect_body_of_water_type,
+            multiselect_distance_to_waterway,
+            fetchSelectfield,
+            street,
+            balik_probinsya,
+            tenurial_status,
+            zone,
+            body_of_water_name,
+            body_of_water_type,
+            distance_to_waterway,
         };
     },
 };
@@ -110,7 +216,9 @@ export default {
 <template>
     <Head title="Informal Settler Families (ISF) and Illegal Encroachments" />
     <BreezeAuthenticatedLayout>
-        <template #header> Informal Settler Families (ISF) and Illegal Encroachments </template>
+        <template #header>
+            Informal Settler Families (ISF) and Illegal Encroachments
+        </template>
 
         <div class="w-full mx-auto sm:px-6 lg:px-8">
             <Breadcrumb />
@@ -135,6 +243,7 @@ export default {
                     <div
                         class="w-full 2xl:w-2/4 xl:w-2/4 lg:w-2/4 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-end place-content-end"
                     ></div>
+
                     <div
                         class="w-full 2xl:w-2/4 xl:w-2/4 lg:w-2/4 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-end place-content-end"
                     >
@@ -171,53 +280,10 @@ export default {
                     </div>
                 </div>
                 <div class="my-3 bg-white rounded p-5 sm:p1">
-                    <div class="py-1 font-semibold">I.</div>
-
-                    <div class="py-1 font-medium text-red-700">
-                        1. Water ways and filing date
-                    </div>
-
-                    <!-- row 1 water -->
                     <div class="flex flex-wrap -mx-3">
-                        <div class="w-full md:w-1/4 px-3 py-1">
-                            <label
-                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                            >
-                                Body of Water Name
-                            </label>
-                            <input
-                                v-model="isf.body_of_water_name"
-                                :class="inputClass"
-                                type="text"
-                                placeholder=""
-                            />
-                        </div>
-                        <div class="w-full md:w-1/4 px-3 py-1">
-                            <label
-                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                            >
-                                Body of Water Type
-                            </label>
-                            <input
-                                v-model="isf.body_of_water_type"
-                                :class="inputClass"
-                                type="text"
-                                placeholder=""
-                            />
-                        </div>
-                        <div class="w-full md:w-1/4 px-3 py-1">
-                            <label
-                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                            >
-                                Distance to Waterways
-                            </label>
-                            <input
-                                :class="inputClass"
-                                v-model="isf.distance_to_waterway"
-                                type="text"
-                                placeholder=""
-                            />
-                        </div>
+                        <div class="w-full md:w-1/4 px-3 py-1"></div>
+                        <div class="w-full md:w-1/4 px-3 py-1"></div>
+                        <div class="w-full md:w-1/4 px-3 py-1"></div>
                         <div class="w-full md:w-1/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -235,7 +301,7 @@ export default {
 
                     <!-- row 2 name and info -->
                     <div class="py-1 font-medium text-red-700">
-                        2. Personal Info
+                        1. Personal Info
                     </div>
                     <div class="flex flex-wrap -mx-3">
                         <div class="w-full md:w-1/4 px-3 py-1">
@@ -294,7 +360,7 @@ export default {
 
                     <!-- row 3 family and info -->
                     <div class="py-1 font-medium text-red-700">
-                        3. Address and Geographical Location
+                        2. Address and Geographical Location
                     </div>
                     <div class="flex flex-wrap -mx-3">
                         <div class="w-full md:w-1/4 px-3 py-1">
@@ -303,11 +369,28 @@ export default {
                             >
                                 Street
                             </label>
-                            <input
-                                v-model="isf.street"
-                                :class="inputClass"
-                                type="text"
-                                placeholder="Street"
+
+                            <Multiselect
+                                :object="true"
+                                ref="multiselect_street"
+                                mode="single"
+                                v-model="street"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="
+                                    async function (query) {
+                                        return await fetchSelectfield(
+                                            query,
+                                            'street'
+                                        );
+                                    }
+                                "
                             />
                         </div>
                         <div class="w-full md:w-1/4 px-3 py-1">
@@ -333,13 +416,6 @@ export default {
                                     {{ barangay.value }}
                                 </option>
                             </select>
-
-                            <!-- <input
-                                :class="inputClass"
-                                v-model="isf.barangay"
-                                type="text"
-                                placeholder="Barangay"
-                            /> -->
                         </div>
                         <div class="w-full md:w-1/4 px-3 py-1">
                             <label
@@ -370,7 +446,7 @@ export default {
                     </div>
 
                     <!-- row 4  -->
-                    <div class="py-1 font-medium text-red-700">4. Status</div>
+                    <div class="py-1 font-medium text-red-700">3. Status</div>
                     <div class="flex flex-wrap -mx-3">
                         <div class="w-full md:w-1/4 px-3 py-1">
                             <label
@@ -378,11 +454,28 @@ export default {
                             >
                                 Balik Probinsya
                             </label>
-                            <input
-                                v-model="isf.household_head"
-                                :class="inputClass"
-                                type="text"
+
+                            <Multiselect
+                                :object="true"
+                                ref="multiselect_balik_probinsya"
+                                mode="single"
+                                v-model="balik_probinsya"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="
+                                    async function (query) {
+                                        return await fetchSelectfield(
+                                            query,
+                                            'balik_probinsya'
+                                        );
+                                    }
+                                "
                             />
                         </div>
                         <div class="w-full md:w-1/4 px-3 py-1">
@@ -404,11 +497,151 @@ export default {
                             >
                                 Tenurial Status
                             </label>
-                            <input
-                                :class="inputClass"
-                                v-model="isf.tenurial_status"
-                                type="text"
+                            <Multiselect
+                                :object="true"
+                                ref="multiselect_tenurial_status"
+                                mode="single"
+                                v-model="tenurial_status"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="
+                                    async function (query) {
+                                        return await fetchSelectfield(
+                                            query,
+                                            'tenurial_status'
+                                        );
+                                    }
+                                "
+                            />
+                        </div>
+                        <div class="w-full md:w-1/4 px-3 py-1">
+                            <label
+                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            >
+                                Zone
+                            </label>
+
+                            <Multiselect
+                                :object="true"
+                                ref="multiselect_zone"
+                                mode="single"
+                                v-model="zone"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="
+                                    async function (query) {
+                                        return await fetchSelectfield(
+                                            query,
+                                            'zone'
+                                        );
+                                    }
+                                "
+                            />
+                        </div>
+                    </div>
+                    <div class="py-1 font-medium text-red-700">
+                        4. Waterways
+                    </div>
+                    <!-- row 1 water -->
+                    <div class="flex flex-wrap -mx-3">
+                        <div class="w-full md:w-1/4 px-3 py-1">
+                            <label
+                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            >
+                                Body of Water Name
+                            </label>
+                            <Multiselect
+                                :object="true"
+                                ref="multiselect_body_of_water_name"
+                                mode="single"
+                                v-model="body_of_water_name"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="
+                                    async function (query) {
+                                        return await fetchSelectfield(
+                                            query,
+                                            'body_of_water_name'
+                                        );
+                                    }
+                                "
+                            />
+                        </div>
+                        <div class="w-full md:w-1/4 px-3 py-1">
+                            <label
+                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            >
+                                Body of Water Type
+                            </label>
+                            <Multiselect
+                                :object="true"
+                                ref="multiselect_body_of_water_type"
+                                mode="single"
+                                v-model="body_of_water_type"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="
+                                    async function (query) {
+                                        return await fetchSelectfield(
+                                            query,
+                                            'body_of_water_type'
+                                        );
+                                    }
+                                "
+                            />
+                        </div>
+                        <div class="w-full md:w-1/4 px-3 py-1">
+                            <label
+                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            >
+                                Distance to Waterways
+                            </label>
+
+                            <Multiselect
+                                :object="true"
+                                ref="multiselect_distance_to_waterway"
+                                mode="single"
+                                v-model="distance_to_waterway"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="
+                                    async function (query) {
+                                        return await fetchSelectfield(
+                                            query,
+                                            'distance_to_waterway'
+                                        );
+                                    }
+                                "
                             />
                         </div>
                     </div>

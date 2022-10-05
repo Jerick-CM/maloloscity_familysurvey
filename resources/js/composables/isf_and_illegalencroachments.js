@@ -5,10 +5,53 @@ export default function useISF_illegal_encroachment() {
     const isf = ref([]);
     const isfs = ref([]);
     const errors_isf = ref("");
+    const street = ref([]);
+    const balik_probinsya = ref(null);
+    const tenurial_status = ref(null);
+    const zone = ref(null);
+    const body_of_water_name = ref(null);
+    const body_of_water_type = ref(null);
+    const distance_to_waterway = ref(null);
 
     const getISF = async (id) => {
         let response = await axios.get("/request/isf/" + id);
+
         isf.value = response.data.data;
+
+        street.value = {
+            value: response.data.data.street,
+            label: response.data.data.street,
+        };
+
+        balik_probinsya.value = {
+            value: response.data.data.balik_probinsya,
+            label: response.data.data.balik_probinsya,
+        };
+
+        tenurial_status.value = {
+            value: response.data.data.tenurial_status,
+            label: response.data.data.tenurial_status,
+        };
+
+        zone.value = {
+            value: response.data.data.zone,
+            label: response.data.data.zone,
+        };
+
+        body_of_water_name.value = {
+            value: response.data.data.body_of_water_name,
+            label: response.data.data.body_of_water_name,
+        };
+
+        body_of_water_type.value = {
+            value: response.data.data.body_of_water_type,
+            label: response.data.data.body_of_water_type,
+        };
+
+        distance_to_waterway.value = {
+            value: response.data.data.distance_to_waterway,
+            label: response.data.data.distance_to_waterway,
+        };
     };
 
     const getISFs = async () => {
@@ -35,10 +78,7 @@ export default function useISF_illegal_encroachment() {
     const updateISF = async (id) => {
         errors_isf.value = "";
         try {
-            await axios.post(
-                "/request/isf/update/" + id,
-                isf.value
-            );
+            await axios.post("/request/isf/update/" + id, isf.value);
         } catch (e) {
             if (e.response.status === 422) {
                 errors_isf.value = e.response.data.errors;
@@ -55,12 +95,7 @@ export default function useISF_illegal_encroachment() {
         await axios.post("/request/isf/delete/" + id);
     };
 
-    const loadFromServer = async (
-        isfs,
-        serverItemsLength,
-        options,
-        params
-    ) => {
+    const loadFromServer = async (isfs, serverItemsLength, options, params) => {
         errors_isf.value = "";
         try {
             let response = await axios.post("/request/isf/fetch", {
@@ -89,5 +124,12 @@ export default function useISF_illegal_encroachment() {
         getISF,
         getISFs,
         loadFromServer,
+        street,
+        balik_probinsya,
+        tenurial_status,
+        zone,
+        body_of_water_name,
+        body_of_water_type,
+        distance_to_waterway,
     };
 }

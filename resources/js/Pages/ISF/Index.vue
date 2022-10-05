@@ -59,7 +59,7 @@ export default {
         /* Datatable */
 
         const headers = ref([
-            // { text: "Id", value: "id", sortable: true },
+            { text: "Id", value: "id", sortable: true },
             { text: "Household Head", value: "household_head", sortable: true },
             {
                 text: "Street",
