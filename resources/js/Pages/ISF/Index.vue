@@ -91,13 +91,11 @@ export default {
             //     value: "body_of_water_type",
             //     sortable: true,
             // },
-
             {
                 text: "No. of Family Members",
                 value: "no_of_family_members",
                 sortable: true,
             },
-
             // {
             //     text: "Longitude",
             //     value: "longitude",
@@ -130,7 +128,7 @@ export default {
         const fetchSelectfield = async (query, field) => {
             let data;
             await axios
-                .post("/request/isfs/getSelectfield", {
+                .post("/request/isf/getSelectfield", {
                     searchValue: query,
                     field: field,
                 })
@@ -215,7 +213,9 @@ export default {
 <template>
     <BreezeAuthenticatedLayout>
         <Head title="ISF and Illegal Encroachments" />
-        <template #header>Informal Settler Families (ISF) and Illegal Encroachments </template>
+        <template #header
+            >Informal Settler Families (ISF) and Illegal Encroachments
+        </template>
         <div class="">
             <div class="pb-10 py-2 w-full mx-auto sm:px-6 lg:px-8">
                 <Breadcrumb />
@@ -316,7 +316,6 @@ export default {
 
                             <form class="group relative">
                                 <Multiselect
-                                    ref="multiselect_line_of_business"
                                     mode="single"
                                     v-model="searchParameter.filterValue"
                                     class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
@@ -355,17 +354,29 @@ export default {
                                     v-model="searchParameter.searchField"
                                 >
                                     <option value="" selected>ALL</option>
-                                    <option value="full_name">Full Name</option>
-                                    <option value="first_name">
-                                        First Name
+                                    <option value="household_head">
+                                        Household head
                                     </option>
-                                    <option value="last_name">Last Name</option>
+                                    <option value="body_of_water_name">
+                                        Body of Water
+                                    </option>
+                                    <option value="body_of_water_type">
+                                        Body of Water Type
+                                    </option>
+                                    <option value="spouse_name">
+                                        Spouse Name
+                                    </option>
+                                    <option value="tenurial_status">
+                                        Tenurial Status
+                                    </option>
+                                    <option value="no_of_family_members">
+                                        No. of family members
+                                    </option>
+                                    <option value="street">Street</option>
                                     <option value="barangay">Barangay</option>
-                                    <option value="sitio">Sitio</option>
-                                    <option value="purok">Purok</option>
-                                    <option value="name_suffix">
-                                        Name Suffix
-                                    </option>
+                                    <option value="balik_probinsya">Balik Probinsya</option>
+                                    <option value="distance_to_waterway">Distance to Waterway</option>
+                                    <option value="zone">zone</option>
                                 </select>
                             </form>
 
