@@ -16,7 +16,7 @@
                 </td>
 
                 <td style="width:50%;text-align: center;font-size:14px;">
-                    Department od Social Welfare and Development</br>
+                    Department of Social Welfare and Development</br>
                     FAMILY SURVEY ON RISK AND VULNERABILITY</br>
 
                 </td>

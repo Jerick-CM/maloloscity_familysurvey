@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
-// use App\Models\Role;
+
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -26,6 +26,7 @@ class ISFPermissionSeeder extends Seeder
         Permission::create(['name' => 'Action Create ISF']);
         Permission::create(['name' => 'Action Edit ISF']);
         Permission::create(['name' => 'Action Show-All ISF']);
+        Permission::create(['name' => 'Action Download ISF']);
 
     }
 }

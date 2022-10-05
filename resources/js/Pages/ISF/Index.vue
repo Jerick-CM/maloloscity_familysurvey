@@ -59,8 +59,10 @@ export default {
         /* Datatable */
 
         const headers = ref([
+
             { text: "Id", value: "id", sortable: true },
-            { text: "Household Head", value: "household_head", sortable: true },
+
+            { text: "Household Head", value: "household_head", sortable: true},
             {
                 text: "Street",
                 value: "street",
@@ -81,6 +83,7 @@ export default {
                 value: "tenurial_status",
                 sortable: true,
             },
+
             // {
             //     text: "Body of Water Name",
             //     value: "body_of_water_name",
@@ -91,11 +94,13 @@ export default {
             //     value: "body_of_water_type",
             //     sortable: true,
             // },
+
             {
                 text: "No. of Family Members",
                 value: "no_of_family_members",
                 sortable: true,
             },
+
             // {
             //     text: "Longitude",
             //     value: "longitude",
@@ -106,6 +111,7 @@ export default {
             //     value: "latitude",
             //     sortable: true,
             // },
+
             { text: "Date / Time", value: "date", sortable: true },
             { text: "Action", value: "action", sortable: false },
         ]);
@@ -147,15 +153,16 @@ export default {
         const searchButton = () => {
             server_sided();
         };
+
         const generatePDF = () => {
             if (searchParameter.filterValue == null) {
-                url.value = hosting.value + "/report/pdf/" + "all";
+                url.value = hosting.value + "/report_isf/pdf/" + "all";
             } else if (searchParameter.filterValue == "") {
-                url.value = hosting.value + "/report/pdf/" + "all";
+                url.value = hosting.value + "/report_isf/pdf/" + "all";
             } else {
                 url.value =
                     hosting.value +
-                    "/report/pdf/" +
+                    "/report_isf/pdf/" +
                     searchParameter.filterValue;
             }
 

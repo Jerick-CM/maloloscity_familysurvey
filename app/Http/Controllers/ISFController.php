@@ -10,6 +10,15 @@ use Illuminate\Http\Request;
 
 class ISFController extends Controller
 {
+
+    public function index()
+    {
+        return Inertia::render('ISF/Index', [
+            'hosting' => config('custom.url')
+        ]);
+    }
+
+
     public function handleISFEdit()
     {
 

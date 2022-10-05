@@ -9,6 +9,7 @@ use PDF;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\DB;
+use App\Models\ISF;
 
 class PDFController extends Controller
 {
@@ -725,6 +726,26 @@ class PDFController extends Controller
         ];
 
         $pdf = PDF::loadView('survey', $data);
+        return $pdf->stream();
+    }
+
+    public function survey_report_isf($barangay)
+    {
+
+        if ($barangay == 'all') {
+            $isf = ISF::get();
+        } else {
+            $isf =  ISF::where('barangay', $barangay)->get();
+        }
+
+        $data = [
+            'data' =>   $isf,
+            'title' => 'Informal Settler Families (ISF) and Illegal Encroachments',
+            'barangay' => $barangay,
+            'date' => date('m/d/Y'),
+        ];
+
+        $pdf = PDF::loadView('survey_isf', $data)->setPaper('a4', 'landscape');
         return $pdf->stream();
     }
 }

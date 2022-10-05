@@ -56,7 +56,6 @@ Route::group(['prefix' => 'request/isf', 'middleware' => ['throttle:500,1']], fu
     Route::post('/delete/{id}', [\App\Http\Controllers\Api\ISFController::class, 'destroy']);
 
     Route::post('/getSelectfield', [\App\Http\Controllers\Api\ISFController::class, 'getSearchfield']);
-
 });
 
 Route::group(['prefix' => 'table/familysurvey', 'middleware' => ['throttle:500,1']], function () {
@@ -65,6 +64,10 @@ Route::group(['prefix' => 'table/familysurvey', 'middleware' => ['throttle:500,1
 
 Route::group(['prefix' => 'report/', 'middleware' => ['permission:Action Download SurveyForm', 'throttle:500,1']], function () {
     Route::get('/pdf/{barangay}', [PDFController::class, 'survey_report']);
+});
+
+Route::group(['prefix' => 'report_isf/', 'middleware' => ['permission:Action Download ISF', 'throttle:500,1']], function () {
+    Route::get('/pdf/{barangay}', [PDFController::class, 'survey_report_isf']);
 });
 
 /* permission */
@@ -100,15 +103,12 @@ Route::group(['prefix' => 'user', 'middleware' => ['permission:Access-Page-User'
     Route::get('/reset-password/{id}', function () {
         return Inertia::render('User/ResetPassword');
     })->middleware(['auth', 'verified'])->name('user-reset-password');
-
 });
 
 Route::group(['prefix' => 'isf', 'middleware' => ['permission:Access-Page-ISF', 'throttle:500,1']], function () {
 
     /* index */
-    Route::get('/', function () {
-        return Inertia::render('ISF/Index');
-    })->middleware(['auth', 'verified'])->name('isf-index');
+    Route::get('/', [App\Http\Controllers\ISFController::class, 'index'])->middleware(['auth', 'verified'])->name('isf-index');
 
     /* create */
     Route::get('/create', [App\Http\Controllers\ISFController::class, 'handleISFCreate'])->middleware(['auth', 'verified'])->name('isf-create');
@@ -120,7 +120,6 @@ Route::group(['prefix' => 'isf', 'middleware' => ['permission:Access-Page-ISF', 
 
     /* edit */
     Route::get('/edit/{id}', [App\Http\Controllers\ISFController::class, 'handleISFEdit'])->middleware(['auth', 'verified'])->name('isf-edit');
-
 });
 
 /* User Page */
@@ -152,7 +151,6 @@ Route::group(['prefix' => 'cstm', 'middleware' => 'throttle:500,1'], function ()
     Route::post('/itineraries', [\App\Http\Controllers\Api\ItineraryController::class, 'store']);
     Route::post('/itineraries/add_business', [\App\Http\Controllers\Api\ItineraryController::class, 'add_business']);
     Route::post('/itineraries/fetch/{id}', [\App\Http\Controllers\Api\ItineraryController::class, 'fetch']);
-
 });
 
 require __DIR__ . '/auth.php';

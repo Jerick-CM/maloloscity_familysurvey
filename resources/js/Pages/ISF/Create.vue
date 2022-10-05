@@ -319,6 +319,34 @@ export default {
                                 />
                             </div>
                         </div>
+                        <div class="flex flex-wrap -mx-3">
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                >
+                                    Birth Date
+                                </label>
+                                <input
+                                    :class="inputClass"
+                                    v-model="form.birthdate"
+                                    type="date"
+                                    placeholder=""
+                                />
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                >
+                                </label>
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                >
+                                </label>
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1"></div>
+                        </div>
                     </div>
 
                     <div class="py-2">
@@ -380,6 +408,35 @@ export default {
                                     placeholder="II., III. ,IV"
                                 />
                             </div>
+                        </div>
+
+                        <div class="flex flex-wrap -mx-3">
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                >
+                                    Spouse Birth Date
+                                </label>
+                                <input
+                                    :class="inputClass"
+                                    v-model="form.spouse_birthdate"
+                                    type="date"
+                                    placeholder=""
+                                />
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                >
+                                </label>
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1">
+                                <label
+                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                                >
+                                </label>
+                            </div>
+                            <div class="w-full md:w-1/4 px-3 py-1"></div>
                         </div>
                     </div>
 

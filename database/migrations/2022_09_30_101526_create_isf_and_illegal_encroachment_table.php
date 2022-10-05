@@ -18,7 +18,7 @@ class CreateIsfAndIllegalEncroachmentTable extends Migration
             $table->string('body_of_water_name')->nullable();
             $table->string('body_of_water_type')->nullable();
             $table->string('household_head')->nullable();
-            $table->date('birthdate')->nullable()->nullable();
+            $table->date('birthdate')->nullable();
             $table->string('spouse_name')->nullable();
             $table->date('spouse_birthdate')->nullable();
             $table->string('tenurial_status')->nullable();
