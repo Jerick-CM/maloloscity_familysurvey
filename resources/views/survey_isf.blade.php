@@ -34,24 +34,36 @@
         <div class="row">
             <table id="survey" class="w-full border-collapse border border-slate-500 table-fixed md:table-fixed">
                 <thead>
-                    <th>CONTROL NO.</th>
-                    <th>WaterBody Name</th>
-                    <th>WaterBody Type</th>
-                    <th>Household Head(SURNAME,FIRSTNAME,MIDDLENAME)</th>
-                    <th>BIRTHDATE</th>
-                    <th>SPOUSE'S NAME (MAIDEN NAME IF FEMALE )</th>
-                    <th>BIRTHDATE </th>
-                    <th>TENURIAL STATUS </th>
-                    <th>NO. OF FAMILY MEMBERS </th>
-                    <th>STREET </th>
-                    <th>BARANGAY </th>
-                    <th>LATITUDE </th>
-                    <th>LONGITUDE </th>
+                    <tr>
+                        <th rowspan="2">CONTROL NO.</th>
+                        <th colspan="2">WATERBODY NAME</th>
+                        <th colspan="6">HOUSEHOLD INFORMATION</th>
+                        <th colspan="2">ADDRESS INFORMATION</th>
+                        <th colspan="2">COORDINATES</th>
+                        <th rowspan="2">BALIK PROBINSYA (BP) </th>
+                        <th rowspan="2">EASEMENT ALONG THE WATERWAY(IN METERS)</th>
+                        <th rowspan="2">LAND CLASSIFICATION </th>
+                        <th rowspan="2">DATE GATHERED </th>
+                    </tr>
+                    <tr>
+                        <th>WATERBODY NAME</th>
+                        <th>WATERBODY TYPE</th>
+                        <th>
+                            HOUSEHOLD HEAD
+                            (SURNAME , FIRSTNAME ,MIDDLENAME)
+                        </th>
+                        <th>BIRTHDATE</th>
+                        <th>SPOUSE'S NAME (MAIDEN NAME IF FEMALE )</th>
+                        <th>BIRTHDATE </th>
+                        <th>TENURIAL STATUS </th>
+                        <th>NO. OF FAMILY MEMBERS </th>
+                        <th>STREET </th>
+                        <th>BARANGAY </th>
+                        <th>LATITUDE </th>
+                        <th>LONGITUDE </th>
 
-                    <th>BALIK PROBINSYA (BP) </th>
-                    <th>EASEMENT ALONG THE WATERWAY(IN METERS)</th>
-                    <th>LAND CLASSIFICATION </th>
-                    <th>DATE GATHERED </th>
+                    </tr>
+
                 </thead>
                 <tbody>
                     {{-- 18 --}}
@@ -93,17 +105,19 @@
     #survey {
         height: 2em;
         word-wrap: break-word;
-        border: 1px solid black;
+        border: 1px solid rgb(143, 137, 137);
         font-size: 8px;
     }
 
     #survey th {
-        border: solid 1px black
+        text-align: center;
+        border: solid 1px rgb(143, 137, 137);
     }
 
     #survey td {
+        text-align: center;
         font-size: 8px;
-        border: solid 1px black
+        border: solid 1px rgb(143, 137, 137);
     }
 </style>
 
