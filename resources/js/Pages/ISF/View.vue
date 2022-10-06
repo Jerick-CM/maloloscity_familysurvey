@@ -7,6 +7,7 @@ import useISF from "./../../composables/isf_and_illegalencroachments";
 import { useToast } from "vue-toastification";
 import Modal from "./../../Components/Modals/Modal_Create.vue";
 import Multiselect from "@vueform/multiselect";
+
 export default {
     data: () => ({
         risksHeaderClass: "bg-blue-100",
@@ -46,13 +47,7 @@ export default {
         const { isf, getISF, destroyISF, errors_isf, loadFromServer } =
             useISF();
 
-        onMounted(async () => {
-            form.province = 14;
-            form.municipality = 10;
-            form.lalawigan = "BULACAN";
-            await getISF(route().params.id);
-        });
-
+   
         const filterBrgys = async (munId) => {
             filteredBrgys.value = brgys.value.filter(
                 (brgy) => brgy.parent === munId
@@ -63,13 +58,13 @@ export default {
             modal_show.value = !modal_show.value;
         };
 
-        watch(
-            () => form.municipality,
-            (value) => {
-                filterBrgys(value);
-            }
-        );
-
+        onMounted(async () => {
+            form.province = 14;
+            form.municipality = 10;
+            form.lalawigan = "BULACAN";
+            await getISF(route().params.id);
+        });
+       
         return {
             filteredBrgys,
             form,
