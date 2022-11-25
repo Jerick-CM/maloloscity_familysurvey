@@ -14,7 +14,6 @@ class EconomicRisk extends Model
 
     protected $fillable = [
         'information_id',
-
         'no_work',
         'work_notalign_to_profession',
         'experienced_workaccident',
@@ -25,7 +24,6 @@ class EconomicRisk extends Model
         'no_lifeinsurance',
         'no_healthinsurance',
         'working_without_sss_or_gsis',
-
         'bankrupt_in_business',
         'mortgage_of_posessions',
         'loaned_money_from_relatives',

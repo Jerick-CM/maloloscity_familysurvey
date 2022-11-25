@@ -56,7 +56,7 @@ export default {
             form.four_ps_beneficiary = checklist_4PS.value;
             form.checklist = checklist_form.value;
             await storeFamilySurvey({ ...form }).then(() => {
-                if (errors_fs.value) {
+                if (errors_populations.value) {
                     submission_process.value = false;
                     toast.error("Submit failed.");
                 } else {
@@ -162,6 +162,7 @@ export default {
             <Breadcrumb />
             <Modal :showmodal="modal_show" @toggle="toggleModal()" :info="data">
             </Modal>
+
             <div v-if="errors_fs">
                 <div
                     v-for="(v, k) in errors_fs"
@@ -173,6 +174,7 @@ export default {
                     </p>
                 </div>
             </div>
+
             <form class="" @submit.prevent="submitSurvey">
                 <div class="flex flex-col 2xl:flex-row xl:flex-row lg:flex-row">
                     <div
@@ -213,6 +215,7 @@ export default {
                         </div>
                     </div>
                 </div>
+                
                 <div class="my-3 bg-white rounded p-5 sm:p1">
                     <!-- row 1 -->
                     <div class="py-2">

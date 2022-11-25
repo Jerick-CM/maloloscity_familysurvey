@@ -10,4 +10,7 @@ class Barangay extends Model
     use HasFactory;
 
     public $table = 'barangay';
+
+   
+
 }
