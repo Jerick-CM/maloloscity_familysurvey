@@ -19,18 +19,26 @@ class CreateSoloParentListsTable extends Migration
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('name_suffix')->nullable();
-            $table->date('full_name')->nullable();
+            $table->string('full_name')->nullable();
+            $table->string('address')->nullable();
 
-            $table->string('barangay')->nullable();
-            $table->string('gender')->nullable();
             $table->date('date_of_birth')->nullable();
-  
-            $table->string('disability')->nullable();
-            $table->string('cause_of_disability')->nullable();
             $table->string('id_number')->nullable();
-            $table->string('date_of_application')->nullable();
+  
+            $table->string('sons')->nullable();
+            $table->string('daugthers')->nullable();
+            
+            $table->date('date_of_issuance')->nullable();
+            $table->string('barangay')->nullable();
+
+            $table->string('gender')->nullable();
+            
+            $table->string('civil_status')->nullable();
+            $table->string('new_member')->nullable();
+            $table->string('renewed_member')->nullable();
+
             $table->string('remarks')->nullable();
-            $table->string('note')->nullable();
+            $table->string('notes')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

@@ -4,82 +4,42 @@ namespace App\Http\Controllers;
 
 use App\Models\Models\SoloParent_list;
 use Illuminate\Http\Request;
+use App\Models\Locations\Barangay;
+use App\Models\Locations\Municipality;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 class SoloParentListController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        return Inertia::render('SoloParent/Index', [
+            'hosting' => config('custom.url')
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function handleISFEdit()
     {
-        //
+
+        $municipalities = Municipality::select('mun_id as id', 'mun_name as value')->where('prov_id', 14)->orderBy('mun_name', 'asc')->get();
+        $barangays = Barangay::select('brgy_id as id', 'brgy_name as value', DB::raw('CAST(mun_id AS UNSIGNED) AS parent'))->where('prov_id', 14)->orderBy('brgy_name', 'asc')->get();
+
+        return Inertia::render('SoloParent/Edit', [
+            'barangays' => $barangays,
+            'municipalities' => $municipalities,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function handleISFCreate()
     {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Models\SoloParent_list  $soloParent_list
-     * @return \Illuminate\Http\Response
-     */
-    public function show(SoloParent_list $soloParent_list)
-    {
-        //
-    }
+        $municipalities = Municipality::select('mun_id as id', 'mun_name as value')->where('prov_id', 14)->orderBy('mun_name', 'asc')->get();
+        $barangays = Barangay::select('brgy_id as id', 'brgy_name as value', DB::raw('CAST(mun_id AS UNSIGNED) AS parent'))->where('prov_id', 14)->orderBy('brgy_name', 'asc')->get();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Models\SoloParent_list  $soloParent_list
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(SoloParent_list $soloParent_list)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Models\SoloParent_list  $soloParent_list
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, SoloParent_list $soloParent_list)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Models\SoloParent_list  $soloParent_list
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(SoloParent_list $soloParent_list)
-    {
-        //
+        return Inertia::render('SoloParent/Create', [
+            'barangays' => $barangays,
+            'municipalities' => $municipalities,
+        ]);
     }
 }

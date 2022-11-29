@@ -278,3 +278,6 @@ php artisan db:seed --class=FixSeeder
 php artisan make:migration create_isf_and_illegal_encrouchment_table
 
 php artisan make:seeder isf_informalsettlers_Seeder
+
+
+ALTER TABLE `users` ADD `id` INT NOT NULL AUTO_INCREMENT;

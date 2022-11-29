@@ -1218,6 +1218,10 @@ select {
 .border-0 {
   border-width: 0px;
 }
+.border-y-4 {
+  border-top-width: 4px;
+  border-bottom-width: 4px;
+}
 .border-t {
   border-top-width: 1px;
 }
@@ -1232,6 +1236,9 @@ select {
 }
 .border-l-4 {
   border-left-width: 4px;
+}
+.border-b-4 {
+  border-bottom-width: 4px;
 }
 .border-solid {
   border-style: solid;
@@ -1282,6 +1289,14 @@ select {
 .border-slate-300 {
   --tw-border-opacity: 1;
   border-color: rgb(203 213 225 / var(--tw-border-opacity));
+}
+.border-indigo-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(99 102 241 / var(--tw-border-opacity));
+}
+.border-blue-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(59 130 246 / var(--tw-border-opacity));
 }
 .bg-white {
   --tw-bg-opacity: 1;

@@ -4,82 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Models\Models\Pwd_list;
 use Illuminate\Http\Request;
+use App\Models\Locations\Barangay;
+use App\Models\Locations\Municipality;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
+
 
 class PwdListController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        return Inertia::render('PWD/Index', [
+            'hosting' => config('custom.url')
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function handleISFEdit()
     {
-        //
+        $municipalities = Municipality::select('mun_id as id', 'mun_name as value')->where('prov_id', 14)->orderBy('mun_name', 'asc')->get();
+        $barangays = Barangay::select('brgy_id as id', 'brgy_name as value', DB::raw('CAST(mun_id AS UNSIGNED) AS parent'))->where('prov_id', 14)->orderBy('brgy_name', 'asc')->get();
+
+        return Inertia::render('PWD/Edit', [
+            'barangays' => $barangays,
+            'municipalities' => $municipalities,
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function handleISFCreate()
     {
-        //
-    }
+        $municipalities = Municipality::select('mun_id as id', 'mun_name as value')->where('prov_id', 14)->orderBy('mun_name', 'asc')->get();
+        $barangays = Barangay::select('brgy_id as id', 'brgy_name as value', DB::raw('CAST(mun_id AS UNSIGNED) AS parent'))->where('prov_id', 14)->orderBy('brgy_name', 'asc')->get();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Models\Pwd_list  $pwd_list
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pwd_list $pwd_list)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Models\Pwd_list  $pwd_list
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Pwd_list $pwd_list)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Models\Pwd_list  $pwd_list
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Pwd_list $pwd_list)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Models\Pwd_list  $pwd_list
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Pwd_list $pwd_list)
-    {
-        //
+        return Inertia::render('PWD/Create', [
+            'barangays' => $barangays,
+            'municipalities' => $municipalities,
+        ]);
     }
 }

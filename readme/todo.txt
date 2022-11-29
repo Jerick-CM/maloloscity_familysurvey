@@ -1,0 +1,17 @@
+ Todo
+ 
+ implement renewal date logic  add including year specially date of renewal and update. 
+ for both pwd and soloparent.
+
+ implement delete pwd
+ implement edit pwd
+ implement add pwd
+
+ implement index soloparent
+ implement delete soloparent
+ implement edit soloparent
+ implement add soloparent
+
+
+
+

@@ -116,6 +116,36 @@ export default {
                                     ISF and IE Page
                                 </BreezeNavLink>
                             </div>
+
+                            <div
+                                v-if="permissions.includes('Access-Page-PWD')"
+                                class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
+                            >
+                                <BreezeNavLink
+                                    :href="route('pwd-index')"
+                                    :active="route().current('pwd-index')"
+                                >
+                                    PWD
+                                </BreezeNavLink>
+                            </div>
+
+                            <div
+                                v-if="
+                                    permissions.includes(
+                                        'Access-Page-SoloParent'
+                                    )
+                                "
+                                class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
+                            >
+                                <BreezeNavLink
+                                    :href="route('soloparent-index')"
+                                    :active="
+                                        route().current('soloparent-index')
+                                    "
+                                >
+                                    Solo Parent
+                                </BreezeNavLink>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -269,6 +299,30 @@ export default {
                         </BreezeNavLink>
                     </div>
 
+                    <div
+                        v-if="permissions.includes('Access-Page-PWD')"
+                        class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
+                    >
+                        <BreezeNavLink
+                            :href="route('pwd-index')"
+                            :active="route().current('pwd-index')"
+                        >
+                            PWD
+                        </BreezeNavLink>
+                    </div>
+
+                    <div
+                        v-if="permissions.includes('Access-Page-SOLOPARENT')"
+                        class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
+                    >
+                        <BreezeNavLink
+                            :href="route('soloparent-index')"
+                            :active="route().current('soloparent-index')"
+                        >
+                            SOLO PARENT
+                        </BreezeNavLink>
+                    </div>
+
                     <!-- Responsive Settings Options -->
                     <div class="pt-4 pb-1 border-t border-gray-200">
                         <div class="px-4">
@@ -294,12 +348,12 @@ export default {
             </nav>
 
             <!-- Page Heading -->
-            <!-- bg-red-500 -->
+
             <header
                 class="bg-gradient-to-r from-red-600 via-red-500 to-red-600 shadow-inner"
                 v-if="$slots.header"
             >
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 border-b-4 border-blue-500 ">
                     <h2 class="font-semibold text-xl text-white leading-tight">
                         <slot name="header" />
                     </h2>

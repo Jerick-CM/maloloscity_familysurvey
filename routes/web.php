@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -152,5 +151,52 @@ Route::group(['prefix' => 'cstm', 'middleware' => 'throttle:500,1'], function ()
     Route::post('/itineraries/add_business', [\App\Http\Controllers\Api\ItineraryController::class, 'add_business']);
     Route::post('/itineraries/fetch/{id}', [\App\Http\Controllers\Api\ItineraryController::class, 'fetch']);
 });
+
+
+Route::group(['prefix' => 'pwd', 'middleware' => ['permission:Access-Page-ISF', 'throttle:500,1']], function () {
+
+    /* index */
+    Route::get('/', [App\Http\Controllers\PwdListController::class, 'index'])->middleware(['auth', 'verified'])->name('pwd-index');
+
+    /* create */
+    Route::get('/create', [App\Http\Controllers\PwdListController::class, 'handleISFCreate'])->middleware(['auth', 'verified'])->name('pwd-create');
+
+    /* view */
+    Route::get('/view/{id}', function () {
+        return Inertia::render('ISF/View');
+    })->middleware(['auth', 'verified'])->name('pwd-view');
+
+    /* edit */
+    Route::get('/edit/{id}', [App\Http\Controllers\PwdListController::class, 'handleISFEdit'])->middleware(['auth', 'verified'])->name('pwd-edit');
+
+    /* fetch */
+    Route::post('/fetch', [\App\Http\Controllers\Api\PwdListController::class, 'fetch'])->name('pwd-fetch');
+    
+    /* selectmultiple */
+    Route::post('/multiselect', [\App\Http\Controllers\Api\PwdListController::class, 'getSearchfield'])->name('pwd-multiselect');
+
+    /* create record */
+    Route::post('/', [\App\Http\Controllers\Api\PwdListController::class, 'store'])->name('pwd-store');
+
+});
+
+Route::group(['prefix' => 'soloparent', 'middleware' => ['permission:Access-Page-ISF', 'throttle:500,1']], function () {
+
+    /* index */
+    Route::get('/', [App\Http\Controllers\SoloParentListController::class, 'index'])->middleware(['auth', 'verified'])->name('soloparent-index');
+
+    /* create */
+    Route::get('/create', [App\Http\Controllers\SoloParentListController::class, 'handleISFCreate'])->middleware(['auth', 'verified'])->name('soloparent-create');
+
+    /* view */
+    Route::get('/view/{id}', function () {
+        return Inertia::render('ISF/View');
+    })->middleware(['auth', 'verified'])->name('soloparent-view');
+
+    /* edit */
+    Route::get('/edit/{id}', [App\Http\Controllers\SoloParentListController::class, 'handleISFEdit'])->middleware(['auth', 'verified'])->name('soloparent-edit');
+
+});
+
 
 require __DIR__ . '/auth.php';
