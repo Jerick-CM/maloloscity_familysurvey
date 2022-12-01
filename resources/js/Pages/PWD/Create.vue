@@ -1,7 +1,7 @@
 <script>
 import BreezeAuthenticatedLayout from "./../../Layouts/Form.vue";
 import Breadcrumb from "./../../Components/BreadCrumb/navPWDCreate.vue";
-import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ref, reactive, computed, onMounted, watch } from "vue";
 import usePWD from "./../../composables/pwd";
 import { useToast } from "vue-toastification";
@@ -42,13 +42,6 @@ export default {
         const multiselect_body_of_water_type = ref(null);
         const multiselect_distance_to_waterway = ref(null);
 
-        const searchParameter = reactive({
-            searchField: "",
-            searchValue: "",
-            filterField: "",
-            filterValue: "",
-        });
-
         /* init */
         const form = reactive({
             province: 14,
@@ -62,7 +55,7 @@ export default {
             toast.info("Sending create");
             submission_process.value = true;
             await storePWD({ ...form }).then(() => {
-                if (errors_isf.value) {
+                if (errors_pwd.value) {
                     submission_process.value = false;
                     toast.error("Submit failed.");
                 } else {
@@ -83,11 +76,9 @@ export default {
 
         const clearFields = () => {
             form.date = "";
-
             form.first_name = "";
             form.middle_name = "";
             form.last_name = "";
-
             form.barangay = "";
         };
 
@@ -130,14 +121,10 @@ export default {
         return {
             filteredBrgys,
             form,
-            submitPWD,
-            errors_isf,
+            errors_pwd,
             submission_process,
-            toggleModal,
             data,
             modal_show,
-
-            fetchSelectfield,
 
             multiselect_address,
             multiselect_balik_probinsya,
@@ -146,6 +133,9 @@ export default {
             multiselect_body_of_water_name,
             multiselect_body_of_water_type,
             multiselect_distance_to_waterway,
+            submitPWD,
+            toggleModal,
+            fetchSelectfield,
         };
     },
 };
@@ -161,9 +151,9 @@ export default {
             <Breadcrumb />
             <Modal :showmodal="modal_show" @toggle="toggleModal()" :info="data">
             </Modal>
-            <div v-if="errors_isf">
+            <div v-if="errors_pwd">
                 <div
-                    v-for="(v, k) in errors_isf"
+                    v-for="(v, k) in errors_pwd"
                     :key="k"
                     class="bg-red-500 text-white rounded font-bold mb-4 shadow-lg py-2 px-4 pr-0"
                 >
@@ -222,12 +212,61 @@ export default {
                             >
                             </label>
                         </div>
+
                         <div class="w-full md:w-1/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                             >
+                                New / Renewal Year
                             </label>
+
+                            <select
+                                v-model="form.year"
+                                id="barangays"
+                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            >
+                                <option value="0" selected="" disabled>
+                                    Select
+                                </option>
+
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                                <option value="2023">2023</option>
+                                <option value="2024">2024</option>
+
+                                <option value="2025">2025</option>
+                                <option value="2026">2026</option>
+                                <option value="2027">2027</option>
+                                <option value="2028">2028</option>
+                                <option value="2029">2029</option>
+
+                                <option value="2030">2030</option>
+                                <option value="2031">2031</option>
+                                <option value="2032">2032</option>
+                                <option value="2033">2033</option>
+                                <option value="2034">2034</option>
+
+                                <option value="2035">2035</option>
+                                <option value="2036">2036</option>
+                                <option value="2037">2037</option>
+                                <option value="2038">2038</option>
+                                <option value="2039">2039</option>
+
+                                <option value="2040">2040</option>
+                                <option value="2041">2041</option>
+                                <option value="2042">2042</option>
+                                <option value="2043">2043</option>
+                                <option value="2044">2044</option>
+
+                                <option value="2045">2045</option>
+                                <option value="2046">2046</option>
+                                <option value="2047">2047</option>
+                                <option value="2048">2048</option>
+                                <option value="2049">2049</option>
+                            </select>
                         </div>
+
                         <div class="w-full md:w-1/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -239,6 +278,7 @@ export default {
                                 v-model="form.id_number"
                             />
                         </div>
+
                         <div class="w-full md:w-1/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -247,9 +287,8 @@ export default {
                             </label>
                             <input
                                 :class="inputClass"
-                                v-model="form.date"
+                                v-model="form.date_of_application"
                                 type="date"
-                                placeholder=""
                             />
                         </div>
                     </div>
@@ -258,7 +297,7 @@ export default {
                         <div class="py-1 font-semibold">I. Pagkakakilanlan</div>
 
                         <div class="py-1 font-medium text-red-700">
-                            1. Pangalan (Household Head)
+                            1. Pangalan
                         </div>
 
                         <div class="flex flex-wrap -mx-3">
@@ -326,33 +365,47 @@ export default {
                                 </label>
                                 <input
                                     :class="inputClass"
-                                    v-model="form.birthdate"
+                                    v-model="form.date_of_birth"
                                     type="date"
                                     placeholder=""
                                 />
                             </div>
+                            <div class="w-full md:w-1/4 px-3 py-1"></div>
                             <div class="w-full md:w-1/4 px-3 py-1">
                                 <label
                                     class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                 >
                                     Gender
                                 </label>
-                                <input
-                                    :class="inputClass"
-                                    v-model="form.birthdate"
-                                    type="text"
+                                <Multiselect
+                                    mode="single"
+                                    v-model="form.gender"
+                                    class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                     placeholder=""
+                                    :filter-results="false"
+                                    :min-chars="1"
+                                    :resolve-on-load="false"
+                                    :delay="0"
+                                    :searchable="true"
+                                    :create-option="true"
+                                    :options="
+                                        async function (query) {
+                                            return await fetchSelectfield(
+                                                query,
+                                                'gender'
+                                            );
+                                        }
+                                    "
                                 />
                             </div>
-                            <div class="w-full md:w-1/4 px-3 py-1"></div>
                             <div class="w-full md:w-1/4 px-3 py-1"></div>
                         </div>
                     </div>
 
-          
                     <div class="py-1 font-medium text-red-700">
                         2. Address Location
                     </div>
+
                     <div class="flex flex-wrap -mx-3">
                         <div class="w-full md:w-2/4 px-3 py-1">
                             <label
@@ -414,16 +467,15 @@ export default {
                         3. Nature of Disability
                     </div>
                     <div class="flex flex-wrap -mx-3">
-                        <div class="w-full md:w-1/4 px-3 py-1">
+                        <div class="w-full md:w-2/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                             >
                                 Disability
                             </label>
                             <Multiselect
-                                ref="multiselect_street"
                                 mode="single"
-                                v-model="form.street"
+                                v-model="form.disability"
                                 class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
                                 :filter-results="false"
@@ -443,16 +495,15 @@ export default {
                             />
                         </div>
 
-                        <div class="w-full md:w-1/4 px-3 py-1">
+                        <div class="w-full md:w-2/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                             >
                                 Cause of Disability
                             </label>
                             <Multiselect
-                                ref="multiselect_street"
                                 mode="single"
-                                v-model="form.street"
+                                v-model="form.cause_of_disability"
                                 class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
                                 :filter-results="false"
@@ -475,7 +526,7 @@ export default {
 
                     <div class="py-1 font-medium text-red-700">4. Notes</div>
                     <div class="flex flex-wrap -mx-3">
-                        <div class="w-full md:w-1/4 px-3 py-1">
+                        <div class="w-full md:w-2/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                             >
@@ -485,7 +536,7 @@ export default {
                             <Multiselect
                                 ref="multiselect_street"
                                 mode="single"
-                                v-model="form.street"
+                                v-model="form.remarks"
                                 class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
                                 :filter-results="false"
@@ -504,7 +555,7 @@ export default {
                                 "
                             />
                         </div>
-                        <div class="w-full md:w-1/4 px-3 py-1">
+                        <div class="w-full md:w-2/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                             >
@@ -514,7 +565,7 @@ export default {
                             <Multiselect
                                 ref="multiselect_street"
                                 mode="single"
-                                v-model="form.street"
+                                v-model="form.notes"
                                 class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
                                 :filter-results="false"
@@ -575,9 +626,9 @@ export default {
                     </div>
                 </div>
             </form>
-            <div v-if="errors_isf">
+            <div v-if="errors_pwd">
                 <div
-                    v-for="(v, k) in errors_isf"
+                    v-for="(v, k) in errors_pwd"
                     :key="k"
                     class="bg-red-500 text-white rounded font-bold mb-4 shadow-lg py-2 px-4 pr-0"
                 >

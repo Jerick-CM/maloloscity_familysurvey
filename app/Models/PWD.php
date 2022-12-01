@@ -37,15 +37,8 @@ class PWD extends Model
     ];
 
 
-    // '',
-    // '',
-    // '',
-    // '',
-    // ''
-
-
     public function renewal()
     {
-        return $this->hasMany(Pwd_renewal::class);
+        return $this->hasMany(Pwd_renewal::class,'pwd_id');
     }
 }

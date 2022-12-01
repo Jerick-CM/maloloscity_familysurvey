@@ -10,6 +10,14 @@ class Pwd_renewal extends Model
 {
     use HasFactory, SoftDeletes;
 
+
+    protected $fillable = [
+        'id',
+        'pwd_id',
+        'year',
+        'date_of_application'
+    ];
+
     public function pwdaccount()
     {
         return $this->belongsTo(PWD::class);

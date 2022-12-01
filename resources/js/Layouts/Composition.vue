@@ -24,7 +24,7 @@ const showingNavigationDropdown = ref(false);
 
             <div id="holder">
                 <header>
-                    <div class="p-5 bg-bottom second-nav">
+                    <div class="p-5 bg-bottom second-nav border-b-4 border-blue-500">
                         <div class="flex flex-items">
                             <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">

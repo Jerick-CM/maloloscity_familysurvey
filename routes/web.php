@@ -171,13 +171,19 @@ Route::group(['prefix' => 'pwd', 'middleware' => ['permission:Access-Page-ISF', 
 
     /* fetch */
     Route::post('/fetch', [\App\Http\Controllers\Api\PwdListController::class, 'fetch'])->name('pwd-fetch');
-    
+
     /* selectmultiple */
     Route::post('/multiselect', [\App\Http\Controllers\Api\PwdListController::class, 'getSearchfield'])->name('pwd-multiselect');
 
     /* create record */
     Route::post('/', [\App\Http\Controllers\Api\PwdListController::class, 'store'])->name('pwd-store');
 
+    /* get record */
+    Route::get('/get/{id}', [\App\Http\Controllers\Api\PwdListController::class, 'show'])->name('pwd-request-edit');
+
+    /* update record */
+    Route::post('/update/{id}', [\App\Http\Controllers\Api\PwdListController::class, 'update'])->name('pwd-request-update');
+    
 });
 
 Route::group(['prefix' => 'soloparent', 'middleware' => ['permission:Access-Page-ISF', 'throttle:500,1']], function () {
@@ -195,7 +201,6 @@ Route::group(['prefix' => 'soloparent', 'middleware' => ['permission:Access-Page
 
     /* edit */
     Route::get('/edit/{id}', [App\Http\Controllers\SoloParentListController::class, 'handleISFEdit'])->middleware(['auth', 'verified'])->name('soloparent-edit');
-
 });
 
 

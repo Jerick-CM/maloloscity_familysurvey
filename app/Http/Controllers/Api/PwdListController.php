@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 use App\Models\PWD;
+use App\Models\Pwd_renewal;
 
 class PwdListController extends Controller
 {
@@ -19,10 +20,10 @@ class PwdListController extends Controller
 
     public function index()
     {
-        return PWDResource::collection(PWD::orderby('id', 'DESC')->get());
+        // return PWDResource::collection(PWD::orderby('id', 'DESC')->get());
     }
 
-    public function store(PWDRequest $request)
+    public function store(Request $request)
     {
         Validator::make($request->all(), [
             'first_name' => ['nullable'],
@@ -48,7 +49,7 @@ class PwdListController extends Controller
                     'date_of_birth' => $request->date_of_birth,
                     'disability' => $request->disability,
                     'cause_of_disability' => $request->cause_of_disability,
-            
+
                     'id_number' => $request->id_number,
                     'date_applied' => $request->date_applied,
                     'remarks' => $request->remarks,
@@ -58,6 +59,12 @@ class PwdListController extends Controller
                 ]
 
             );
+
+            Pwd_renewal::create([
+                'year' => $request->year,
+                'pwd_id' =>  $PWD->id,
+                'date_of_application' => $request->date_of_application,
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json($e, 500);
@@ -73,52 +80,110 @@ class PwdListController extends Controller
     public function show(Request $request, $id)
     {
         $data = PWD::where('id', $id)->first();
-        return response()->json(['data' => $data]);
+        $pwd_renewals  = PWD::find($id)->renewal;
+
+        return response()->json(
+            [
+                'data' => $data,
+                'pwd' => $pwd_renewals,
+            ]
+        );
     }
 
     public function update(Request $request, $id)
     {
-        Validator::make($request->all(), [
-            // 'first_name' => ['required'],
-        ])->validate();
 
+        Validator::make($request->all(), [])->validate();
 
         DB::beginTransaction();
+
         try {
-            $isf = PWD::findOrfail($id);
 
-            $isf->body_of_water_name = $request->body_of_water_name;
-            $isf->body_of_water_type = $request->body_of_water_type;
-            $isf->household_head = $request->household_head;
-            $isf->birthdate = $request->birthdate;
-            $isf->spouse_name = $request->spouse_name;
+            $pwd = PWD::findOrfail($id);
 
-            $isf->spouse_birthdate = $request->spouse_birthdate;
-            $isf->spouse_name = $request->spouse_name;
-            $isf->tenurial_status = $request->tenurial_status;
-            $isf->no_of_family_members = $request->no_of_family_members;
-            $isf->street = $request->street;
+            $pwd->first_name  = $request->first_name;
+            $pwd->middle_name = $request->middle_name;
+            $pwd->last_name = $request->last_name;
+            $pwd->name_suffix = $request->name_suffix;
 
-            $isf->barangay = $request->barangay;
-            $isf->latitude = $request->latitude;
-            $isf->longitude = $request->longitude;
-            $isf->balik_probinsya = $request->balik_probinsya;
-            $isf->distance_to_waterway = $request->distance_to_waterway;
+            $pwd->full_name = $request->first_name . " " . $request->middle_name . " " . $request->last_name . " " . $request->name_suffix;
 
-            $isf->zone = $request->zone;
-            $isf->date = $request->date;
-            $isf->save();
+            $pwd->address = $request->address;
+            $pwd->date_of_birth = $request->date_of_birth;
+            $pwd->disability = $request->disability;
+            $pwd->cause_of_disability = $request->cause_of_disability;
+
+            $pwd->id_number = $request->id_number;
+            $pwd->remarks = $request->remarks;
+            $pwd->notes = $request->notes;
+            $pwd->barangay = $request->barangay;
+
+            $pwd->save();
+
+            $all_years = Pwd_renewal::where('pwd_id', $id)->select('year')->get();
+
+            if (count($all_years) > 0) {
+                $data = 'non empty';
+                foreach ($all_years as $kk => $vv) {
+                    $current_year[$kk] =  $vv['year'];
+                }
+
+                if (!empty($current_year)) {
+                    $diff_array_0 = array_diff($current_year, $request->year_renewal);
+                }
+
+                if (!empty($current_year)) {
+                    $diff_array_1 = array_diff($request->year_renewal, $current_year);
+                }
+
+                $diff_array_0 = array_values($diff_array_0);
+                $diff_array_1 = array_values($diff_array_1);
+
+                // remove 
+                foreach ($diff_array_0 as $key => $val) {
+                    Pwd_renewal::where('pwd_id', $id)->where('year', $val)->delete();
+                }
+
+                // add
+                foreach ($diff_array_1 as $key => $val) {
+
+                    Pwd_renewal::create([
+                        'year' => $val,
+                        'pwd_id' =>   $id,
+                        'date_of_application' => $request->date_of_application,
+                    ]);
+                }
+
+            } else {
+                $data = 'empty';
+                // no available year renewals
+                foreach ($request->year_renewal as $key => $val) {
+                    Pwd_renewal::create([
+                        'year' => $val,
+                        'pwd_id' =>   $id,
+                        'date_of_application' => $request->date_of_application,
+                    ]);
+                }
+
+            }
         } catch (\Exception $e) {
+
             DB::rollBack();
             return response()->json($e, 500);
         }
+
         DB::commit();
-
-
 
         return response()->json([
             'success' => true,
-            'data' => $request->all()
+            'id' => $id,
+            'all_year' =>  $all_years,
+            'data' => $data
+            // 'submit_year' => $request->year_renewal,
+            // 'array_year' => $current_year,
+            // 'array_0' => $diff_array_0,
+            // 'array_1' => $diff_array_1,
+
         ]);
     }
 

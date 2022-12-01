@@ -15,7 +15,7 @@ const showingNavigationDropdown = ref(false);
         <div class="min-h-screen bg-gray-100">
             <div id="holder">
                 <header>
-                    <div class="p-5 bg-bottom second-nav">
+                    <div class="p-5 bg-bottom second-nav border-b-4 border-blue-500">
                         <div class="flex flex-items">
                             <div
                                 class="w-full 2xl:w-1/3 xl:w-1/3 lg:w-1/3 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-start place-content-start"
