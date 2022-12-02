@@ -26,7 +26,6 @@ export default {
     props: ["barangays", "municipalities"],
 
     setup(props, { attrs, slots, emit, expose }) {
-        
         const toast = useToast();
         const brgys = computed(() => props.barangays);
         const filteredBrgys = ref([]);
@@ -67,7 +66,7 @@ export default {
             muxsel_cause_of_disability,
             muxsel_remarks,
             muxsel_notes,
-
+            muxsel_barangay,
             getPWD,
         } = usePWD();
 
@@ -91,7 +90,7 @@ export default {
         const fetchSelectfield = async (query, field) => {
             let data;
             await axios
-                .post("/request/pwd/getSelectfield", {
+                .post(route("pwd-multiselect"), {
                     searchValue: query,
                     field: field,
                 })
@@ -200,6 +199,7 @@ export default {
             muxsel_cause_of_disability,
             muxsel_remarks,
             muxsel_notes,
+            muxsel_barangay,
             year_group,
             year_selection,
 
@@ -462,7 +462,29 @@ export default {
                                 Barangay
                             </label>
 
-                            <select
+                            <Multiselect
+                                :object="true"
+                                mode="single"
+                                v-model="muxsel_barangay"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="
+                                    async function (query) {
+                                        return await fetchSelectfield(
+                                            query,
+                                            'barangay'
+                                        );
+                                    }
+                                "
+                            />
+
+                            <!-- <select
                                 v-model="pwd.barangay"
                                 id="barangays"
                                 class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -477,7 +499,7 @@ export default {
                                 >
                                     {{ barangay.value }}
                                 </option>
-                            </select>
+                            </select> -->
                         </div>
                     </div>
 

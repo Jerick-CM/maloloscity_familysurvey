@@ -13,6 +13,7 @@ export default function usePWD() {
     const muxsel_cause_of_disability = ref(null);
     const muxsel_remarks = ref(null);
     const muxsel_notes = ref(null);
+    const muxsel_barangay = ref(null);
 
     const getPWD = async (id) => {
         let response = await axios.get(route("pwd-request-edit", id));
@@ -55,6 +56,11 @@ export default function usePWD() {
         muxsel_notes.value = {
             value: response.data.data.notes,
             label: response.data.data.notes,
+        };
+
+        muxsel_barangay.value = {
+            value: response.data.data.barangay,
+            label: response.data.data.barangay,
         };
     };
 
@@ -129,7 +135,7 @@ export default function usePWD() {
         muxsel_cause_of_disability,
         muxsel_remarks,
         muxsel_notes,
-
+        muxsel_barangay,
         getPWD,
         getISFs,
         destroyPWD,
