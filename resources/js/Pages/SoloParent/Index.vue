@@ -5,9 +5,9 @@ import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
 import { ref, onMounted, reactive, watch, computed } from "vue";
 import Multiselect from "@vueform/multiselect";
 import { useToast } from "vue-toastification";
-
 import Breadcrumb from "./../../Components/BreadCrumb/navSoloParentIndex.vue";
-import useISF from "./../../composables/isf_and_illegalencroachments";
+import useSoloParent from "./../../composables/soloparent";
+
 export default {
     components: {
         Breadcrumb,
@@ -18,7 +18,6 @@ export default {
         Link,
     },
     props: ["hosting"],
-    methods: {},
     data: () => ({
         collapseClass:
             "border-green-200 rounded-t rounded-t mb-0 px-4 py-3 border-0 bg-green-600",
@@ -31,11 +30,16 @@ export default {
     setup(props) {
         const Auth_user = computed(() => usePage().props.value.auth.user);
         const permissions = usePage().props.value.auth.user.PermissionList;
-        const hosting = computed(() => props.hosting);
         const toast = useToast();
         const form = reactive({});
-        const { isfs, destroyISF, errors_isf, loadFromServer } = useISF();
         const url = ref("");
+
+        const {
+            soloparents,
+            destroySoloParent,
+            errors_soloparent,
+            loadFromServer,
+        } = useSoloParent();
 
         /* Datatable */
 
@@ -50,7 +54,7 @@ export default {
         });
 
         const searchParameter = reactive({
-            searchField: "household_head",
+            searchField: "full_name",
             searchValue: "",
             filterField: "",
             filterValue: "",
@@ -59,37 +63,10 @@ export default {
         /* Datatable */
 
         const headers = ref([
-            { text: "Id", value: "id", sortable: true },
-
-            { text: "Household Head", value: "household_head", sortable: true },
-            {
-                text: "Street",
-                value: "street",
-                sortable: true,
-            },
-            {
-                text: "Barangay",
-                value: "barangay",
-                sortable: true,
-            },
-            {
-                text: "Balik Probinsya",
-                value: "balik_probinsya",
-                sortable: true,
-            },
-            {
-                text: "Tenurial Status",
-                value: "tenurial_status",
-                sortable: true,
-            },
-
-            {
-                text: "No. of Family Members",
-                value: "no_of_family_members",
-                sortable: true,
-            },
-
-            { text: "Date / Time", value: "date", sortable: true },
+            { text: "Name", value: "full_name", sortable: true },
+            { text: "Barangay", value: "barangay", sortable: true },
+            { text: "Gender", value: "gender", sortable: true },
+            { text: "ID Number", value: "id_number", sortable: true },
             { text: "Action", value: "action", sortable: false },
         ]);
 
@@ -100,7 +77,7 @@ export default {
         const server_sided = _.debounce(async () => {
             loading.value = true;
             await loadFromServer(
-                isfs,
+                soloparents,
                 serverItemsLength,
                 serverOptions,
                 searchParameter
@@ -108,6 +85,33 @@ export default {
             loading.value = false;
         }, 500);
 
+        const searchButton = () => {
+            server_sided();
+        };
+
+        const generatePDF = () => {
+            // if (searchParameter.filterValue == null) {
+            //     url.value = hosting.value + "/report_isf/pdf/" + "all";
+            // } else if (searchParameter.filterValue == "") {
+            //     url.value = hosting.value + "/report_isf/pdf/" + "all";
+            // } else {
+            //     url.value =
+            //         hosting.value +
+            //         "/report_isf/pdf/" +
+            //         searchParameter.filterValue;
+            // }
+            // window.open(url.value);
+        };
+
+        const removeSoloParent = async (id) => {
+            // if (!window.confirm("Are you sure?")) {
+            //     return;
+            // }
+            // toast.info("Sending delete");
+            // await destroyISF(id);
+            // await server_sided();
+            // await toast.success("Delete success.");
+        };
         const fetchSelectfield = async (query, field) => {
             let data;
             await axios
@@ -126,48 +130,20 @@ export default {
 
             return data;
         };
-
-        const searchButton = () => {
-            server_sided();
-        };
-
-        const generatePDF = () => {
-            if (searchParameter.filterValue == null) {
-                url.value = hosting.value + "/report_isf/pdf/" + "all";
-            } else if (searchParameter.filterValue == "") {
-                url.value = hosting.value + "/report_isf/pdf/" + "all";
-            } else {
-                url.value =
-                    hosting.value +
-                    "/report_isf/pdf/" +
-                    searchParameter.filterValue;
-            }
-
-            window.open(url.value);
-        };
-
-        const removeISF = async (id) => {
-            if (!window.confirm("Are you sure?")) {
-                return;
-            }
-            toast.info("Sending delete");
-            await destroyISF(id);
-            await server_sided();
-            await toast.success("Delete success.");
-        };
-
         watch(
             () => searchParameter.searchValue,
             (value) => {
                 server_sided();
             }
         );
+
         watch(
             () => searchParameter.sortBy,
             (value) => {
                 server_sided();
             }
         );
+
         watch(
             () => serverOptions.value,
             (value) => {
@@ -184,22 +160,20 @@ export default {
             serverOptions,
             searchParameter,
             permissions,
-            isfs,
+            soloparents,
             selectedItems,
             fetchSelectfield,
             searchButton,
             generatePDF,
-            removeISF,
+            removeSoloParent,
         };
     },
 };
 </script>
 <template>
     <BreezeAuthenticatedLayout>
-        <Head title="Solo Parent" />
-        <template #header
-            >Solo Parent
-        </template>
+        <Head title="Solo Parent Page" />
+        <template #header> Solo Parent Page </template>
         <div class="">
             <div class="pb-10 py-2 w-full mx-auto sm:px-6 lg:px-8">
                 <Breadcrumb />
@@ -215,7 +189,7 @@ export default {
                             class="px-1"
                             v-if="
                                 permissions.includes(
-                                    'Action Download SurveyForm'
+                                    'Action Download SoloParent'
                                 )
                             "
                         >
@@ -242,7 +216,7 @@ export default {
                             </button>
                         </div>
                         <div class="px-1">
-                            <Link :href="route('isf-create')">
+                            <Link :href="route('soloparent-create')">
                                 <button
                                     class="my-2 py-2 px-4 w-full 2xl:w-fit xl:w-fit lg:w-fit bg-green-300 hover:bg-green-400 text-green-800 font-bold rounded inline-flex items-center"
                                 >
@@ -260,9 +234,7 @@ export default {
                                             d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
                                         />
                                     </svg>
-                                    <span
-                                        >Create Solo Parent</span
-                                    >
+                                    <span>Create Solo Parent</span>
                                 </button>
                             </Link>
                         </div>
@@ -337,37 +309,9 @@ export default {
                                     v-model="searchParameter.searchField"
                                 >
                                     <option value="" selected>ALL</option>
-                                    <option value="household_head">
-                                        Household head
-                                    </option>
-                                    <option value="body_of_water_name">
-                                        Body of Water
-                                    </option>
-                                    <option value="body_of_water_type">
-                                        Body of Water Type
-                                    </option>
-                                    <option value="spouse_name">
-                                        Spouse Name
-                                    </option>
-                                    <option value="tenurial_status">
-                                        Tenurial Status
-                                    </option>
-                                    <option value="no_of_family_members">
-                                        No. of family members
-                                    </option>
-                                    <option value="street">Street</option>
-                                    <option value="barangay">Barangay</option>
-                                    <option value="balik_probinsya">
-                                        Balik Probinsya
-                                    </option>
-                                    <option value="distance_to_waterway">
-                                        Distance to Waterway
-                                    </option>
-                                    <option value="zone">zone</option>
+                                    <option value="full_name">Full Name</option>
                                 </select>
                             </form>
-
-                            <!-- </div> -->
                         </div>
                         <div class="col-span-1 sm:col-span-1">
                             <label
@@ -476,16 +420,11 @@ export default {
                             v-model:items-selected="selectedItems"
                             :server-items-length="serverItemsLength"
                             :headers="headers"
-                            :items="isfs"
+                            :items="soloparents"
                             table-class-name="customize-table"
                             :loading="loading"
                             :rows-items="[10, 25, 50, 100]"
                         >
-                            <template #item-four_ps_beneficiary="item">
-                                {{
-                                    item.four_ps_beneficiary == 1 ? "Yes" : "No"
-                                }}
-                            </template>
                             <template #expand="item">
                                 <div class="">
                                     <div class="md:grid md:grid-rows">
@@ -494,7 +433,7 @@ export default {
                                                 <Link
                                                     :href="
                                                         route(
-                                                            'isf-view',
+                                                            'soloparent-view',
                                                             item.id
                                                         )
                                                     "
@@ -534,12 +473,12 @@ export default {
                                                 <Link
                                                     v-if="
                                                         permissions.includes(
-                                                            'Action Edit ISF'
+                                                            'Action Edit SoloParent'
                                                         )
                                                     "
                                                     :href="
                                                         route(
-                                                            'isf-edit',
+                                                            'soloparent-edit',
                                                             item.id
                                                         )
                                                     "
@@ -572,13 +511,15 @@ export default {
                                                 <Link
                                                     v-if="
                                                         permissions.includes(
-                                                            'Action Delete ISF'
+                                                            'Action Delete SoloParent'
                                                         )
                                                     "
                                                 >
                                                     <button
                                                         @click="
-                                                            removeISF(item.id)
+                                                            removeSoloParent(
+                                                                item.id
+                                                            )
                                                         "
                                                         class="h-15 w-24 text-xs bg-red-700 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                                     >
@@ -630,16 +571,17 @@ export default {
                                     <span>Loading...</span>
                                 </div>
                             </template>
-                            <template #item-no_of_family_members="item">
-                                <div class="text-right">
-                                    {{ item.no_of_family_members }}
-                                </div>
-                            </template>
+
                             <template #item-action="item">
                                 <div class="operation-wrapper flex">
                                     <div class="p-1">
                                         <Link
-                                            :href="route('isf-view', item.id)"
+                                            :href="
+                                                route(
+                                                    'soloparent-view',
+                                                    item.id
+                                                )
+                                            "
                                         >
                                             <button
                                                 type="button"
@@ -654,12 +596,17 @@ export default {
                                         class="p-1"
                                         v-if="
                                             permissions.includes(
-                                                'Action Edit ISF'
+                                                'Action Edit SoloParent'
                                             )
                                         "
                                     >
                                         <Link
-                                            :href="route('isf-edit', item.id)"
+                                            :href="
+                                                route(
+                                                    'soloparent-edit',
+                                                    item.id
+                                                )
+                                            "
                                         >
                                             <button
                                                 type="button"
@@ -673,12 +620,12 @@ export default {
                                         class="p-1"
                                         v-if="
                                             permissions.includes(
-                                                'Action Delete ISF'
+                                                'Action Delete SoloParent'
                                             )
                                         "
                                     >
                                         <button
-                                            @click="removeISF(item.id)"
+                                            @click="removeSoloParent(item.id)"
                                             class="text-xs bg-red-700 hover:bg-red-400 text-white font-bold py-2 px-4 rounded"
                                         >
                                             Delete

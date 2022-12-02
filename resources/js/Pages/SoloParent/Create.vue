@@ -1,12 +1,12 @@
 <script>
 import BreezeAuthenticatedLayout from "./../../Layouts/Form.vue";
-import Breadcrumb from "./../../Components/BreadCrumb/navISFCreate.vue";
-import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
+import Breadcrumb from "./../../Components/BreadCrumb/navSoloParentCreate.vue";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ref, reactive, computed, onMounted, watch } from "vue";
-import useISF from "./../../composables/isf_and_illegalencroachments";
 import { useToast } from "vue-toastification";
 import Modal from "./../../Components/Modals/Modal_Create.vue";
 import Multiselect from "@vueform/multiselect";
+import useSoloParent from "./../../composables/soloparent";
 
 export default {
     data: () => ({
@@ -22,29 +22,17 @@ export default {
         Modal,
         Multiselect,
     },
+
     props: ["barangays", "municipalities"],
+
     setup(props, { attrs, slots, emit, expose }) {
+
         const toast = useToast();
         const brgys = computed(() => props.barangays);
         const filteredBrgys = ref([]);
         const submission_process = ref(false);
         const modal_show = ref(false);
         const data = ref(false);
-
-        const multiselect_street = ref(null);
-        const multiselect_balik_probinsya = ref(null);
-        const multiselect_tenurial_status = ref(null);
-        const multiselect_zone = ref(null);
-        const multiselect_body_of_water_name = ref(null);
-        const multiselect_body_of_water_type = ref(null);
-        const multiselect_distance_to_waterway = ref(null);
-
-        const searchParameter = reactive({
-            searchField: "",
-            searchValue: "",
-            filterField: "",
-            filterValue: "",
-        });
 
         /* init */
         const form = reactive({
@@ -53,12 +41,13 @@ export default {
             region: "III",
         });
 
-        const { errors_isf, storeISF } = useISF();
-        const submitISF = async () => {
+        const { errors_pwd, store } = useSoloParent();
+
+        const submitSoloParent = async () => {
             toast.info("Sending create");
             submission_process.value = true;
-            await storeISF({ ...form }).then(() => {
-                if (errors_isf.value) {
+            await store({ ...form }).then(() => {
+                if (errors_pwd.value) {
                     submission_process.value = false;
                     toast.error("Submit failed.");
                 } else {
@@ -79,33 +68,18 @@ export default {
 
         const clearFields = () => {
             form.date = "";
-
             form.first_name = "";
             form.middle_name = "";
             form.last_name = "";
-
-            form.spouse_first_name = "";
-            form.spouse_middle_name = "";
-            form.spouse_last_name = "";
-
             form.barangay = "";
-            form.latitude = "";
-            form.longitude = "";
-            form.no_of_family_members = "";
-
-            multiselect_street.value.clear();
-            multiselect_balik_probinsya.value.clear();
-            multiselect_tenurial_status.value.clear();
-            multiselect_zone.value.clear();
-            multiselect_body_of_water_name.value.clear();
-            multiselect_body_of_water_type.value.clear();
-            multiselect_distance_to_waterway.value.clear();
         };
+
         const filterBrgys = async (munId) => {
             filteredBrgys.value = brgys.value.filter(
                 (brgy) => brgy.parent === munId
             );
         };
+
         const toggleModal = () => {
             modal_show.value = !modal_show.value;
         };
@@ -113,7 +87,7 @@ export default {
         const fetchSelectfield = async (query, field) => {
             let data;
             await axios
-                .post("/request/isf/getSelectfield", {
+                .post(route("soloparent-multiselect"), {
                     searchValue: query,
                     field: field,
                 })
@@ -125,7 +99,6 @@ export default {
                         };
                     });
                 });
-
             return data;
         };
 
@@ -139,39 +112,32 @@ export default {
         return {
             filteredBrgys,
             form,
-            submitISF,
-            errors_isf,
+            errors_pwd,
             submission_process,
-            toggleModal,
             data,
             modal_show,
 
+            submitSoloParent,
+            toggleModal,
             fetchSelectfield,
-
-            multiselect_street,
-            multiselect_balik_probinsya,
-            multiselect_tenurial_status,
-            multiselect_zone,
-            multiselect_body_of_water_name,
-            multiselect_body_of_water_type,
-            multiselect_distance_to_waterway,
         };
     },
 };
 </script>
 <template>
-    <Head title="Informal Settler Families (ISF) and Illegal Encroachments" />
+    <Head title="Solo Parent Page" />
+
     <BreezeAuthenticatedLayout>
         <template #header>
-            <div>Informal Settler Families (ISF) and Illegal Encroachments</div>
+            <div>Solo Parent Page</div>
         </template>
         <div class="w-full mx-auto sm:px-6 lg:px-8">
             <Breadcrumb />
             <Modal :showmodal="modal_show" @toggle="toggleModal()" :info="data">
             </Modal>
-            <div v-if="errors_isf">
+            <div v-if="errors_pwd">
                 <div
-                    v-for="(v, k) in errors_isf"
+                    v-for="(v, k) in errors_pwd"
                     :key="k"
                     class="bg-red-500 text-white rounded font-bold mb-4 shadow-lg py-2 px-4 pr-0"
                 >
@@ -180,11 +146,13 @@ export default {
                     </p>
                 </div>
             </div>
-            <form class="" @submit.prevent="submitISF">
+
+            <form class="" @submit.prevent="submitSoloParent">
                 <div class="flex flex-col 2xl:flex-row xl:flex-row lg:flex-row">
                     <div
                         class="w-full 2xl:w-2/4 xl:w-2/4 lg:w-2/4 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-end place-content-end"
                     ></div>
+
                     <div
                         class="w-full 2xl:w-2/4 xl:w-2/4 lg:w-2/4 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-end place-content-end"
                     >
@@ -221,7 +189,6 @@ export default {
                     </div>
                 </div>
                 <div class="my-3 bg-white rounded p-5 sm:p1">
-                    <!-- row 1 water -->
                     <div class="flex flex-wrap -mx-3">
                         <div class="w-full md:w-1/4 px-3 py-1">
                             <label
@@ -229,18 +196,121 @@ export default {
                             >
                             </label>
                         </div>
+
                         <div class="w-full md:w-1/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                             >
+                                New / Renewal Year
                             </label>
+
+                            <Multiselect
+                                mode="single"
+                                v-model="form.year"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                placeholder=""
+                                :filter-results="false"
+                                :min-chars="1"
+                                :resolve-on-load="false"
+                                :delay="0"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="[
+                                    { value: '2022', label: '2022' },
+                                    { value: '2023', label: '2023' },
+                                    { value: '2024', label: '2024' },
+                                    { value: '2025', label: '2025' },
+                                    { value: '2026', label: '2026' },
+                                    { value: '2027', label: '2027' },
+                                    { value: '2028', label: '2028' },
+                                    { value: '2029', label: '2029' },
+                                    { value: '2030', label: '2030' },
+                                    { value: '2031', label: '2031' },
+                                    { value: '2032', label: '2032' },
+                                    { value: '2033', label: '2033' },
+                                    { value: '2034', label: '2034' },
+                                    { value: '2035', label: '2035' },
+                                    { value: '2036', label: '2036' },
+                                    { value: '2037', label: '2037' },
+                                    { value: '2038', label: '2038' },
+                                    { value: '2039', label: '2039' },
+                                    { value: '2040', label: '2040' },
+                                    { value: '2041', label: '2041' },
+                                    { value: '2042', label: '2042' },
+                                    { value: '2043', label: '2043' },
+                                    { value: '2044', label: '2044' },
+                                    { value: '2045', label: '2045' },
+                                    { value: '2046', label: '2046' },
+                                    { value: '2047', label: '2047' },
+                                    { value: '2048', label: '2048' },
+                                    { value: '2049', label: '2049' },
+                                    { value: '2050', label: '2050' },
+                                    { value: '2051', label: '2051' },
+                                    { value: '2052', label: '2052' },
+                                    { value: '2053', label: '2053' },
+                                    { value: '2054', label: '2054' },
+                                    { value: '2055', label: '2055' },
+                                    { value: '2056', label: '2056' },
+                                    { value: '2057', label: '2057' },
+                                    { value: '2058', label: '2058' },
+                                    { value: '2059', label: '2059' },
+                                    { value: '2060', label: '2060' },
+                                    { value: '2061', label: '2061' },
+                                    { value: '2062', label: '2062' },
+                                    { value: '2063', label: '2063' },
+                                    { value: '2064', label: '2064' },
+                                    { value: '2065', label: '2065' },
+                                    { value: '2066', label: '2066' },
+                                    { value: '2067', label: '2067' },
+                                    { value: '2068', label: '2068' },
+                                    { value: '2069', label: '2069' },
+                                    { value: '2070', label: '2070' },
+                                    { value: '2071', label: '2071' },
+                                    { value: '2072', label: '2072' },
+                                    { value: '2073', label: '2073' },
+                                    { value: '2074', label: '2074' },
+                                    { value: '2075', label: '2075' },
+                                    { value: '2076', label: '2076' },
+                                    { value: '2077', label: '2077' },
+                                    { value: '2078', label: '2078' },
+                                    { value: '2079', label: '2079' },
+                                    { value: '2080', label: '2080' },
+                                    { value: '2081', label: '2081' },
+                                    { value: '2082', label: '2082' },
+                                    { value: '2083', label: '2083' },
+                                    { value: '2084', label: '2084' },
+                                    { value: '2085', label: '2085' },
+                                    { value: '2086', label: '2086' },
+                                    { value: '2087', label: '2087' },
+                                    { value: '2088', label: '2088' },
+                                    { value: '2089', label: '2089' },
+                                    { value: '2090', label: '2090' },
+                                    { value: '2091', label: '2091' },
+                                    { value: '2092', label: '2092' },
+                                    { value: '2093', label: '2093' },
+                                    { value: '2094', label: '2094' },
+                                    { value: '2095', label: '2095' },
+                                    { value: '2096', label: '2096' },
+                                    { value: '2097', label: '2097' },
+                                    { value: '2098', label: '2098' },
+                                    { value: '2099', label: '2099' },
+                                    { value: '2100', label: '2100' },
+                                ]"
+                            />
                         </div>
+
                         <div class="w-full md:w-1/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                             >
+                                ID Number
                             </label>
+                            <input
+                                :class="inputClass"
+                                v-model="form.id_number"
+                            />
                         </div>
+
                         <div class="w-full md:w-1/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -249,19 +319,17 @@ export default {
                             </label>
                             <input
                                 :class="inputClass"
-                                v-model="form.date"
+                                v-model="form.date_of_application"
                                 type="date"
-                                placeholder=""
                             />
                         </div>
                     </div>
 
-                    <!-- row 1 -->
                     <div class="py-2">
                         <div class="py-1 font-semibold">I. Pagkakakilanlan</div>
 
                         <div class="py-1 font-medium text-red-700">
-                            1. Pangalan (Household Head)
+                            1. Pangalan
                         </div>
 
                         <div class="flex flex-wrap -mx-3">
@@ -319,16 +387,17 @@ export default {
                                 />
                             </div>
                         </div>
+
                         <div class="flex flex-wrap -mx-3">
                             <div class="w-full md:w-1/4 px-3 py-1">
                                 <label
                                     class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                 >
-                                    Birth Date
+                                    Birth of Date
                                 </label>
                                 <input
                                     :class="inputClass"
-                                    v-model="form.birthdate"
+                                    v-model="form.date_of_birth"
                                     type="date"
                                     placeholder=""
                                 />
@@ -337,127 +406,76 @@ export default {
                                 <label
                                     class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                 >
+                                    Civil Status
                                 </label>
-                            </div>
-                            <div class="w-full md:w-1/4 px-3 py-1">
-                                <label
-                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                >
-                                </label>
-                            </div>
-                            <div class="w-full md:w-1/4 px-3 py-1"></div>
-                        </div>
-                    </div>
-
-                    <div class="py-2">
-                        <div class="py-1 font-medium text-red-700">
-                            2. Pangalan (Spouse)
-                        </div>
-
-                        <div class="flex flex-wrap -mx-3">
-                            <div class="w-full md:w-1/4 px-3 py-1">
-                                <label
-                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                >
-                                    First Name
-                                </label>
-                                <input
-                                    v-model="form.spouse_first_name"
-                                    :class="inputClass"
-                                    type="text"
-                                    placeholder="First Name"
-                                />
-                            </div>
-                            <div class="w-full md:w-1/4 px-3 py-1">
-                                <label
-                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                >
-                                    Middle Name or M.I.
-                                </label>
-                                <input
-                                    v-model="form.spouse_middle_name"
-                                    :class="inputClass"
-                                    type="text"
-                                    placeholder="Middle Name or Middle Initial"
-                                />
-                            </div>
-                            <div class="w-full md:w-1/4 px-3 py-1">
-                                <label
-                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                >
-                                    Last Name
-                                </label>
-                                <input
-                                    :class="inputClass"
-                                    v-model="form.spouse_last_name"
-                                    type="text"
-                                    placeholder="Last Name"
-                                />
-                            </div>
-                            <div class="w-full md:w-1/4 px-3 py-1">
-                                <label
-                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                    for="grid-last-name"
-                                >
-                                    Name Suffix
-                                </label>
-                                <input
-                                    :class="inputClass"
-                                    type="text"
-                                    v-model="form.spouse_name_suffix"
-                                    placeholder="II., III. ,IV"
-                                />
-                            </div>
-                        </div>
-
-                        <div class="flex flex-wrap -mx-3">
-                            <div class="w-full md:w-1/4 px-3 py-1">
-                                <label
-                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                >
-                                    Spouse Birth Date
-                                </label>
-                                <input
-                                    :class="inputClass"
-                                    v-model="form.spouse_birthdate"
-                                    type="date"
+                                <Multiselect
+                                    mode="single"
+                                    v-model="form.civil_status"
+                                    class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                     placeholder=""
+                                    :filter-results="false"
+                                    :min-chars="1"
+                                    :resolve-on-load="false"
+                                    :delay="0"
+                                    :searchable="true"
+                                    :create-option="true"
+                                    :options="
+                                        async function (query) {
+                                            return await fetchSelectfield(
+                                                query,
+                                                'civil_status'
+                                            );
+                                        }
+                                    "
                                 />
                             </div>
                             <div class="w-full md:w-1/4 px-3 py-1">
                                 <label
                                     class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                                 >
+                                    Gender
                                 </label>
-                            </div>
-                            <div class="w-full md:w-1/4 px-3 py-1">
-                                <label
-                                    class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                >
-                                </label>
+                                <Multiselect
+                                    mode="single"
+                                    v-model="form.gender"
+                                    class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                    placeholder=""
+                                    :filter-results="false"
+                                    :min-chars="1"
+                                    :resolve-on-load="false"
+                                    :delay="0"
+                                    :searchable="true"
+                                    :create-option="true"
+                                    :options="
+                                        async function (query) {
+                                            return await fetchSelectfield(
+                                                query,
+                                                'gender'
+                                            );
+                                        }
+                                    "
+                                />
                             </div>
                             <div class="w-full md:w-1/4 px-3 py-1"></div>
                         </div>
                     </div>
 
-                    <!-- row 2 waterways -->
-
-                    <!-- row 3 family and info -->
                     <div class="py-1 font-medium text-red-700">
-                        3. Address and Geographical Location
+                        2. Address Location
                     </div>
+
                     <div class="flex flex-wrap -mx-3">
-                        <div class="w-full md:w-1/4 px-3 py-1">
+                        <div class="w-full md:w-2/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                             >
-                                Street
+                                Complete Address
                             </label>
 
                             <Multiselect
-                                ref="multiselect_street"
+                                ref="multiselect_address"
                                 mode="single"
-                                v-model="form.street"
+                                v-model="form.address"
                                 class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
                                 :filter-results="false"
@@ -470,7 +488,7 @@ export default {
                                     async function (query) {
                                         return await fetchSelectfield(
                                             query,
-                                            'street'
+                                            'address'
                                         );
                                     }
                                 "
@@ -500,48 +518,21 @@ export default {
                                 </option>
                             </select>
                         </div>
-                        <div class="w-full md:w-1/4 px-3 py-1">
-                            <label
-                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                            >
-                                Latitude
-                            </label>
-                            <input
-                                v-model="form.latitude"
-                                :class="inputClass"
-                                type="text"
-                                placeholder=""
-                            />
-                        </div>
-                        <div class="w-full md:w-1/4 px-3 py-1">
-                            <label
-                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                            >
-                                Longitude
-                            </label>
-                            <input
-                                v-model="form.longitude"
-                                :class="inputClass"
-                                type="text"
-                                placeholder=""
-                            />
-                        </div>
                     </div>
 
-                    <!-- row 4  -->
-                    <div class="py-1 font-medium text-red-700">4. Status</div>
+                    <div class="py-1 font-medium text-red-700">3. Notes</div>
                     <div class="flex flex-wrap -mx-3">
-                        <div class="w-full md:w-1/4 px-3 py-1">
+                        <div class="w-full md:w-2/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                             >
-                                Balik Probinsya
+                                Remarks
                             </label>
 
                             <Multiselect
-                                ref="multiselect_balik_probinsya"
+                                ref="multiselect_street"
                                 mode="single"
-                                v-model="form.balik_probinsya"
+                                v-model="form.remarks"
                                 class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
                                 :filter-results="false"
@@ -554,38 +545,23 @@ export default {
                                     async function (query) {
                                         return await fetchSelectfield(
                                             query,
-                                            'balik_probinsya'
+                                            'remarks'
                                         );
                                     }
                                 "
                             />
                         </div>
-
-                        <div class="w-full md:w-1/4 px-3 py-1">
+                        <div class="w-full md:w-2/4 px-3 py-1">
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                             >
-                                Number of Family Members
-                            </label>
-                            <input
-                                :class="inputClass"
-                                v-model="form.no_of_family_members"
-                                type="number"
-                                placeholder=""
-                            />
-                        </div>
-
-                        <div class="w-full md:w-1/4 px-3 py-1">
-                            <label
-                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                            >
-                                Tenurial Status
+                                Notes
                             </label>
 
                             <Multiselect
-                                ref="multiselect_tenurial_status"
+                                ref="multiselect_street"
                                 mode="single"
-                                v-model="form.tenurial_status"
+                                v-model="form.notes"
                                 class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
                                 :filter-results="false"
@@ -598,130 +574,7 @@ export default {
                                     async function (query) {
                                         return await fetchSelectfield(
                                             query,
-                                            'tenurial_status'
-                                        );
-                                    }
-                                "
-                            />
-                        </div>
-
-                        <div class="w-full md:w-1/4 px-3 py-1">
-                            <label
-                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                            >
-                                Zone
-                            </label>
-
-                            <Multiselect
-                                ref="multiselect_zone"
-                                mode="single"
-                                v-model="form.zone"
-                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
-                                placeholder=""
-                                :filter-results="false"
-                                :min-chars="1"
-                                :resolve-on-load="false"
-                                :delay="0"
-                                :searchable="true"
-                                :create-option="true"
-                                :options="
-                                    async function (query) {
-                                        return await fetchSelectfield(
-                                            query,
-                                            'zone'
-                                        );
-                                    }
-                                "
-                            />
-                        </div>
-                    </div>
-
-                    <div class="py-1 font-medium text-red-700">
-                        5. Water ways
-                    </div>
-                    <div class="flex flex-wrap -mx-3">
-                        <div class="w-full md:w-1/4 px-3 py-1">
-                            <label
-                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                            >
-                                Body of Water Name
-                            </label>
-
-                            <Multiselect
-                                ref="multiselect_body_of_water_name"
-                                mode="single"
-                                v-model="form.body_of_water_name"
-                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
-                                placeholder=""
-                                :filter-results="false"
-                                :min-chars="1"
-                                :resolve-on-load="false"
-                                :delay="0"
-                                :searchable="true"
-                                :create-option="true"
-                                :options="
-                                    async function (query) {
-                                        return await fetchSelectfield(
-                                            query,
-                                            'body_of_water_name'
-                                        );
-                                    }
-                                "
-                            />
-                        </div>
-                        <div class="w-full md:w-1/4 px-3 py-1">
-                            <label
-                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                            >
-                                Body of Water Type
-                            </label>
-
-                            <Multiselect
-                                ref="multiselect_body_of_water_type"
-                                mode="single"
-                                v-model="form.body_of_water_type"
-                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
-                                placeholder=""
-                                :filter-results="false"
-                                :min-chars="1"
-                                :resolve-on-load="false"
-                                :delay="0"
-                                :searchable="true"
-                                :create-option="true"
-                                :options="
-                                    async function (query) {
-                                        return await fetchSelectfield(
-                                            query,
-                                            'body_of_water_type'
-                                        );
-                                    }
-                                "
-                            />
-                        </div>
-                        <div class="w-full md:w-1/4 px-3 py-1">
-                            <label
-                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                            >
-                                Distance to Waterways
-                            </label>
-
-                            <Multiselect
-                                ref="multiselect_distance_to_waterway"
-                                mode="single"
-                                v-model="form.distance_to_waterway"
-                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
-                                placeholder=""
-                                :filter-results="false"
-                                :min-chars="1"
-                                :resolve-on-load="false"
-                                :delay="0"
-                                :searchable="true"
-                                :create-option="true"
-                                :options="
-                                    async function (query) {
-                                        return await fetchSelectfield(
-                                            query,
-                                            'distance_to_waterway'
+                                            'notes'
                                         );
                                     }
                                 "
@@ -769,9 +622,9 @@ export default {
                     </div>
                 </div>
             </form>
-            <div v-if="errors_isf">
+            <div v-if="errors_pwd">
                 <div
-                    v-for="(v, k) in errors_isf"
+                    v-for="(v, k) in errors_pwd"
                     :key="k"
                     class="bg-red-500 text-white rounded font-bold mb-4 shadow-lg py-2 px-4 pr-0"
                 >
@@ -783,91 +636,13 @@ export default {
         </div>
     </BreezeAuthenticatedLayout>
 </template>
+
 <style scoped>
 table,
 th,
 td {
     border: 1px solid black;
 }
-/*
-table {
-    border: 1px solid #ccc;
-    border-collapse: collapse;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    table-layout: fixed;
-}
-
-table caption {
-    font-size: 1.5em;
-    margin: 0.5em 0 0.75em;
-}
-
-table tr {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    padding: 0.35em;
-}
-
-table th,
-table td {
-    padding: 0.625em;
-    text-align: center;
-}
-
-table th {
-    font-size: 0.85em;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-}
-
-@media screen and (max-width: 600px) {
-    table {
-        border: 0;
-    }
-
-    table caption {
-        font-size: 1.3em;
-    }
-
-    table thead {
-        border: none;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
-
-    table tr {
-        border-bottom: 3px solid #ddd;
-        display: block;
-        margin-bottom: 0.625em;
-    }
-
-    table td {
-        border-bottom: 1px solid #ddd;
-        display: block;
-        font-size: 0.8em;
-        text-align: right;
-    }
-
-    table td::before {
-
-        content: attr(data-label);
-        float: left;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-
-    table td:last-child {
-        border-bottom: 0;
-    }
-} */
-
 input[type="radio"] + label span {
     transition: background 0.2s, transform 0.2s;
 }
@@ -885,13 +660,6 @@ input[type="radio"]:checked + label span {
 input[type="radio"]:checked + label {
     color: #1f9d55;
 }
-
-/* tr:nth-child(even) {
-    background-color: rgb(243, 182, 182);
-}
-tr:nth-child(od) {
-    background-color: rgb(242, 169, 169);
-} */
 
 tr:hover {
     background-color: coral;

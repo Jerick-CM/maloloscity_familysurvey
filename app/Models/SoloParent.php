@@ -14,10 +14,28 @@ class SoloParent extends Model
     public $timestamps = true;
     protected $fillable = [
         'id',
+        'first_name',
+        'middle_name',
+        'last_name',
+        'name_suffix',
+        'full_name',
+        'address',
+        'date_of_birth',
+        'id_number',
+        'sons',
+        'daugthers',
+        'date_of_issuance',
+        'barangay',
+        'gender',
+        'civil_status',
+        'new_member',
+        'renewed_member',
+        'remarks',
+        'notes',
     ];
 
     public function renewal()
     {
-        return $this->hasMany(Pwd_renewal::class);
+        return $this->hasMany(Soloparent_renewal::class, 'soloparent_id');
     }
 }

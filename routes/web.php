@@ -81,6 +81,7 @@ Route::group(['middleware' => ['permission:Access-Page-Dashboard']], function ()
 /* User Page */
 
 Route::group(['prefix' => 'user', 'middleware' => ['permission:Access-Page-User', 'throttle:500,1']], function () {
+
     /* index */
     Route::get('/', function () {
         return Inertia::render('User/Index');
@@ -119,6 +120,7 @@ Route::group(['prefix' => 'isf', 'middleware' => ['permission:Access-Page-ISF', 
 
     /* edit */
     Route::get('/edit/{id}', [App\Http\Controllers\ISFController::class, 'handleISFEdit'])->middleware(['auth', 'verified'])->name('isf-edit');
+    
 });
 
 /* User Page */
@@ -141,6 +143,7 @@ Route::get('phpinfo', function () {
 });
 
 Route::group(['prefix' => 'cstm', 'middleware' => 'throttle:500,1'], function () {
+
     /* roles */
     Route::get('roles', [\App\Http\Controllers\Api\RoleController::class, 'index']);
     /* checklist */
@@ -150,6 +153,7 @@ Route::group(['prefix' => 'cstm', 'middleware' => 'throttle:500,1'], function ()
     Route::post('/itineraries', [\App\Http\Controllers\Api\ItineraryController::class, 'store']);
     Route::post('/itineraries/add_business', [\App\Http\Controllers\Api\ItineraryController::class, 'add_business']);
     Route::post('/itineraries/fetch/{id}', [\App\Http\Controllers\Api\ItineraryController::class, 'fetch']);
+
 });
 
 
@@ -160,11 +164,6 @@ Route::group(['prefix' => 'pwd', 'middleware' => ['permission:Access-Page-PWD', 
 
     /* create */
     Route::get('/create', [App\Http\Controllers\PwdListController::class, 'handleCreate'])->middleware(['auth', 'verified'])->name('pwd-create');
-
-    /* view */
-    Route::get('/view/{id}', function () {
-        return Inertia::render('ISF/View');
-    })->middleware(['auth', 'verified'])->name('pwd-view');
 
     /* edit */
     Route::get('/edit/{id}', [App\Http\Controllers\PwdListController::class, 'handleEdit'])->middleware(['auth', 'verified'])->name('pwd-edit');
@@ -188,10 +187,12 @@ Route::group(['prefix' => 'pwd', 'middleware' => ['permission:Access-Page-PWD', 
 
     /* delete record */
     Route::post('/delete/{id}', [\App\Http\Controllers\Api\PwdListController::class, 'destroy'])->name('pwd-request-delete');;
-    
 });
 
 Route::group(['prefix' => 'soloparent', 'middleware' => ['permission:Access-Page-ISF', 'throttle:500,1']], function () {
+
+    /* fetch */
+    Route::post('/fetch', [\App\Http\Controllers\Api\SoloParentListController::class, 'fetch'])->name('soloparent-fetch');
 
     /* index */
     Route::get('/', [App\Http\Controllers\SoloParentListController::class, 'index'])->middleware(['auth', 'verified'])->name('soloparent-index');
@@ -206,7 +207,16 @@ Route::group(['prefix' => 'soloparent', 'middleware' => ['permission:Access-Page
 
     /* edit */
     Route::get('/edit/{id}', [App\Http\Controllers\SoloParentListController::class, 'handleISFEdit'])->middleware(['auth', 'verified'])->name('soloparent-edit');
-});
 
+    /* create record */
+    Route::post('/', [\App\Http\Controllers\Api\SoloParentListController::class, 'store'])->name('soloparent-store');
+
+    /* selectmultiple */
+    Route::post('/multiselect', [\App\Http\Controllers\Api\SoloParentListController::class, 'getSearchfield'])->name('soloparent-multiselect');
+
+    /* create record */
+    Route::post('/', [\App\Http\Controllers\Api\SoloParentListController::class, 'store'])->name('soloparent-store');
+
+});
 
 require __DIR__ . '/auth.php';

@@ -1,0 +1,12 @@
+migration 
+
+php artisan migrate
+
+php artisan db:seed --class=PWDandSoloParentPermissionSeeder
+
+php artisan db:seed --class=PwdListSeeder
+php artisan db:seed --class=PwdRenewalYearSeeder
+php artisan db:seed --class=SoloParentListSeeder
+php artisan db:seed --class=SoloParentRenewalYearSeeder
+php artisan db:seed --class=BarangayTrimSeeder
+php artisan db:seed --class=BarangaySoloParentTrimSeeder
