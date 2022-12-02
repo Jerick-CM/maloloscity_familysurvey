@@ -2,7 +2,6 @@ import { ref, reactive } from "vue";
 import axios from "axios";
 
 export default function usePWD() {
-    
     const pwd = ref([]);
     const pwd_renewals = ref([]);
     const pwds = ref([]);
@@ -16,7 +15,6 @@ export default function usePWD() {
     const muxsel_notes = ref(null);
 
     const getPWD = async (id) => {
-
         let response = await axios.get(route("pwd-request-edit", id));
 
         pwd.value = response.data.data;
@@ -98,8 +96,8 @@ export default function usePWD() {
         }
     };
 
-    const destroyISF = async (id) => {
-        await axios.post("/request/pwd/delete/" + id);
+    const destroyPWD = async (id) => {
+        await axios.post(route("pwd-request-delete", id));
     };
 
     const loadFromServer = async (pwds, serverItemsLength, options, params) => {
@@ -134,7 +132,7 @@ export default function usePWD() {
 
         getPWD,
         getISFs,
-        destroyISF,
+        destroyPWD,
         updatePWD,
         storePWD,
         getPWD,

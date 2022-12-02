@@ -1,9 +1,12 @@
  Todo
  
- implement renewal date logic  add including year specially date of renewal and update. 
- for both pwd and soloparent.
+ fixed - implement renewal date logic  add including year specially date of renewal and update for both pwd.
+ fixed - seeder for barangay trim spaces
+ fixed - implement view page for pwd.
+       - implement delete pwd
 
- implement delete pwd
+ implement renewal date logic  add including year specially date of renewal and update. for both pwd and soloparent.
+
  implement edit pwd
  implement add pwd
 

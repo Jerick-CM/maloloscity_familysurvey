@@ -17,7 +17,6 @@ use App\Models\Pwd_renewal;
 class PwdListController extends Controller
 {
 
-
     public function index()
     {
         // return PWDResource::collection(PWD::orderby('id', 'DESC')->get());
@@ -32,6 +31,7 @@ class PwdListController extends Controller
         ])->validate();
 
         DB::beginTransaction();
+
         try {
 
             $fullname = $request->first_name . " " . $request->middle_name . " " . $request->last_name . " " . $request->name_suffix;
@@ -65,6 +65,7 @@ class PwdListController extends Controller
                 'pwd_id' =>  $PWD->id,
                 'date_of_application' => $request->date_of_application,
             ]);
+            
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json($e, 500);
@@ -93,7 +94,9 @@ class PwdListController extends Controller
     public function update(Request $request, $id)
     {
 
-        Validator::make($request->all(), [])->validate();
+        Validator::make($request->all(), [
+            'date_of_application' => ['required']
+        ])->validate();
 
         DB::beginTransaction();
 
@@ -106,7 +109,9 @@ class PwdListController extends Controller
             $pwd->last_name = $request->last_name;
             $pwd->name_suffix = $request->name_suffix;
 
-            $pwd->full_name = $request->first_name . " " . $request->middle_name . " " . $request->last_name . " " . $request->name_suffix;
+            if ($request->first_name != null &&  $request->last_name != null) {
+                $pwd->full_name = $request->first_name . " " . $request->middle_name . " " . $request->last_name . " " . $request->name_suffix;
+            }
 
             $pwd->address = $request->address;
             $pwd->date_of_birth = $request->date_of_birth;
@@ -123,7 +128,7 @@ class PwdListController extends Controller
             $all_years = Pwd_renewal::where('pwd_id', $id)->select('year')->get();
 
             if (count($all_years) > 0) {
-                $data = 'non empty';
+
                 foreach ($all_years as $kk => $vv) {
                     $current_year[$kk] =  $vv['year'];
                 }
@@ -137,6 +142,7 @@ class PwdListController extends Controller
                 }
 
                 $diff_array_0 = array_values($diff_array_0);
+
                 $diff_array_1 = array_values($diff_array_1);
 
                 // remove 
@@ -152,37 +158,38 @@ class PwdListController extends Controller
                         'pwd_id' =>   $id,
                         'date_of_application' => $request->date_of_application,
                     ]);
+
                 }
 
             } else {
-                $data = 'empty';
+
                 // no available year renewals
                 foreach ($request->year_renewal as $key => $val) {
+
                     Pwd_renewal::create([
                         'year' => $val,
                         'pwd_id' =>   $id,
                         'date_of_application' => $request->date_of_application,
                     ]);
+
                 }
 
             }
+
         } catch (\Exception $e) {
 
             DB::rollBack();
             return response()->json($e, 500);
+            
         }
 
         DB::commit();
 
         return response()->json([
+
             'success' => true,
             'id' => $id,
-            'all_year' =>  $all_years,
-            'data' => $data
-            // 'submit_year' => $request->year_renewal,
-            // 'array_year' => $current_year,
-            // 'array_0' => $diff_array_0,
-            // 'array_1' => $diff_array_1,
+            'all_year' =>  $all_years
 
         ]);
     }

@@ -33,6 +33,7 @@ class PwdTable extends Migration
             $table->string('notes')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
   
         });
     }

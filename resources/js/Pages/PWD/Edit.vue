@@ -7,7 +7,6 @@ import usePWD from "./../../composables/pwd";
 import { useToast } from "vue-toastification";
 import Modal from "./../../Components/Modals/Modal_Create.vue";
 import Multiselect from "@vueform/multiselect";
-
 import Breadcrumb from "./../../Components/BreadCrumb/navPWDEdit.vue";
 
 export default {
@@ -16,6 +15,7 @@ export default {
         inputClass:
             "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
     }),
+
     components: {
         BreezeAuthenticatedLayout,
         Head,
@@ -24,9 +24,11 @@ export default {
         Modal,
         Multiselect,
     },
+
     props: ["barangays", "municipalities"],
 
     setup(props, { attrs, slots, emit, expose }) {
+        
         const toast = useToast();
         const brgys = computed(() => props.barangays);
         const filteredBrgys = ref([]);
@@ -124,6 +126,13 @@ export default {
         };
 
         /* watch events */
+
+        watch(
+            () => form.municipality,
+            (value) => {
+                filterBrgys(value);
+            }
+        );
 
         watch(
             () => muxsel_disability.value,
@@ -434,6 +443,7 @@ export default {
                                 >
                                     Gender
                                 </label>
+
                                 <Multiselect
                                     :object="true"
                                     mode="single"
@@ -500,7 +510,6 @@ export default {
                             >
                                 Barangay
                             </label>
-
                             <select
                                 v-model="pwd.barangay"
                                 id="barangays"
@@ -559,6 +568,7 @@ export default {
                             >
                                 Cause of Disability
                             </label>
+
                             <Multiselect
                                 :object="true"
                                 mode="single"

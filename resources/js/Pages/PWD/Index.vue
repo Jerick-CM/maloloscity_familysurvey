@@ -29,12 +29,14 @@ export default {
     }),
 
     setup(props) {
+
         const Auth_user = computed(() => usePage().props.value.auth.user);
         const permissions = usePage().props.value.auth.user.PermissionList;
-        const hosting = computed(() => props.hosting);
         const toast = useToast();
         const form = reactive({});
-        const { pwds, destroyISF, errors_pwd, loadFromServer } = usePWD();
+
+        const { pwds, destroyPWD, errors_pwd, loadFromServer } = usePWD();
+
         const url = ref("");
 
         /* Datatable */
@@ -59,11 +61,14 @@ export default {
 
         /* Datatable */
         const headers = ref([
-            // { text: "Id", value: "id", sortable: true },
             { text: "Name", value: "full_name", sortable: true },
             { text: "Barangay", value: "barangay", sortable: true },
             { text: "Disability", value: "disability", sortable: true },
-            { text: "Cause of Disability", value: "cause_of_disability", sortable: true },
+            {
+                text: "Cause of Disability",
+                value: "cause_of_disability",
+                sortable: true,
+            },
             { text: "ID Number", value: "id_number", sortable: true },
             { text: "Date / Time", value: "date", sortable: true },
             { text: "Action", value: "action", sortable: false },
@@ -122,13 +127,13 @@ export default {
         };
 
         const removePWD = async (id) => {
-            //     if (!window.confirm("Are you sure?")) {
-            //         return;
-            //     }
-            //     toast.info("Sending delete");
-            //     await destroyISF(id);
-            //     await server_sided();
-            //     await toast.success("Delete success.");
+            if (!window.confirm("Are you sure?")) {
+                return;
+            }
+            toast.info("Sending delete");
+            await destroyPWD(id);
+            await server_sided();
+            await toast.success("Delete success.");
         };
 
         watch(
@@ -177,6 +182,7 @@ export default {
         <template #header>PWD Page </template>
         <div class="">
             <div class="pb-10 py-2 w-full mx-auto sm:px-6 lg:px-8">
+                
                 <Breadcrumb />
 
                 <div class="flex flex-col 2xl:flex-row xl:flex-row lg:flex-row">
