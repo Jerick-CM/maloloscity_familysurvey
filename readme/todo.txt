@@ -6,14 +6,16 @@ fixed - seeder for barangay trim spaces
 fixed - implement view page for pwd.
 fixed - implement delete pwd
 fixed - implement table relationship one to many for soloparent page
+fixed - implement delete soloparent
+fixed - fix soloparent breadcrumb
+fixed - implement edit soloparent
+fixed - implement add soloparent
+fixed - implement edit soloparent
+fixed - implement add soloparent
 
+- implement prompt for detection of renewal pwd
+- implement prompt for detection of renewal soloparent
 - implement index soloparent
-
-- implement delete soloparent
-- implement edit soloparent
-- implement add soloparent
-- implement edit pwd
-- implement add pwd
 - implement renewal date logic  add including year specially date of renewal and update. for both pwd and soloparent.
 - implement updating renewal of existing data in the table.
 - add multi selection year in edit since the pwd is renewed every 5 years, same for solo parent renewed every year.

@@ -16,6 +16,7 @@ export default function usePWD() {
     const muxsel_barangay = ref(null);
 
     const getPWD = async (id) => {
+        
         let response = await axios.get(route("pwd-request-edit", id));
 
         pwd.value = response.data.data;

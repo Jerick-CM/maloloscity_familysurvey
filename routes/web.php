@@ -120,7 +120,6 @@ Route::group(['prefix' => 'isf', 'middleware' => ['permission:Access-Page-ISF', 
 
     /* edit */
     Route::get('/edit/{id}', [App\Http\Controllers\ISFController::class, 'handleISFEdit'])->middleware(['auth', 'verified'])->name('isf-edit');
-    
 });
 
 /* User Page */
@@ -153,7 +152,6 @@ Route::group(['prefix' => 'cstm', 'middleware' => 'throttle:500,1'], function ()
     Route::post('/itineraries', [\App\Http\Controllers\Api\ItineraryController::class, 'store']);
     Route::post('/itineraries/add_business', [\App\Http\Controllers\Api\ItineraryController::class, 'add_business']);
     Route::post('/itineraries/fetch/{id}', [\App\Http\Controllers\Api\ItineraryController::class, 'fetch']);
-
 });
 
 
@@ -168,6 +166,7 @@ Route::group(['prefix' => 'pwd', 'middleware' => ['permission:Access-Page-PWD', 
     /* edit */
     Route::get('/edit/{id}', [App\Http\Controllers\PwdListController::class, 'handleEdit'])->middleware(['auth', 'verified'])->name('pwd-edit');
 
+    /* view */
     Route::get('/view/{id}', [App\Http\Controllers\PwdListController::class, 'handleView'])->middleware(['auth', 'verified'])->name('pwd-view');
 
     /* fetch */
@@ -186,7 +185,7 @@ Route::group(['prefix' => 'pwd', 'middleware' => ['permission:Access-Page-PWD', 
     Route::post('/update/{id}', [\App\Http\Controllers\Api\PwdListController::class, 'update'])->name('pwd-request-update');
 
     /* delete record */
-    Route::post('/delete/{id}', [\App\Http\Controllers\Api\PwdListController::class, 'destroy'])->name('pwd-request-delete');;
+    Route::post('/delete/{id}', [\App\Http\Controllers\Api\PwdListController::class, 'destroy'])->name('pwd-request-delete');
 });
 
 Route::group(['prefix' => 'soloparent', 'middleware' => ['permission:Access-Page-ISF', 'throttle:500,1']], function () {
@@ -198,15 +197,14 @@ Route::group(['prefix' => 'soloparent', 'middleware' => ['permission:Access-Page
     Route::get('/', [App\Http\Controllers\SoloParentListController::class, 'index'])->middleware(['auth', 'verified'])->name('soloparent-index');
 
     /* create */
-    Route::get('/create', [App\Http\Controllers\SoloParentListController::class, 'handleISFCreate'])->middleware(['auth', 'verified'])->name('soloparent-create');
+    Route::get('/create', [App\Http\Controllers\SoloParentListController::class, 'handleCreate'])->middleware(['auth', 'verified'])->name('soloparent-create');
 
     /* view */
-    Route::get('/view/{id}', function () {
-        return Inertia::render('ISF/View');
-    })->middleware(['auth', 'verified'])->name('soloparent-view');
+    Route::get('/view/{id}', [App\Http\Controllers\SoloParentListController::class, 'handleView'])->middleware(['auth', 'verified'])->name('soloparent-view');
+
 
     /* edit */
-    Route::get('/edit/{id}', [App\Http\Controllers\SoloParentListController::class, 'handleISFEdit'])->middleware(['auth', 'verified'])->name('soloparent-edit');
+    Route::get('/edit/{id}', [App\Http\Controllers\SoloParentListController::class, 'handleEdit'])->middleware(['auth', 'verified'])->name('soloparent-edit');
 
     /* create record */
     Route::post('/', [\App\Http\Controllers\Api\SoloParentListController::class, 'store'])->name('soloparent-store');
@@ -214,9 +212,14 @@ Route::group(['prefix' => 'soloparent', 'middleware' => ['permission:Access-Page
     /* selectmultiple */
     Route::post('/multiselect', [\App\Http\Controllers\Api\SoloParentListController::class, 'getSearchfield'])->name('soloparent-multiselect');
 
-    /* create record */
-    Route::post('/', [\App\Http\Controllers\Api\SoloParentListController::class, 'store'])->name('soloparent-store');
+    /* delete record */
+    Route::post('/delete/{id}', [\App\Http\Controllers\Api\SoloParentListController::class, 'destroy'])->name('soloparent-request-delete');
 
+    /* get record */
+    Route::get('/get/{id}', [\App\Http\Controllers\Api\SoloParentListController::class, 'show'])->name('soloparent-request-edit');
+
+    /* update record */
+    Route::post('/update/{id}', [\App\Http\Controllers\Api\SoloParentListController::class, 'update'])->name('soloparent-request-update');
 });
 
 require __DIR__ . '/auth.php';

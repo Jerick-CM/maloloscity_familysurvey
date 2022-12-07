@@ -2,23 +2,48 @@ import { ref, reactive } from "vue";
 import axios from "axios";
 
 export default function useSoloParent() {
+    
     const soloparent = ref([]);
     const soloparents = ref([]);
     const errors_soloparent = ref("");
-    const street = ref([]);
+    const soloparent_renewals = ref([]);
+    const muxsel_barangay = ref(null);
+    const muxsel_gender = ref(null);
+    const muxsel_remarks = ref(null);
+    const muxsel_notes = ref(null);
 
-    const getISF = async (id) => {
-        let response = await axios.get("/request/soloparent/" + id);
-
+    const getSoloParent = async (id) => {
+        let response = await axios.get(route("soloparent-request-edit", id));
         soloparent.value = response.data.data;
+        let data = [];
+        response.data.soloparent.forEach((element) => {
+            data.push({ value: element.year, label: element.year });
+        });
 
-        street.value = {
-            value: response.data.data.street,
-            label: response.data.data.street,
+        soloparent_renewals.value = data;
+
+        muxsel_barangay.value = {
+            value: response.data.data.barangay,
+            label: response.data.data.barangay,
+        };
+
+        muxsel_gender.value = {
+            value: response.data.data.gender,
+            label: response.data.data.gender,
+        };
+
+        muxsel_remarks.value = {
+            value: response.data.data.remarks,
+            label: response.data.data.remarks,
+        };
+
+        muxsel_notes.value = {
+            value: response.data.data.notes,
+            label: response.data.data.notes,
         };
     };
 
-    const getISFs = async () => {
+    const getSoloParents = async () => {
         let response = await axios.get("/request/soloparent");
         soloparents.value = response.data.data;
     };
@@ -39,12 +64,12 @@ export default function useSoloParent() {
         }
     };
 
-    const update = async (id) => {
+    const updateSoloParent = async (id) => {
         errors_soloparent.value = "";
 
         try {
             await axios.post(
-                "/request/soloparent/update/" + id,
+                route("soloparent-request-update", id),
                 soloparent.value
             );
         } catch (e) {
@@ -60,7 +85,7 @@ export default function useSoloParent() {
     };
 
     const destroySoloParent = async (id) => {
-        await axios.post("/request/soloparent/delete/" + id);
+        await axios.post(route("soloparent-request-delete", id));
     };
 
     const loadFromServer = async (
@@ -90,14 +115,16 @@ export default function useSoloParent() {
         errors_soloparent,
         soloparent,
         soloparents,
-        getISF,
-        getISFs,
+        soloparent_renewals,
+        muxsel_barangay,
+        muxsel_gender,
+        muxsel_remarks,
+        muxsel_notes,
+        getSoloParent,
+        getSoloParents,
         destroySoloParent,
-        update,
         store,
-        getISF,
-        getISFs,
         loadFromServer,
-        street,
+        updateSoloParent,
     };
 }

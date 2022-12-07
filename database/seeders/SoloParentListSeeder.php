@@ -17,7 +17,7 @@ class SoloParentListSeeder extends Seeder
 
     // soloparents_list
 
-    DB::statement("INSERT INTO `soloparents_list` (`id`, `full_name`, `address`, `date_of_birth`, `id_number`, `sons`, `daugthers`, `date_of_issuance`, `barangay`, `gender`, `civil_status`, `new_member`, `renewed_member`, `remarks`, `notes`) VALUES
+    DB::statement("INSERT INTO `soloparents_list` (`id`, `full_name`, `address`, `date_of_birth`, `id_number`, `sons`, `daughters`, `date_of_issuance`, `barangay`, `gender`, `civil_status`, `new_member`, `renewed_member`, `remarks`, `notes`) VALUES
       (1, 'MARIA CONCEPCION G. PUNZALAN', '308 BATASAN', '2022-06-01', '000-014', '', '', '2022-01-13', 'ANILAO', 'F', 'SEPARATED', '1', '0', '', ''),
       (2, 'ROWENA SC. DAVID', ' 202 BAHAW ST., ', '1977-01-07', '000-269-B', '', '', '2022-06-22', 'ANILAO', 'F', 'SINGLE', '1', '0', '', ''),
       (3, 'MAXIMA L. SANGLE ', 'ANILAO ', '1965-12-11', '000-620-B', '', '', '2022-08-23', 'ANILAO', 'F', 'BALO', '0', '1', '', ''),
@@ -388,7 +388,7 @@ class SoloParentListSeeder extends Seeder
       (368, 'JOHN AL P. CASTEL ', 'COFRADIA ', '1985-08-19', '000-1053-B', '', '', '2022-11-09', 'COFRADIA', 'M', 'SINGLE', '1', '0', '', '');
     ");
 
-    DB::statement("INSERT INTO `soloparents_list` (`id`, `full_name`, `address`, `date_of_birth`, `id_number`, `sons`, `daugthers`, `date_of_issuance`, `barangay`, `gender`, `civil_status`, `new_member`, `renewed_member`, `remarks`, `notes`) VALUES
+    DB::statement("INSERT INTO `soloparents_list` (`id`, `full_name`, `address`, `date_of_birth`, `id_number`, `sons`, `daughters`, `date_of_issuance`, `barangay`, `gender`, `civil_status`, `new_member`, `renewed_member`, `remarks`, `notes`) VALUES
       (369, 'CATHERINE S. TEODORO', '198 CAMIA ST.,', '1978-03-15', '000-001', '', '', '2022-01-05', 'DAKILA', 'F', 'SEPARATED', '0', '1', '', ''),
       (370, 'MORIEL LIZA A. DIONISIO', 'DAKILA', '1981-06-05', '000-052-B', '', '', '2022-02-10', 'DAKILA', 'F', 'SEPARATED', '1', '0', '', ''),
       (371, 'ARLENE G. TRAJANO', 'MADERA GROVE', '1972-12-20', '000-077-B', '', '', '2022-02-22', 'DAKILA', 'F', 'SEPARATED', '0', '1', '', ''),
@@ -767,7 +767,7 @@ class SoloParentListSeeder extends Seeder
     ");
 
 
-    DB::statement("INSERT INTO `soloparents_list` (`id`, `full_name`, `address`, `date_of_birth`, `id_number`, `sons`, `daugthers`, `date_of_issuance`, `barangay`, `gender`, `civil_status`, `new_member`, `renewed_member`, `remarks`, `notes`) VALUES
+    DB::statement("INSERT INTO `soloparents_list` (`id`, `full_name`, `address`, `date_of_birth`, `id_number`, `sons`, `daughters`, `date_of_issuance`, `barangay`, `gender`, `civil_status`, `new_member`, `renewed_member`, `remarks`, `notes`) VALUES
     (744, 'MA. CRISTINA P. TORRES', 'TORES ST., ', '1976-11-06', '000-290-B', '', '', '2022-06-27', 'PANASAHAN', 'F', 'SINGLE', '0', '1', '', ''),
     (745, 'ANNA LEAH DC. MENDOZA ', 'SAMPAGUITA ', '1983-06-16', '000-318-B', '', '', '2022-07-05', 'PANASAHAN', 'F', 'SEPARATED', '1', '0', '', ''),
     (746, 'REGINA GRACE P. BULURAN', 'DAMA DE NOCHE ', '1995-02-22', '000-343-B', '', '', '2022-07-08', 'PANASAHAN', 'F', 'SINGLE', '1', '0', '', ''),

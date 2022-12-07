@@ -26,7 +26,7 @@ class CreateSoloParentListsTable extends Migration
             $table->string('id_number')->nullable();
   
             $table->string('sons')->nullable();
-            $table->string('daugthers')->nullable();
+            $table->string('daughters')->nullable();
             
             $table->date('date_of_issuance')->nullable();
             $table->string('barangay')->nullable();

@@ -104,13 +104,13 @@ export default {
         };
 
         const removeSoloParent = async (id) => {
-            // if (!window.confirm("Are you sure?")) {
-            //     return;
-            // }
-            // toast.info("Sending delete");
-            // await destroyISF(id);
-            // await server_sided();
-            // await toast.success("Delete success.");
+            if (!window.confirm("Are you sure?")) {
+                return;
+            }
+            toast.info("Sending delete");
+            await destroySoloParent(id);
+            await server_sided();
+            await toast.success("Delete success.");
         };
         const fetchSelectfield = async (query, field) => {
             let data;

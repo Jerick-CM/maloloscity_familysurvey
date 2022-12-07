@@ -22,11 +22,8 @@ export default {
         Modal,
         Multiselect,
     },
-
     props: ["barangays", "municipalities"],
-
     setup(props, { attrs, slots, emit, expose }) {
-
         const toast = useToast();
         const brgys = computed(() => props.barangays);
         const filteredBrgys = ref([]);
@@ -457,6 +454,35 @@ export default {
                                 />
                             </div>
                             <div class="w-full md:w-1/4 px-3 py-1"></div>
+                        </div>
+                    </div>
+
+                    <div class="py-1 font-medium text-red-700">2. Children</div>
+
+                    <div class="flex flex-wrap -mx-3">
+                        <div class="w-full md:w-1/4 px-3 py-1">
+                            <label
+                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            >
+                                Number of Son
+                            </label>
+                            <input
+                                :class="inputClass"
+                                v-model="form.sons"
+                                type="number"
+                            />
+                        </div>
+                        <div class="w-full md:w-1/4 px-3 py-1">
+                            <label
+                                class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                            >
+                                Number of Daugther
+                            </label>
+                            <input
+                                :class="inputClass"
+                                v-model="form.daughter"
+                                type="number"
+                            />
                         </div>
                     </div>
 
