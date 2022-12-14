@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use App\Models\SoloParent;
 use App\Models\SoloParent_renewal;
 
+use App\Exports\SoloParentExport;
+
 class SoloParentListController extends Controller
 {
 
@@ -87,6 +89,15 @@ class SoloParentListController extends Controller
                 $reqs =  $reqs->where($params['filterField'], $params['filterValue']);
             }
         }
+
+        if ($params['datefrom'] != "" && $params['dateto'] != "") {
+            $reqs =  $reqs->whereBetween("soloparents_list.date_applied",  [$params['datefrom'], $params['dateto']]);
+        } else if ($params['datefrom'] != "") {
+            $reqs =  $reqs->whereDate('"soloparents_list.date_applied"', '>=', $params['datefrom']);
+        } else if ($params['dateto'] != "") {
+            $reqs =  $reqs->whereDate('"soloparents_list.date_applied"', '<=', $params['dateto']);
+        }
+
 
         $reqs = $reqs->where(function ($query) use ($params) {
             $word = str_replace(" ", "%", $params['searchValue']);
@@ -214,7 +225,6 @@ class SoloParentListController extends Controller
                 }
             } else {
 
-                // no available year renewals
                 foreach ($request->year_renewal as $key => $val) {
 
                     SoloParent_renewal::create([
@@ -223,6 +233,7 @@ class SoloParentListController extends Controller
                         'date_of_application' => $request->date_of_application,
                     ]);
                 }
+
             }
         } catch (\Exception $e) {
 
@@ -239,5 +250,39 @@ class SoloParentListController extends Controller
             'all_year' =>  $all_years
 
         ]);
+    }
+
+    public function export(Request $request)
+    {
+
+        $params = $request->params;
+
+        $reqs = SoloParent::query();
+
+        if (isset($params['filterField'])) {
+            if ($params['filterField'] != "") {
+                $reqs =  $reqs->where($params['filterField'], $params['filterValue']);
+            }
+        }
+
+        if ($params['datefrom'] != "" && $params['dateto'] != "") {
+            $reqs =  $reqs->whereBetween("soloparents_list.date_applied",  [$params['datefrom'], $params['dateto']]);
+        } else if ($params['datefrom'] != "") {
+            $reqs =  $reqs->whereDate('"soloparents_list.date_applied"', '>=', $params['datefrom']);
+        } else if ($params['dateto'] != "") {
+            $reqs =  $reqs->whereDate('"soloparents_list.date_applied"', '<=', $params['dateto']);
+        }
+
+        $reqs  = $reqs->select('soloparents_list.*');
+
+        $reqs = $reqs->where(function ($query) use ($params) {
+            $word = str_replace(" ", "%", $params['searchValue']);
+            $query->where([['full_name', 'LIKE', "%" . $word . "%"]]);
+        });
+
+        $items = $reqs->get();
+
+        return (new SoloParentExport($items))->download('SoloParents_data.xls');
+
     }
 }

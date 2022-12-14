@@ -5,17 +5,17 @@ import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
 import { ref, onMounted, reactive, watch, computed } from "vue";
 import Multiselect from "@vueform/multiselect";
 import { useToast } from "vue-toastification";
-
 import Breadcrumb from "./../../Components/BreadCrumb/navPWDIndex.vue";
 import usePWD from "./../../composables/pwd";
+
 export default {
     components: {
         Breadcrumb,
-        BreezeDropdown,
         Multiselect,
         BreezeAuthenticatedLayout,
         Head,
         Link,
+        BreezeDropdown,
     },
     props: ["hosting"],
     methods: {},
@@ -29,15 +29,12 @@ export default {
     }),
 
     setup(props) {
-
         const Auth_user = computed(() => usePage().props.value.auth.user);
         const permissions = usePage().props.value.auth.user.PermissionList;
         const toast = useToast();
         const form = reactive({});
-
-        const { pwds, destroyPWD, errors_pwd, loadFromServer } = usePWD();
-
-        const url = ref("");
+        const { pwds, destroyPWD, errors_pwd, loadFromServer, exportRequests } =
+            usePWD();
 
         /* Datatable */
 
@@ -53,10 +50,12 @@ export default {
         });
 
         const searchParameter = reactive({
-            searchField: "household_head",
+            searchField: "full_name",
             searchValue: "",
             filterField: "",
             filterValue: "",
+            datefrom: "",
+            dateto: "",
         });
 
         /* Datatable */
@@ -70,7 +69,12 @@ export default {
                 sortable: true,
             },
             { text: "ID Number", value: "id_number", sortable: true },
-            { text: "Date / Time", value: "date", sortable: true },
+            { text: "Renewed Year", value: "latestyear.year", sortable: true },
+            {
+                text: "Year to Renew",
+                value: "computed_renewal_year",
+                sortable: true,
+            },
             { text: "Action", value: "action", sortable: false },
         ]);
 
@@ -92,7 +96,7 @@ export default {
         const fetchSelectfield = async (query, field) => {
             let data;
             await axios
-                .post("/request/isf/getSelectfield", {
+                .post(route("pwd-multiselect"), {
                     searchValue: query,
                     field: field,
                 })
@@ -112,28 +116,27 @@ export default {
             server_sided();
         };
 
-        const generatePDF = () => {
-            // if (searchParameter.filterValue == null) {
-            //     url.value = hosting.value + "/report_isf/pdf/" + "all";
-            // } else if (searchParameter.filterValue == "") {
-            //     url.value = hosting.value + "/report_isf/pdf/" + "all";
-            // } else {
-            //     url.value =
-            //         hosting.value +
-            //         "/report_isf/pdf/" +
-            //         searchParameter.filterValue;
-            // }
-            // window.open(url.value);
+        const compute_renew_year = (year, addend) => {
+            return parseInt(year) + parseInt(addend);
         };
 
         const removePWD = async (id) => {
-            if (!window.confirm("Are you sure?")) {
+            if (!window.confirm(" Are you sure ? ")) {
                 return;
             }
             toast.info("Sending delete");
             await destroyPWD(id);
             await server_sided();
             await toast.success("Delete success.");
+        };
+
+        const exportData = async () => {
+            await exportRequests(
+                pwds,
+                serverItemsLength,
+                serverOptions,
+                searchParameter
+            );
         };
 
         watch(
@@ -170,8 +173,9 @@ export default {
             selectedItems,
             fetchSelectfield,
             searchButton,
-            generatePDF,
             removePWD,
+            compute_renew_year,
+            exportData,
         };
     },
 };
@@ -182,7 +186,6 @@ export default {
         <template #header>PWD Page </template>
         <div class="">
             <div class="pb-10 py-2 w-full mx-auto sm:px-6 lg:px-8">
-                
                 <Breadcrumb />
 
                 <div class="flex flex-col 2xl:flex-row xl:flex-row lg:flex-row">
@@ -197,7 +200,7 @@ export default {
                             v-if="permissions.includes('Action Download PWD')"
                         >
                             <button
-                                @click.prevent="generatePDF()"
+                                @click.prevent="exportData()"
                                 class="my-2 py-2 px-4 w-full 2xl:w-fit xl:w-fit lg:w-fit bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded inline-flex items-center"
                             >
                                 <svg
@@ -297,7 +300,42 @@ export default {
                     </div>
 
                     <!-- Search -->
+                    <div class="py-2 pb-0 md:grid md:grid-cols-3 md:gap-6">
+                        <div class="col-span-1 sm:col-span-1">
+                            <label
+                                for="company-website"
+                                class="block text-sm font-medium text-red-700"
+                            >
+                                Date From:
+                            </label>
 
+                            <div class="group relative">
+                                <input
+                                    v-model="searchParameter.datefrom"
+                                    id="date-from"
+                                    type="date"
+                                    class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                />
+                            </div>
+                        </div>
+                        <div class="col-span-1 sm:col-span-1">
+                            <label
+                                for="company-website"
+                                class="block text-sm font-medium text-red-700"
+                            >
+                                Date to:
+                            </label>
+
+                            <div class="group relative">
+                                <input
+                                    v-model="searchParameter.dateto"
+                                    id="date-to"
+                                    type="date"
+                                    class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                />
+                            </div>
+                        </div>
+                    </div>
                     <div class="py-2 pb-8 md:grid md:grid-cols-3 md:gap-6">
                         <div class="col-span-1 sm:col-span-1">
                             <label
@@ -313,9 +351,7 @@ export default {
                                     v-model="searchParameter.searchField"
                                 >
                                     <option value="" selected>ALL</option>
-                                    <option value="household_head">
-                                        Household head
-                                    </option>
+                                    <option value="full_name">Name</option>
                                 </select>
                             </form>
                         </div>
@@ -577,6 +613,11 @@ export default {
                                 </div>
                             </template>
 
+                            <template #item-computed_renewal_year="item">
+                                {{
+                                    compute_renew_year(item.latestyear.year, 5)
+                                }}
+                            </template>
                             <template #item-action="item">
                                 <div class="operation-wrapper flex">
                                     <div class="p-1">

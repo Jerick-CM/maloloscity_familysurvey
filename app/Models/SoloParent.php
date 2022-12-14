@@ -12,6 +12,9 @@ class SoloParent extends Model
     use HasFactory, SoftDeletes;
     protected $table = "soloparents_list";
     public $timestamps = true;
+
+    protected $appends = ['latestyear'];
+    
     protected $fillable = [
         'id',
         'first_name',
@@ -38,4 +41,11 @@ class SoloParent extends Model
     {
         return $this->hasMany(Soloparent_renewal::class, 'soloparent_id');
     }
+
+    public function getlatestyearAttribute()
+    {
+        $year = Soloparent_renewal::select('year')->where('soloparent_id', $this->id)->latest()->first();
+        return $year;
+    }
+
 }

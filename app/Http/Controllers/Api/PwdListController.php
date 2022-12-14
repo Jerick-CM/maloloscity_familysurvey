@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use App\Models\PWD;
 use App\Models\Pwd_renewal;
 
+use App\Exports\PwdExport;
+
 class PwdListController extends Controller
 {
 
@@ -65,7 +67,6 @@ class PwdListController extends Controller
                 'pwd_id' =>  $PWD->id,
                 'date_of_application' => $request->date_of_application,
             ]);
-            
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json($e, 500);
@@ -158,9 +159,7 @@ class PwdListController extends Controller
                         'pwd_id' =>   $id,
                         'date_of_application' => $request->date_of_application,
                     ]);
-
                 }
-
             } else {
 
                 // no available year renewals
@@ -171,16 +170,12 @@ class PwdListController extends Controller
                         'pwd_id' =>   $id,
                         'date_of_application' => $request->date_of_application,
                     ]);
-
                 }
-
             }
-
         } catch (\Exception $e) {
 
             DB::rollBack();
             return response()->json($e, 500);
-            
         }
 
         DB::commit();
@@ -224,6 +219,14 @@ class PwdListController extends Controller
             }
         }
 
+        if ($params['datefrom'] != "" && $params['dateto'] != "") {
+            $reqs =  $reqs->whereBetween("pwd_list.date_applied",  [$params['datefrom'], $params['dateto']]);
+        } else if ($params['datefrom'] != "") {
+            $reqs =  $reqs->whereDate('"pwd_list.date_applied"', '>=', $params['datefrom']);
+        } else if ($params['dateto'] != "") {
+            $reqs =  $reqs->whereDate('"pwd_list.date_applied"', '<=', $params['dateto']);
+        }
+
         $reqs = $reqs->where(function ($query) use ($params) {
             $word = str_replace(" ", "%", $params['searchValue']);
             $query->where([['full_name', 'LIKE', "%" . $word . "%"]]);
@@ -254,5 +257,45 @@ class PwdListController extends Controller
         return response()->json([
             'data' => $data,
         ]);
+    }
+
+
+    public function export(Request $request)
+    {
+
+        $params = $request->params;
+
+        $reqs = PWD::query();
+
+        // if ($params['filterField'] != "") {
+
+        //     if ($params['filterField'] == 'user_id') {
+        //         $reqs =  $reqs->where("users.name", $params['filterValue']);
+        //     }
+        // }
+
+        if (isset($params['filterField'])) {
+            if ($params['filterField'] != "") {
+                $reqs =  $reqs->where($params['filterField'], $params['filterValue']);
+            }
+        }
+
+        if ($params['datefrom'] != "" && $params['dateto'] != "") {
+            $reqs =  $reqs->whereBetween("pwd_list.created_at",  [$params['datefrom'], $params['dateto']]);
+        } else if ($params['datefrom'] != "") {
+            $reqs =  $reqs->whereDate('"pwd_list.created_at"', '>=', $params['datefrom']);
+        } else if ($params['dateto'] != "") {
+            $reqs =  $reqs->whereDate('"pwd_list.created_at"', '<=', $params['dateto']);
+        }
+
+        $reqs = $reqs->select('pwd_list.*');
+        $reqs = $reqs->where(function ($query) use ($params) {
+            $word = str_replace(" ", "%", $params['searchValue']);
+            $query->where([['pwd_list.full_name', 'LIKE', "%" . $word . "%"]]);
+        });
+
+        $items = $reqs->get();
+
+        return (new PwdExport($items))->download('pwd_data.xls');
     }
 }

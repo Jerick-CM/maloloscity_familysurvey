@@ -26,23 +26,21 @@ export default {
         defaultClass:
             "border-slate-200 rounded-t rounded-t mb-0 px-4 py-3 border-0 bg-slate-600",
     }),
-
     setup(props) {
+
         const Auth_user = computed(() => usePage().props.value.auth.user);
         const permissions = usePage().props.value.auth.user.PermissionList;
         const toast = useToast();
         const form = reactive({});
-        const url = ref("");
-
         const {
             soloparents,
             destroySoloParent,
             errors_soloparent,
             loadFromServer,
+            exportRequests
         } = useSoloParent();
 
         /* Datatable */
-
         const loading = ref(true);
         const selectedItems = ref([]);
         const serverItemsLength = ref(0);
@@ -58,6 +56,8 @@ export default {
             searchValue: "",
             filterField: "",
             filterValue: "",
+            datefrom: "",
+            dateto: "",
         });
 
         /* Datatable */
@@ -67,6 +67,12 @@ export default {
             { text: "Barangay", value: "barangay", sortable: true },
             { text: "Gender", value: "gender", sortable: true },
             { text: "ID Number", value: "id_number", sortable: true },
+            { text: "Renewed Year", value: "latestyear.year", sortable: true },
+            {
+                text: "Year to Renew",
+                value: "computed_renewal_year",
+                sortable: true,
+            },
             { text: "Action", value: "action", sortable: false },
         ]);
 
@@ -89,20 +95,6 @@ export default {
             server_sided();
         };
 
-        const generatePDF = () => {
-            // if (searchParameter.filterValue == null) {
-            //     url.value = hosting.value + "/report_isf/pdf/" + "all";
-            // } else if (searchParameter.filterValue == "") {
-            //     url.value = hosting.value + "/report_isf/pdf/" + "all";
-            // } else {
-            //     url.value =
-            //         hosting.value +
-            //         "/report_isf/pdf/" +
-            //         searchParameter.filterValue;
-            // }
-            // window.open(url.value);
-        };
-
         const removeSoloParent = async (id) => {
             if (!window.confirm("Are you sure?")) {
                 return;
@@ -112,10 +104,11 @@ export default {
             await server_sided();
             await toast.success("Delete success.");
         };
+        
         const fetchSelectfield = async (query, field) => {
             let data;
             await axios
-                .post("/request/isf/getSelectfield", {
+                .post(route("soloparent-multiselect"), {
                     searchValue: query,
                     field: field,
                 })
@@ -130,6 +123,20 @@ export default {
 
             return data;
         };
+
+        const compute_renew_year = (year, addend) => {
+            return parseInt(year) + parseInt(addend);
+        };
+
+        const exportData = async () => {
+            await exportRequests(
+                soloparents,
+                serverItemsLength,
+                serverOptions,
+                searchParameter
+            );
+        };
+
         watch(
             () => searchParameter.searchValue,
             (value) => {
@@ -164,8 +171,9 @@ export default {
             selectedItems,
             fetchSelectfield,
             searchButton,
-            generatePDF,
             removeSoloParent,
+            compute_renew_year,
+            exportData
         };
     },
 };
@@ -194,7 +202,7 @@ export default {
                             "
                         >
                             <button
-                                @click.prevent="generatePDF()"
+                                @click.prevent="exportData()"
                                 class="my-2 py-2 px-4 w-full 2xl:w-fit xl:w-fit lg:w-fit bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded inline-flex items-center"
                             >
                                 <svg
@@ -261,6 +269,7 @@ export default {
                                 </select>
                             </form>
                         </div>
+
                         <div class="col-span-1 sm:col-span-1">
                             <label
                                 for="company-website"
@@ -291,6 +300,42 @@ export default {
                                     "
                                 />
                             </form>
+                        </div>
+                    </div>
+                    <div class="py-2 pb-0 md:grid md:grid-cols-3 md:gap-6">
+                        <div class="col-span-1 sm:col-span-1">
+                            <label
+                                for="company-website"
+                                class="block text-sm font-medium text-red-700"
+                            >
+                                Date From:
+                            </label>
+
+                            <div class="group relative">
+                                <input
+                                    v-model="searchParameter.datefrom"
+                                    id="date-from"
+                                    type="date"
+                                    class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                />
+                            </div>
+                        </div>
+                        <div class="col-span-1 sm:col-span-1">
+                            <label
+                                for="company-website"
+                                class="block text-sm font-medium text-red-700"
+                            >
+                                Date to:
+                            </label>
+
+                            <div class="group relative">
+                                <input
+                                    v-model="searchParameter.dateto"
+                                    id="date-to"
+                                    type="date"
+                                    class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                />
+                            </div>
                         </div>
                     </div>
                     <!-- Search -->
@@ -506,7 +551,7 @@ export default {
                                                     </button>
                                                 </Link>
                                             </div>
-                                            <!-- Delete -->
+
                                             <div class="py-1 px-1">
                                                 <Link
                                                     v-if="
@@ -571,7 +616,11 @@ export default {
                                     <span>Loading...</span>
                                 </div>
                             </template>
-
+                            <template #item-computed_renewal_year="item">
+                                {{
+                                    compute_renew_year(item.latestyear.year, 5)
+                                }}
+                            </template>
                             <template #item-action="item">
                                 <div class="operation-wrapper flex">
                                     <div class="p-1">

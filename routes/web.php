@@ -142,7 +142,6 @@ Route::get('phpinfo', function () {
 });
 
 Route::group(['prefix' => 'cstm', 'middleware' => 'throttle:500,1'], function () {
-
     /* roles */
     Route::get('roles', [\App\Http\Controllers\Api\RoleController::class, 'index']);
     /* checklist */
@@ -186,6 +185,10 @@ Route::group(['prefix' => 'pwd', 'middleware' => ['permission:Access-Page-PWD', 
 
     /* delete record */
     Route::post('/delete/{id}', [\App\Http\Controllers\Api\PwdListController::class, 'destroy'])->name('pwd-request-delete');
+
+    /* export */
+    Route::post('/export', [\App\Http\Controllers\Api\PwdListController::class, 'export'])->name('pwd-export');
+
 });
 
 Route::group(['prefix' => 'soloparent', 'middleware' => ['permission:Access-Page-ISF', 'throttle:500,1']], function () {
@@ -201,7 +204,6 @@ Route::group(['prefix' => 'soloparent', 'middleware' => ['permission:Access-Page
 
     /* view */
     Route::get('/view/{id}', [App\Http\Controllers\SoloParentListController::class, 'handleView'])->middleware(['auth', 'verified'])->name('soloparent-view');
-
 
     /* edit */
     Route::get('/edit/{id}', [App\Http\Controllers\SoloParentListController::class, 'handleEdit'])->middleware(['auth', 'verified'])->name('soloparent-edit');
@@ -220,6 +222,10 @@ Route::group(['prefix' => 'soloparent', 'middleware' => ['permission:Access-Page
 
     /* update record */
     Route::post('/update/{id}', [\App\Http\Controllers\Api\SoloParentListController::class, 'update'])->name('soloparent-request-update');
+
+    /* export */
+    Route::post('/export', [\App\Http\Controllers\Api\SoloParentListController::class, 'export'])->name('soloparent-export');
+    
 });
 
 require __DIR__ . '/auth.php';

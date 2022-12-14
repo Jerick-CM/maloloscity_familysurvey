@@ -16,7 +16,6 @@ export default function usePWD() {
     const muxsel_barangay = ref(null);
 
     const getPWD = async (id) => {
-        
         let response = await axios.get(route("pwd-request-edit", id));
 
         pwd.value = response.data.data;
@@ -124,12 +123,43 @@ export default function usePWD() {
         }
     };
 
+    const exportRequests = async (
+        pwds,
+        serverItemsLength,
+        serverOptions,
+        searchParameter
+    ) => {
+        await axios
+            .post(
+                route("pwd-export"),
+                {
+                    options: serverOptions.value,
+                    params: searchParameter,
+                },
+                { responseType: "blob" }
+            )
+            .then((response) => {
+                var fileURL = window.URL.createObjectURL(
+                    new Blob([response.data])
+                );
+                var fileLink = document.createElement("a");
+                fileLink.href = fileURL;
+                fileLink.setAttribute(
+                    "download",
+                    "pwd-data" +
+                        new Date().toJSON().slice(0, 10).replace(/-/g, "_") +
+                        ".xls"
+                );
+                document.body.appendChild(fileLink);
+                fileLink.click();
+            });
+    };
+
     return {
         errors_pwd,
         pwd,
         pwds,
         pwd_renewals,
-
         muxsel_complete_address,
         muxsel_gender,
         muxsel_disability,
@@ -145,5 +175,6 @@ export default function usePWD() {
         getPWD,
         getISFs,
         loadFromServer,
+        exportRequests,
     };
 }

@@ -2,7 +2,6 @@ import { ref, reactive } from "vue";
 import axios from "axios";
 
 export default function useSoloParent() {
-    
     const soloparent = ref([]);
     const soloparents = ref([]);
     const errors_soloparent = ref("");
@@ -111,6 +110,38 @@ export default function useSoloParent() {
         }
     };
 
+    const exportRequests = async (
+        soloparents,
+        serverItemsLength,
+        serverOptions,
+        searchParameter
+    ) => {
+        await axios
+            .post(
+                route("soloparent-export"),
+                {
+                    options: serverOptions.value,
+                    params: searchParameter,
+                },
+                { responseType: "blob" }
+            )
+            .then((response) => {
+                var fileURL = window.URL.createObjectURL(
+                    new Blob([response.data])
+                );
+                var fileLink = document.createElement("a");
+                fileLink.href = fileURL;
+                fileLink.setAttribute(
+                    "download",
+                    "SoloParents_data-" +
+                        new Date().toJSON().slice(0, 10).replace(/-/g, "_") +
+                        ".xls"
+                );
+                document.body.appendChild(fileLink);
+                fileLink.click();
+            });
+    };
+
     return {
         errors_soloparent,
         soloparent,
@@ -126,5 +157,6 @@ export default function useSoloParent() {
         store,
         loadFromServer,
         updateSoloParent,
+        exportRequests,
     };
 }

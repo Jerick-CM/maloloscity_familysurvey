@@ -1,7 +1,6 @@
 <script>
 import BreezeAuthenticatedLayout from "./../../Layouts/Form.vue";
-
-import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ref, reactive, computed, onMounted, watch } from "vue";
 import usePWD from "./../../composables/pwd";
 import { useToast } from "vue-toastification";
@@ -59,7 +58,6 @@ export default {
             pwd,
             errors_pwd,
             street,
-
             muxsel_complete_address,
             muxsel_gender,
             muxsel_disability,
