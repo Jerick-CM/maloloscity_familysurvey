@@ -16,15 +16,15 @@ fixed - implement prompt for detection of renewal pwd/ or just show the next ren
 fixed - implement prompt for detection of renewal soloparent
 fixed - add multi selection year in edit since the pwd is renewed every 5 years, same for solo parent renewed every year.
 fixed - implement index soloparent.
+fixed - implement pdf search and filter index.
+fixed - implement updating renewal of existing data in the table.
+fixed - implement renewal date logic add including year specially date of renewal and update. for both pwd and soloparent.
 
-- implement pdf search and filter index.
-- implement renewal date logic add including year specially date of renewal and update. for both pwd and soloparent.
-- implement updating renewal of existing data in the table.
 - implement filling up fname, mname and lname with suffixed in fields in all existing datas.
 - table show last date applied.
-- implement page testing pwd all pages.
-- implement page testing soloparent all pages.
 - i forgot the task here maybe tag all todo seeder to run in the application.
 - backup all pdf data for the family survey.
 - update date uplied whenever a new renewal year is requested and prompted for pwd  use date_applied.
 - update date uplied whenever a new renewal year is requested and prompted for soloparents use date of issuance.
+- implement page testing pwd all pages.
+- implement page testing soloparent all pages.
