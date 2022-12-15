@@ -26,6 +26,7 @@ fixed - create pwd gender, address , notes.
 fixed - bug in field create soloparent create 
 fixed - implement bug in edit missing content in fields for soloparent page
 
+- fix bug error create submission error
 - clear fields on created pwd page
 - clear fields on created solo parent page 
 - fix updating of original table data appliend everytime renewal is done. 

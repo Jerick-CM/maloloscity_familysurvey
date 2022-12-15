@@ -58,8 +58,6 @@ export default function usePWD() {
             label: response.data.data.notes,
         };
 
-        console.log(muxsel_notes.value)
-
         muxsel_barangay.value = {
             value: response.data.data.barangay,
             label: response.data.data.barangay,

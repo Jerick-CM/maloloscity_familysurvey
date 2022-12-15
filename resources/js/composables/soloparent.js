@@ -29,8 +29,6 @@ export default function useSoloParent() {
             label: response.data.data.address,
         };
 
-        console.log(muxsel_address);
-
         muxsel_barangay.value = {
             value: response.data.data.barangay,
             label: response.data.data.barangay,
