@@ -40,6 +40,8 @@ export default {
         const multiselect_remarks = ref(null);
         const multiselect_notes = ref(null);
 
+        const pwd_year = ref([]);
+
         /* init */
         const form = reactive({
             province: 14,
@@ -230,6 +232,14 @@ export default {
             }
         );
 
+        watch(
+            () => pwd_year.value,
+            (value) => {
+                form.year = value["label"];
+            },
+            { deep: true }
+        );
+
         return {
             filteredBrgys,
             form,
@@ -243,6 +253,7 @@ export default {
             multiselect_remarks,
             multiselect_notes,
             year_selection,
+            pwd_year,
             submitPWD,
             toggleModal,
             fetchSelectfield,
@@ -333,7 +344,7 @@ export default {
                             <Multiselect
                                 ref="multiselect_yearrenewal"
                                 mode="single"
-                                v-model="form.year"
+                                v-model="pwd_year"
                                 class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 :object="true"
                                 :close-on-select="false"

@@ -30,7 +30,7 @@ export default {
         const submission_process = ref(false);
         const modal_show = ref(false);
         const data = ref(false);
-
+        const pwd_year = ref([]);
         /* init */
         const form = reactive({
             province: 14,
@@ -206,7 +206,13 @@ export default {
                 filterBrgys(value);
             }
         );
-
+        watch(
+            () => pwd_year.value,
+            (value) => {
+                form.year = value["label"];
+            },
+            { deep: true }
+        );
         return {
             filteredBrgys,
             form,
@@ -215,6 +221,7 @@ export default {
             data,
             modal_show,
             year_selection,
+            pwd_year,
             submitSoloParent,
             toggleModal,
             fetchSelectfield,
