@@ -480,7 +480,7 @@ export default {
                             </label>
                             <input
                                 :class="inputClass"
-                                v-model="form.daughter"
+                                v-model="form.daughters"
                                 type="number"
                             />
                         </div>

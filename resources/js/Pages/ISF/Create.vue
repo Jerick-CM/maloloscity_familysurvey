@@ -1,7 +1,7 @@
 <script>
 import BreezeAuthenticatedLayout from "./../../Layouts/Form.vue";
 import Breadcrumb from "./../../Components/BreadCrumb/navISFCreate.vue";
-import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ref, reactive, computed, onMounted, watch } from "vue";
 import useISF from "./../../composables/isf_and_illegalencroachments";
 import { useToast } from "vue-toastification";
@@ -39,13 +39,6 @@ export default {
         const multiselect_body_of_water_type = ref(null);
         const multiselect_distance_to_waterway = ref(null);
 
-        const searchParameter = reactive({
-            searchField: "",
-            searchValue: "",
-            filterField: "",
-            filterValue: "",
-        });
-
         /* init */
         const form = reactive({
             province: 14,
@@ -54,6 +47,7 @@ export default {
         });
 
         const { errors_isf, storeISF } = useISF();
+
         const submitISF = async () => {
             toast.info("Sending create");
             submission_process.value = true;
@@ -139,15 +133,10 @@ export default {
         return {
             filteredBrgys,
             form,
-            submitISF,
             errors_isf,
             submission_process,
-            toggleModal,
             data,
             modal_show,
-
-            fetchSelectfield,
-
             multiselect_street,
             multiselect_balik_probinsya,
             multiselect_tenurial_status,
@@ -155,6 +144,10 @@ export default {
             multiselect_body_of_water_name,
             multiselect_body_of_water_type,
             multiselect_distance_to_waterway,
+
+            submitISF,
+            toggleModal,
+            fetchSelectfield,
         };
     },
 };
@@ -256,7 +249,6 @@ export default {
                         </div>
                     </div>
 
-                    <!-- row 1 -->
                     <div class="py-2">
                         <div class="py-1 font-semibold">I. Pagkakakilanlan</div>
 
@@ -440,9 +432,6 @@ export default {
                         </div>
                     </div>
 
-                    <!-- row 2 waterways -->
-
-                    <!-- row 3 family and info -->
                     <div class="py-1 font-medium text-red-700">
                         3. Address and Geographical Location
                     </div>
@@ -528,7 +517,6 @@ export default {
                         </div>
                     </div>
 
-                    <!-- row 4  -->
                     <div class="py-1 font-medium text-red-700">4. Status</div>
                     <div class="flex flex-wrap -mx-3">
                         <div class="w-full md:w-1/4 px-3 py-1">
@@ -789,84 +777,6 @@ th,
 td {
     border: 1px solid black;
 }
-/*
-table {
-    border: 1px solid #ccc;
-    border-collapse: collapse;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    table-layout: fixed;
-}
-
-table caption {
-    font-size: 1.5em;
-    margin: 0.5em 0 0.75em;
-}
-
-table tr {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    padding: 0.35em;
-}
-
-table th,
-table td {
-    padding: 0.625em;
-    text-align: center;
-}
-
-table th {
-    font-size: 0.85em;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-}
-
-@media screen and (max-width: 600px) {
-    table {
-        border: 0;
-    }
-
-    table caption {
-        font-size: 1.3em;
-    }
-
-    table thead {
-        border: none;
-        clip: rect(0 0 0 0);
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        padding: 0;
-        position: absolute;
-        width: 1px;
-    }
-
-    table tr {
-        border-bottom: 3px solid #ddd;
-        display: block;
-        margin-bottom: 0.625em;
-    }
-
-    table td {
-        border-bottom: 1px solid #ddd;
-        display: block;
-        font-size: 0.8em;
-        text-align: right;
-    }
-
-    table td::before {
-
-        content: attr(data-label);
-        float: left;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-
-    table td:last-child {
-        border-bottom: 0;
-    }
-} */
 
 input[type="radio"] + label span {
     transition: background 0.2s, transform 0.2s;
@@ -885,13 +795,6 @@ input[type="radio"]:checked + label span {
 input[type="radio"]:checked + label {
     color: #1f9d55;
 }
-
-/* tr:nth-child(even) {
-    background-color: rgb(243, 182, 182);
-}
-tr:nth-child(od) {
-    background-color: rgb(242, 169, 169);
-} */
 
 tr:hover {
     background-color: coral;

@@ -29,6 +29,7 @@ export default {
     }),
 
     setup(props) {
+        
         const Auth_user = computed(() => usePage().props.value.auth.user);
         const permissions = usePage().props.value.auth.user.PermissionList;
         const hosting = computed(() => props.hosting);
@@ -166,7 +167,7 @@ export default {
                 searchParameter
             );
         };
-        
+
         watch(
             () => searchParameter.searchValue,
             (value) => {

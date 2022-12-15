@@ -24,7 +24,6 @@ export default {
     },
     props: ["barangays", "municipalities"],
     setup(props, { attrs, slots, emit, expose }) {
-
         const toast = useToast();
         const brgys = computed(() => props.barangays);
         const filteredBrgys = ref([]);
@@ -59,6 +58,7 @@ export default {
             muxsel_gender,
             muxsel_remarks,
             muxsel_notes,
+            muxsel_address,
             getSoloParent,
             updateSoloParent,
         } = useSoloParent();
@@ -131,6 +131,14 @@ export default {
         );
 
         watch(
+            () => muxsel_address.value,
+            (currentValue, oldValue) => {
+                soloparent.value.address = currentValue.value;
+            },
+            { deep: true }
+        );
+
+        watch(
             () => muxsel_remarks.value,
             (currentValue, oldValue) => {
                 soloparent.value.remarks = currentValue.value;
@@ -180,13 +188,13 @@ export default {
             muxsel_gender,
             muxsel_remarks,
             muxsel_notes,
+            muxsel_address,
             toggleModal,
             editSoloParent,
             fetchSelectfield,
         };
     },
 };
-
 </script>
 
 <template>
@@ -444,7 +452,7 @@ export default {
                                 :object="true"
                                 ref="multiselect_address"
                                 mode="single"
-                                v-model="muxsel_complete_address"
+                                v-model="muxsel_address"
                                 class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
                                 :filter-results="false"

@@ -50,7 +50,7 @@ class SoloParentListController extends Controller
 
                     'barangay' => $request->barangay,
                     'sons' => $request->sons,
-                    'daugthers' => $request->daugthers,
+                    'daughters' => $request->daughters,
                     'remarks' => $request->remarks,
                     'notes' => $request->notes,
                 ]
@@ -91,11 +91,11 @@ class SoloParentListController extends Controller
         }
 
         if ($params['datefrom'] != "" && $params['dateto'] != "") {
-            $reqs =  $reqs->whereBetween("soloparents_list.date_applied",  [$params['datefrom'], $params['dateto']]);
+            $reqs =  $reqs->whereBetween('soloparents_list.date_applied',  [$params['datefrom'], $params['dateto']]);
         } else if ($params['datefrom'] != "") {
-            $reqs =  $reqs->whereDate('"soloparents_list.date_applied"', '>=', $params['datefrom']);
+            $reqs =  $reqs->whereDate('soloparents_list.date_applied', '>=', $params['datefrom']);
         } else if ($params['dateto'] != "") {
-            $reqs =  $reqs->whereDate('"soloparents_list.date_applied"', '<=', $params['dateto']);
+            $reqs =  $reqs->whereDate('soloparents_list.date_applied', '<=', $params['dateto']);
         }
 
 

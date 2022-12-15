@@ -57,6 +57,8 @@ class PwdListController extends Controller
                     'remarks' => $request->remarks,
                     'notes' => $request->notes,
                     'barangay' => $request->barangay,
+                    'gender' => $request->gender,
+                    'date_applied' => $request->date_of_application,
 
                 ]
 
@@ -67,6 +69,7 @@ class PwdListController extends Controller
                 'pwd_id' =>  $PWD->id,
                 'date_of_application' => $request->date_of_application,
             ]);
+            
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json($e, 500);

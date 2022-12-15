@@ -21,13 +21,19 @@ fixed - implement updating renewal of existing data in the table.
 fixed - implement renewal date logic add including year specially date of renewal and update. for both pwd and soloparent.
 fixed - fix filter spacing in all pages.
 fixed - add isf search date filter
+fixed - implement isf with download and search.
+fixed - create pwd gender, address , notes.
+fixed - bug in field create soloparent create 
+fixed - implement bug in edit missing content in fields for soloparent page
 
-- implement isf with download and search.
+- clear fields on created pwd page
+- clear fields on created solo parent page 
+- fix updating of original table data appliend everytime renewal is done. 
+wip - backup all pdf data for the family survey.
 - implement survey form with download and search.
 - implement filling up fname, mname and lname with suffixed in fields in all existing datas.
 - table show last date applied.
 - i forgot the task here maybe tag all todo seeder to run in the application.
-- backup all pdf data for the family survey.
 - update date uplied whenever a new renewal year is requested and prompted for pwd  use date_applied.
 - update date uplied whenever a new renewal year is requested and prompted for soloparents use date of issuance.
 - implement page testing pwd all pages.
