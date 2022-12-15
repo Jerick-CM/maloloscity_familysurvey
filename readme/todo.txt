@@ -19,7 +19,11 @@ fixed - implement index soloparent.
 fixed - implement pdf search and filter index.
 fixed - implement updating renewal of existing data in the table.
 fixed - implement renewal date logic add including year specially date of renewal and update. for both pwd and soloparent.
+fixed - fix filter spacing in all pages.
+fixed - add isf search date filter
 
+- implement isf with download and search.
+- implement survey form with download and search.
 - implement filling up fname, mname and lname with suffixed in fields in all existing datas.
 - table show last date applied.
 - i forgot the task here maybe tag all todo seeder to run in the application.

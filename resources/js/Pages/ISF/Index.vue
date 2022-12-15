@@ -34,7 +34,7 @@ export default {
         const hosting = computed(() => props.hosting);
         const toast = useToast();
         const form = reactive({});
-        const { isfs, destroyISF, errors_isf, loadFromServer } = useISF();
+        const { isfs, destroyISF, errors_isf, loadFromServer, exportRequests } = useISF();
         const url = ref("");
 
         /* Datatable */
@@ -54,15 +54,16 @@ export default {
             searchValue: "",
             filterField: "",
             filterValue: "",
+            datefrom: "",
+            dateto: "",
         });
 
         /* Datatable */
 
         const headers = ref([
-
             { text: "Id", value: "id", sortable: true },
 
-            { text: "Household Head", value: "household_head", sortable: true},
+            { text: "Household Head", value: "household_head", sortable: true },
             {
                 text: "Street",
                 value: "street",
@@ -84,33 +85,11 @@ export default {
                 sortable: true,
             },
 
-            // {
-            //     text: "Body of Water Name",
-            //     value: "body_of_water_name",
-            //     sortable: true,
-            // },
-            // {
-            //     text: "Body of Water Name Type",
-            //     value: "body_of_water_type",
-            //     sortable: true,
-            // },
-
             {
                 text: "No. of Family Members",
                 value: "no_of_family_members",
                 sortable: true,
             },
-
-            // {
-            //     text: "Longitude",
-            //     value: "longitude",
-            //     sortable: true,
-            // },
-            // {
-            //     text: "Latitude",
-            //     value: "latitude",
-            //     sortable: true,
-            // },
 
             { text: "Date / Time", value: "date", sortable: true },
             { text: "Action", value: "action", sortable: false },
@@ -179,6 +158,15 @@ export default {
             await toast.success("Delete success.");
         };
 
+        const exportData = async () => {
+            await exportRequests(
+                isfs,
+                serverItemsLength,
+                serverOptions,
+                searchParameter
+            );
+        };
+        
         watch(
             () => searchParameter.searchValue,
             (value) => {
@@ -213,6 +201,7 @@ export default {
             searchButton,
             generatePDF,
             removeISF,
+            exportData,
         };
     },
 };
@@ -243,7 +232,7 @@ export default {
                             "
                         >
                             <button
-                                @click.prevent="generatePDF()"
+                                @click.prevent="exportData()"
                                 class="my-2 py-2 px-4 w-full 2xl:w-fit xl:w-fit lg:w-fit bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded inline-flex items-center"
                             >
                                 <svg
@@ -294,7 +283,7 @@ export default {
                 </div>
 
                 <div class="bg-white p-8 rounded-lg">
-                    <div class="py-2 pb-8 md:grid md:grid-cols-3 md:gap-6">
+                    <div class="py-2 pb-0 md:grid md:grid-cols-3 md:gap-6">
                         <div class="col-span-1 sm:col-span-1">
                             <label
                                 for="company-website"
@@ -345,6 +334,45 @@ export default {
                             </form>
                         </div>
                     </div>
+
+                    <!-- Search -->
+                    <div class="py-2 pb-0 md:grid md:grid-cols-3 md:gap-6">
+                        <div class="col-span-1 sm:col-span-1">
+                            <label
+                                for="company-website"
+                                class="block text-sm font-medium text-red-700"
+                            >
+                                Date From:
+                            </label>
+
+                            <div class="group relative">
+                                <input
+                                    v-model="searchParameter.datefrom"
+                                    id="date-from"
+                                    type="date"
+                                    class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                />
+                            </div>
+                        </div>
+                        <div class="col-span-1 sm:col-span-1">
+                            <label
+                                for="company-website"
+                                class="block text-sm font-medium text-red-700"
+                            >
+                                Date to:
+                            </label>
+
+                            <div class="group relative">
+                                <input
+                                    v-model="searchParameter.dateto"
+                                    id="date-to"
+                                    type="date"
+                                    class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Search -->
                     <div class="py-2 pb-8 md:grid md:grid-cols-3 md:gap-6">
                         <div class="col-span-1 sm:col-span-1">
@@ -381,13 +409,15 @@ export default {
                                     </option>
                                     <option value="street">Street</option>
                                     <option value="barangay">Barangay</option>
-                                    <option value="balik_probinsya">Balik Probinsya</option>
-                                    <option value="distance_to_waterway">Distance to Waterway</option>
+                                    <option value="balik_probinsya">
+                                        Balik Probinsya
+                                    </option>
+                                    <option value="distance_to_waterway">
+                                        Distance to Waterway
+                                    </option>
                                     <option value="zone">zone</option>
                                 </select>
                             </form>
-
-                            <!-- </div> -->
                         </div>
                         <div class="col-span-1 sm:col-span-1">
                             <label

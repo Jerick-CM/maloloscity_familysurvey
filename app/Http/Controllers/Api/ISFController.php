@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 
 use App\Models\ISF;
 
+use App\Exports\ISFExport;
+
 class ISFController extends Controller
 {
 
@@ -190,5 +192,37 @@ class ISFController extends Controller
         return response()->json([
             'data' => $data,
         ]);
+    }
+
+    public function export(Request $request)
+    {
+
+        $params = $request->params;
+
+        $reqs = ISF::query();
+
+        if (isset($params['filterField'])) {
+            if ($params['filterField'] != "") {
+                $reqs =  $reqs->where($params['filterField'], $params['filterValue']);
+            }
+        }
+
+        if ($params['datefrom'] != "" && $params['dateto'] != "") {
+            $reqs =  $reqs->whereBetween("isf_and_illegal_encroachment.created_at",  [$params['datefrom'], $params['dateto']]);
+        } else if ($params['datefrom'] != "") {
+            $reqs =  $reqs->whereDate('"isf_and_illegal_encroachment.created_at"', '>=', $params['datefrom']);
+        } else if ($params['dateto'] != "") {
+            $reqs =  $reqs->whereDate('"isf_and_illegal_encroachment.created_at"', '<=', $params['dateto']);
+        }
+
+        $reqs = $reqs->select('isf_and_illegal_encroachment.*');
+        $reqs = $reqs->where(function ($query) use ($params) {
+            $word = str_replace(" ", "%", $params['searchValue']);
+            $query->where([['isf_and_illegal_encroachment.household_head', 'LIKE', "%" . $word . "%"]]);
+        });
+
+        $items = $reqs->get();
+
+        return (new ISFExport($items))->download('isf_data.xls');
     }
 }

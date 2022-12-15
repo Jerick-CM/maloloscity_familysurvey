@@ -120,6 +120,9 @@ Route::group(['prefix' => 'isf', 'middleware' => ['permission:Access-Page-ISF', 
 
     /* edit */
     Route::get('/edit/{id}', [App\Http\Controllers\ISFController::class, 'handleISFEdit'])->middleware(['auth', 'verified'])->name('isf-edit');
+
+    /* export */
+    Route::post('/export', [\App\Http\Controllers\Api\ISFController::class, 'export'])->name('isf-export');
 });
 
 /* User Page */

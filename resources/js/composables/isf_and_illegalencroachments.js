@@ -112,10 +112,51 @@ export default function useISF_illegal_encroachment() {
         }
     };
 
+
+    const exportRequests = async (
+        isfs,
+        serverItemsLength,
+        serverOptions,
+        searchParameter
+    ) => {
+        await axios
+            .post(
+                route("isf-export"),
+                {
+                    options: serverOptions.value,
+                    params: searchParameter,
+                },
+                { responseType: "blob" }
+            )
+            .then((response) => {
+                var fileURL = window.URL.createObjectURL(
+                    new Blob([response.data])
+                );
+                var fileLink = document.createElement("a");
+                fileLink.href = fileURL;
+                fileLink.setAttribute(
+                    "download",
+                    "SoloParents_data-" +
+                        new Date().toJSON().slice(0, 10).replace(/-/g, "_") +
+                        ".xls"
+                );
+                document.body.appendChild(fileLink);
+                fileLink.click();
+            });
+    };
+
+
     return {
         errors_isf,
         isf,
         isfs,
+        street,
+        balik_probinsya,
+        tenurial_status,
+        zone,
+        body_of_water_name,
+        body_of_water_type,
+        distance_to_waterway,
         getISF,
         getISFs,
         destroyISF,
@@ -124,12 +165,6 @@ export default function useISF_illegal_encroachment() {
         getISF,
         getISFs,
         loadFromServer,
-        street,
-        balik_probinsya,
-        tenurial_status,
-        zone,
-        body_of_water_name,
-        body_of_water_type,
-        distance_to_waterway,
+        exportRequests,
     };
 }

@@ -247,7 +247,7 @@ export default {
                 </div>
 
                 <div class="bg-white p-8 rounded-lg">
-                    <div class="py-2 pb-8 md:grid md:grid-cols-3 md:gap-6">
+                    <div class="py-2 pb-0 md:grid md:grid-cols-3 md:gap-6">
                         <div class="col-span-1 sm:col-span-1">
                             <label
                                 for="company-website"
