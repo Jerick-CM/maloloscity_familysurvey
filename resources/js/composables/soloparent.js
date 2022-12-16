@@ -2,11 +2,11 @@ import { ref, reactive } from "vue";
 import axios from "axios";
 
 export default function useSoloParent() {
-    
     const soloparent = ref([]);
     const soloparents = ref([]);
     const errors_soloparent = ref("");
     const soloparent_renewals = ref([]);
+    const soloparent_application_date = ref([]);
     const muxsel_barangay = ref(null);
     const muxsel_gender = ref(null);
     const muxsel_remarks = ref(null);
@@ -14,13 +14,15 @@ export default function useSoloParent() {
     const muxsel_address = ref(null);
 
     const getSoloParent = async (id) => {
-
         let response = await axios.get(route("soloparent-request-edit", id));
         soloparent.value = response.data.data;
         let data = [];
         response.data.soloparent.forEach((element) => {
             data.push({ value: element.year, label: element.year });
         });
+
+        soloparent_application_date.value =
+            response.data.date["date_of_application"];
 
         soloparent_renewals.value = data;
 
@@ -48,7 +50,6 @@ export default function useSoloParent() {
             value: response.data.data.notes,
             label: response.data.data.notes,
         };
-
     };
 
     const getSoloParents = async () => {
@@ -156,6 +157,7 @@ export default function useSoloParent() {
         soloparent,
         soloparents,
         soloparent_renewals,
+        soloparent_application_date,
         muxsel_barangay,
         muxsel_gender,
         muxsel_remarks,

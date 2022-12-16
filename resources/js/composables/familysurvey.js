@@ -7,6 +7,7 @@ export default function useFamilySurveys() {
     const family_position = ref([]);
     const errors_fs = ref("");
 
+
     const individual_lifecycle_risks = ref("");
     const economic_risks = ref("");
     const environment_and_disaster_risks = ref("");
@@ -20,6 +21,8 @@ export default function useFamilySurveys() {
                 value: response.data.data.family_position,
                 label: response.data.data.family_position,
             });
+
+
 
         individual_lifecycle_risks.value =
             response.data.data.individual_lifecycle_risk;
@@ -102,6 +105,13 @@ export default function useFamilySurveys() {
         errors_fs,
         familysurvey,
         familysurveys,
+        family_position,
+        economic_risks,
+        environment_and_disaster_risks,
+        individual_lifecycle_risks,
+        social_and_governance_risks,
+
+
         getFamilySurvey,
         destroyFamilySurvey,
         updateFamilySurvey,
@@ -109,11 +119,5 @@ export default function useFamilySurveys() {
         getFamilySurveys,
         getFamilySurvey,
         loadFromServer,
-        family_position,
-
-        economic_risks,
-        environment_and_disaster_risks,
-        individual_lifecycle_risks,
-        social_and_governance_risks,
     };
 }

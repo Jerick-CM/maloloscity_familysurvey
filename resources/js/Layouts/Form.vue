@@ -48,7 +48,7 @@ const showingNavigationDropdown = ref(false);
                                 </div>
                             </div>
                             <div
-                                class="w-full 2xl:w-1/3 xl:w-1/3 lg:w-1/3 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-start place-content-start"
+                                class="w-full 2xl:w-2/3 xl:w-2/3 lg:w-2/3 flex flex-col 2xl:flex-row xl:flex-row lg:flex-row justify-items-end place-content-end"
                             >
                                 <div class="text-white">
                                     <slot class="text-white" name="header" />

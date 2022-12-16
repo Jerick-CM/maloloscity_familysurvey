@@ -36,7 +36,6 @@ export default {
         const multiselect_street = ref(null);
 
         /* init */
-
         const form = reactive({
             province: 14,
             municipality: null,
@@ -61,7 +60,7 @@ export default {
             pwd,
             errors_pwd,
             street,
-
+            pwd_application_date,
             muxsel_complete_address,
             muxsel_gender,
             muxsel_disability,
@@ -69,6 +68,7 @@ export default {
             muxsel_remarks,
             muxsel_notes,
             muxsel_barangay,
+
             getPWD,
             updatePWD,
         } = usePWD();
@@ -78,6 +78,7 @@ export default {
             form.municipality = 10;
             form.lalawigan = "BULACAN";
             await getPWD(route().params.id);
+            form.application_date = pwd_application_date.value;
         });
 
         const filterBrgys = async (munId) => {
@@ -130,6 +131,14 @@ export default {
             (value) => {
                 filterBrgys(value);
             }
+        );
+
+        watch(
+            () => pwd_application_date.value,
+            (currentValue, oldValue) => {
+                pwd.value.application_date = currentValue.value;
+            },
+            { deep: true }
         );
 
         watch(
@@ -219,7 +228,8 @@ export default {
             muxsel_barangay,
             year_group,
             year_selection,
-
+            pwd_application_date,
+            familysurvey_application_date,
             toggleModal,
             editPWD,
             fetchSelectfield,
@@ -318,6 +328,7 @@ export default {
                                 :create-option="true"
                                 :options="year_selection"
                             />
+
                         </div>
 
                         <div class="w-full md:w-1/4 px-3 py-1">
@@ -338,9 +349,10 @@ export default {
                             >
                                 Filing Date
                             </label>
+
                             <input
                                 :class="inputClass"
-                                v-model="pwd.date_of_application"
+                                v-model="pwd_application_date"
                                 type="date"
                             />
                         </div>

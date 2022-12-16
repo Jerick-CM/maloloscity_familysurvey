@@ -51,6 +51,7 @@ export default {
         ]);
 
         const {
+            soloparent_application_date,
             soloparent,
             errors_soloparent,
             soloparent_renewals,
@@ -67,6 +68,7 @@ export default {
             form.municipality = 10;
             form.lalawigan = "BULACAN";
             await getSoloParent(route().params.id);
+            form.application_date = soloparent_application_date.value;
         });
 
         const filterBrgys = async (munId) => {
@@ -164,6 +166,14 @@ export default {
             { deep: true }
         );
 
+        watch(
+            () => soloparent_application_date.value,
+            (currentValue, oldValue) => {
+                soloparent.value.application_date = currentValue.value;
+            },
+            { deep: true }
+        );
+
         return {
             filteredBrgys,
             form,
@@ -179,6 +189,7 @@ export default {
             muxsel_gender,
             muxsel_remarks,
             muxsel_notes,
+            soloparent_application_date,
             toggleModal,
             editSoloParent,
             fetchSelectfield,
@@ -267,7 +278,7 @@ export default {
                             </label>
                             <input
                                 :class="inputClass"
-                                v-model="soloparent.date_of_application"
+                                v-model="soloparent_application_date"
                                 type="date"
                             />
                         </div>

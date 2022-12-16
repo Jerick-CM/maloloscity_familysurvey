@@ -69,7 +69,6 @@ class PwdListController extends Controller
                 'pwd_id' =>  $PWD->id,
                 'date_of_application' => $request->date_of_application,
             ]);
-            
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json($e, 500);
@@ -86,11 +85,12 @@ class PwdListController extends Controller
     {
         $data = PWD::where('id', $id)->first();
         $pwd_renewals  = PWD::find($id)->renewal;
-
+        $date = Pwd_renewal::where('pwd_id', $id)->select('date_of_application')->orderBy('id', 'DESC')->first();
         return response()->json(
             [
                 'data' => $data,
                 'pwd' => $pwd_renewals,
+                'date' => $date,
             ]
         );
     }

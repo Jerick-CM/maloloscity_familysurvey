@@ -58,6 +58,7 @@ export default {
             pwd,
             errors_pwd,
             street,
+            pwd_application_date,
             muxsel_complete_address,
             muxsel_gender,
             muxsel_disability,
@@ -73,6 +74,7 @@ export default {
             form.municipality = 10;
             form.lalawigan = "BULACAN";
             await getPWD(route().params.id);
+            form.application_date = pwd_application_date.value;
         });
 
         const filterBrgys = async (munId) => {
@@ -180,6 +182,14 @@ export default {
             { deep: true }
         );
 
+        watch(
+            () => pwd_application_date.value,
+            (currentValue, oldValue) => {
+                pwd.value.application_date = currentValue.value;
+            },
+            { deep: true }
+        );
+
         return {
             filteredBrgys,
             form,
@@ -200,6 +210,7 @@ export default {
             muxsel_barangay,
             year_group,
             year_selection,
+            pwd_application_date,
 
             toggleModal,
             fetchSelectfield,
@@ -291,10 +302,11 @@ export default {
                             </label>
                             <input
                                 :class="inputClass"
-                                v-model="pwd.date_of_application"
+                                v-model="pwd_application_date"
                                 type="date"
                             />
                         </div>
+                        
                     </div>
 
                     <div class="py-2">

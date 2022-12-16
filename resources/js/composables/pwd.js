@@ -1,10 +1,11 @@
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import axios from "axios";
 
 export default function usePWD() {
     const pwd = ref([]);
     const pwd_renewals = ref([]);
     const pwds = ref([]);
+    const pwd_application_date = ref([]);
     const errors_pwd = ref("");
 
     const muxsel_complete_address = ref(null);
@@ -17,15 +18,14 @@ export default function usePWD() {
 
     const getPWD = async (id) => {
         let response = await axios.get(route("pwd-request-edit", id));
-
         pwd.value = response.data.data;
-
         let data = [];
 
         response.data.pwd.forEach((element) => {
             data.push({ value: element.year, label: element.year });
         });
 
+        pwd_application_date.value = response.data.date["date_of_application"];
         pwd_renewals.value = data;
 
         muxsel_complete_address.value = {
@@ -160,6 +160,7 @@ export default function usePWD() {
         pwd,
         pwds,
         pwd_renewals,
+        pwd_application_date,
         muxsel_complete_address,
         muxsel_gender,
         muxsel_disability,

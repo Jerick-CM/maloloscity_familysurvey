@@ -39,6 +39,7 @@ export default {
         const multiselect_causeofdisability = ref(null);
         const multiselect_remarks = ref(null);
         const multiselect_notes = ref(null);
+        const multiselect_gender = ref(null);
 
         const pwd_year = ref([]);
 
@@ -193,7 +194,8 @@ export default {
             multiselect_causeofdisability.value.clear();
             multiselect_remarks.value.clear();
             multiselect_notes.value.clear();
-            multiselect_yearrenewal.value.clear();
+            multiselect_gender.value.clear();
+            // multiselect_yearrenewal.value.clear();
         };
 
         const filterBrgys = async (munId) => {
@@ -252,6 +254,7 @@ export default {
             multiselect_causeofdisability,
             multiselect_remarks,
             multiselect_notes,
+            multiselect_gender,
             year_selection,
             pwd_year,
             submitPWD,
@@ -465,6 +468,7 @@ export default {
                                     Gender
                                 </label>
                                 <Multiselect
+                                    ref="multiselect_gender"
                                     mode="single"
                                     v-model="form.gender"
                                     class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"

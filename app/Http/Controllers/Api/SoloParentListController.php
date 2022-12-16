@@ -145,11 +145,12 @@ class SoloParentListController extends Controller
     {
         $data = SoloParent::where('id', $id)->first();
         $soloparent  = SoloParent::find($id)->renewal;
-
+        $date = SoloParent_renewal::where('soloparent_id', $id)->select('date_of_application')->orderBy('id', 'DESC')->first();
         return response()->json(
             [
                 'data' => $data,
                 'soloparent' => $soloparent,
+                'date' => $date,
             ]
         );
     }
@@ -233,7 +234,6 @@ class SoloParentListController extends Controller
                         'date_of_application' => $request->date_of_application,
                     ]);
                 }
-
             }
         } catch (\Exception $e) {
 
@@ -283,6 +283,5 @@ class SoloParentListController extends Controller
         $items = $reqs->get();
 
         return (new SoloParentExport($items))->download('SoloParents_data.xls');
-
     }
 }

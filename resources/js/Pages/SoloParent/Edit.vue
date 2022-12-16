@@ -30,6 +30,7 @@ export default {
         const submission_process = ref(false);
         const modal_show = ref(false);
         const data = ref(false);
+
         /* init */
         const form = reactive({
             province: 14,
@@ -51,6 +52,7 @@ export default {
         ]);
 
         const {
+            soloparent_application_date,
             soloparent,
             errors_soloparent,
             soloparent_renewals,
@@ -68,6 +70,7 @@ export default {
             form.municipality = 10;
             form.lalawigan = "BULACAN";
             await getSoloParent(route().params.id);
+            form.application_date = soloparent_application_date.value;
         });
 
         const filterBrgys = async (munId) => {
@@ -173,6 +176,14 @@ export default {
             { deep: true }
         );
 
+        watch(
+            () => soloparent_application_date.value,
+            (currentValue, oldValue) => {
+                soloparent.value.application_date = currentValue.value;
+            },
+            { deep: true }
+        );
+
         return {
             filteredBrgys,
             form,
@@ -189,6 +200,7 @@ export default {
             muxsel_remarks,
             muxsel_notes,
             muxsel_address,
+            soloparent_application_date,
             toggleModal,
             editSoloParent,
             fetchSelectfield,
@@ -208,9 +220,9 @@ export default {
             <Modal :showmodal="modal_show" @toggle="toggleModal()" :info="data">
             </Modal>
 
-            <div v-if="errors_pwd">
+            <div v-if="errors_soloparent">
                 <div
-                    v-for="(v, k) in errors_pwd"
+                    v-for="(v, k) in errors_soloparent"
                     :key="k"
                     class="bg-red-500 text-white rounded font-bold mb-4 shadow-lg py-2 px-4 pr-0"
                 >
@@ -308,7 +320,7 @@ export default {
                             </label>
                             <input
                                 :class="inputClass"
-                                v-model="soloparent.date_of_application"
+                                v-model="soloparent_application_date"
                                 type="date"
                             />
                         </div>

@@ -30,7 +30,15 @@ export default {
         const submission_process = ref(false);
         const modal_show = ref(false);
         const data = ref(false);
-        const pwd_year = ref([]);
+        const soloparent_year = ref([]);
+
+        const multiselect_yearrenewal = ref(null);
+        const multiselect_civilstatus = ref(null);
+        const multiselect_gender = ref(null);
+        const multiselect_address = ref(null);
+        const multiselect_remarks = ref(null);
+        const multiselect_notes = ref(null);
+
         /* init */
         const form = reactive({
             province: 14,
@@ -38,13 +46,13 @@ export default {
             region: "III",
         });
 
-        const { errors_pwd, store } = useSoloParent();
+        const { errors_soloparent, store } = useSoloParent();
 
         const submitSoloParent = async () => {
             toast.info("Sending create");
             submission_process.value = true;
             await store({ ...form }).then(() => {
-                if (errors_pwd.value) {
+                if (errors_soloparent.value) {
                     submission_process.value = false;
                     toast.error("Submit failed.");
                 } else {
@@ -69,6 +77,19 @@ export default {
             form.middle_name = "";
             form.last_name = "";
             form.barangay = "";
+            form.id_number = "";
+            form.date_of_application = "";
+            form.name_suffix = "";
+            form.date_of_birth = "";
+            form.sons = "";
+            form.daughters = "";
+
+            // multiselect_yearrenewal.value.clear();
+            multiselect_civilstatus.value.clear();
+            multiselect_gender.value.clear();
+            multiselect_address.value.clear();
+            multiselect_remarks.value.clear();
+            multiselect_notes.value.clear();
         };
 
         const filterBrgys = async (munId) => {
@@ -206,22 +227,32 @@ export default {
                 filterBrgys(value);
             }
         );
+
         watch(
-            () => pwd_year.value,
+            () => soloparent_year.value,
             (value) => {
                 form.year = value["label"];
             },
             { deep: true }
         );
+
         return {
             filteredBrgys,
             form,
-            errors_pwd,
+            errors_soloparent,
             submission_process,
             data,
             modal_show,
             year_selection,
-            pwd_year,
+            soloparent_year,
+
+            multiselect_yearrenewal,
+            multiselect_civilstatus,
+            multiselect_gender,
+            multiselect_address,
+            multiselect_remarks,
+            multiselect_notes,
+
             submitSoloParent,
             toggleModal,
             fetchSelectfield,
@@ -240,9 +271,9 @@ export default {
             <Breadcrumb />
             <Modal :showmodal="modal_show" @toggle="toggleModal()" :info="data">
             </Modal>
-            <div v-if="errors_pwd">
+            <div v-if="errors_soloparent">
                 <div
-                    v-for="(v, k) in errors_pwd"
+                    v-for="(v, k) in errors_soloparent"
                     :key="k"
                     class="bg-red-500 text-white rounded font-bold mb-4 shadow-lg py-2 px-4 pr-0"
                 >
@@ -312,7 +343,7 @@ export default {
                             <Multiselect
                                 ref="multiselect_yearrenewal"
                                 mode="single"
-                                v-model="form.year"
+                                v-model="soloparent_year"
                                 class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 :object="true"
                                 :close-on-select="false"
@@ -431,7 +462,9 @@ export default {
                                 >
                                     Civil Status
                                 </label>
+
                                 <Multiselect
+                                    ref="multiselect_civilstatus"
                                     mode="single"
                                     v-model="form.civil_status"
                                     class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
@@ -458,7 +491,9 @@ export default {
                                 >
                                     Gender
                                 </label>
+
                                 <Multiselect
+                                    ref="multiselect_gender"
                                     mode="single"
                                     v-model="form.gender"
                                     class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
@@ -580,9 +615,8 @@ export default {
                             >
                                 Remarks
                             </label>
-
                             <Multiselect
-                                ref="multiselect_street"
+                                ref="multiselect_remarks"
                                 mode="single"
                                 v-model="form.remarks"
                                 class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
@@ -611,7 +645,7 @@ export default {
                             </label>
 
                             <Multiselect
-                                ref="multiselect_street"
+                                ref="multiselect_notes"
                                 mode="single"
                                 v-model="form.notes"
                                 class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
@@ -674,9 +708,9 @@ export default {
                     </div>
                 </div>
             </form>
-            <div v-if="errors_pwd">
+            <div v-if="errors_soloparent">
                 <div
-                    v-for="(v, k) in errors_pwd"
+                    v-for="(v, k) in errors_soloparent"
                     :key="k"
                     class="bg-red-500 text-white rounded font-bold mb-4 shadow-lg py-2 px-4 pr-0"
                 >
