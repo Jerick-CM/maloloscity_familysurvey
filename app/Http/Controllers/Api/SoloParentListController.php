@@ -104,7 +104,26 @@ class SoloParentListController extends Controller
             $query->where([['full_name', 'LIKE', "%" . $word . "%"]]);
         })->take($options['rowsPerPage']);
 
-        $query =  $reqs->orderBy('id', 'DESC')->offset(($options['page'] - 1) * $limit);
+        if ($request->options['sortBy']) {
+
+            if ($request->options['sortBy'] == "latestyear.year") {
+
+                $query =  $reqs->orderBy("date_of_issuance", strtoupper($request->options['sortType']))->offset(($options['page'] - 1) * $limit);
+
+            } else if ($request->options['sortBy'] == "computed_renewal_year") {
+
+                $query =  $reqs->orderBy("date_of_issuance", strtoupper($request->options['sortType']))->offset(($options['page'] - 1) * $limit);
+
+            } else {
+                $query =  $reqs->orderBy($request->options['sortBy'], strtoupper($request->options['sortType']))->offset(($options['page'] - 1) * $limit);
+
+            }
+        } else {
+
+            $query =  $reqs->orderBy('id', 'DESC')->offset(($options['page'] - 1) * $limit);
+            
+        }
+
         $reqs =  $query->get();
 
         if (isset($params['filterField'])) {

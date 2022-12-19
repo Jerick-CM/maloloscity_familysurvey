@@ -28,14 +28,25 @@ fixed - implement bug in edit missing content in fields for soloparent page
 fixed - fix bug error create submission error, fixed due to year renew selection done.
 fixed - solopareng registration form fix bugs in year creations
 fixed - clear fields for soloparents in creation
+fixed - fix bug in edit pages and view page   
+fixed - fix view and edit last year renewal for application date 
+fixed - fix edit show latest year application on edit from year renewal one to many relationship
+fixed - clear fields on created solo parent page 
+fixed - clear fields on created pwd page done. except year selection not working yet
+fixed - bug testing pwd create edit and view 
+fixed - bug create address is missing in pwd  
+fixed - bug testing pwd create edit and view
+fixed - bug testing soloparent create edit and view 
+fixed - bug create address is missing in solo parent  
+fixed - bug testing soloparent create edit and view
+fixed - fix soloparent create index warnings.
+fixed - bug in barangay soloparent not updating, create watch method.
+fixed - bug in barangay pwd not updating, create watch method.
+fixed - fix solo parent yearly renewal
 
-- fix bug in edit pages 
-- fix view and edit last year renewal for application date 
-- fix edit show latest year application on edit from year renewal one to many relationship
-- clear fields on created solo parent page 
-- clear fields on created pwd page done. except year selection not working yet
-- fix updating of original table data appliend everytime renewal is done. 
+wip - fix pwd yearly renewal
 wip - backup all pdf data for the family survey.
+- fix updating of original table data appliend everytime renewal is done. 
 - implement survey form with download and search.
 - implement filling up fname, mname and lname with suffixed in fields in all existing datas.
 - table show last date applied.
@@ -44,3 +55,5 @@ wip - backup all pdf data for the family survey.
 - update date uplied whenever a new renewal year is requested and prompted for soloparents use date of issuance.
 - implement page testing pwd all pages.
 - implement page testing soloparent all pages.
+- possibly create a sort for renew dates for the two.
+- fix Luningning M. Ba?as,Longos table data issue in pwd.

@@ -126,6 +126,7 @@ class PwdListController extends Controller
             $pwd->remarks = $request->remarks;
             $pwd->notes = $request->notes;
             $pwd->barangay = $request->barangay;
+            $pwd->date_applied = $request->date_of_application;
 
             $pwd->save();
 
@@ -156,7 +157,6 @@ class PwdListController extends Controller
 
                 // add
                 foreach ($diff_array_1 as $key => $val) {
-
                     Pwd_renewal::create([
                         'year' => $val,
                         'pwd_id' =>   $id,
@@ -167,7 +167,6 @@ class PwdListController extends Controller
 
                 // no available year renewals
                 foreach ($request->year_renewal as $key => $val) {
-
                     Pwd_renewal::create([
                         'year' => $val,
                         'pwd_id' =>   $id,
@@ -235,7 +234,27 @@ class PwdListController extends Controller
             $query->where([['full_name', 'LIKE', "%" . $word . "%"]]);
         })->take($options['rowsPerPage']);
 
-        $query =  $reqs->orderBy('id', 'DESC')->offset(($options['page'] - 1) * $limit);
+
+        if ($request->options['sortBy']) {
+
+            if ($request->options['sortBy'] == "latestyear.year") {
+
+                $query =  $reqs->orderBy("pwd_list.date_applied", strtoupper($request->options['sortType']))->offset(($options['page'] - 1) * $limit);
+
+            } else if ($request->options['sortBy'] == "computed_renewal_year") {
+
+                $query =  $reqs->orderBy("pwd_list.date_applied", strtoupper($request->options['sortType']))->offset(($options['page'] - 1) * $limit);
+
+            } else {
+
+                $query =  $reqs->orderBy($request->options['sortBy'], strtoupper($request->options['sortType']))->offset(($options['page'] - 1) * $limit);
+
+            }
+
+        } else {
+            $query =  $reqs->orderBy('id', 'DESC')->offset(($options['page'] - 1) * $limit);
+        }
+
         $reqs =  $query->get();
 
         if (isset($params['filterField'])) {
@@ -251,6 +270,7 @@ class PwdListController extends Controller
         return response()->json([
             'data' => $reqs,
             'totalRecords' => $count,
+            'options' => $request->options,
         ]);
     }
 

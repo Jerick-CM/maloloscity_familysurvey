@@ -12,7 +12,7 @@ export default {
 </script>
 <template>
     <div for="breadcrumb">
-        <nav class="py-5 flex" aria-label="Breadcrumb">
+        <nav class="py-2 flex" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3">
                 <li class="inline-flex items-center">
                     <Link

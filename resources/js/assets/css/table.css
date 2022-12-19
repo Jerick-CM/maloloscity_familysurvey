@@ -1,6 +1,6 @@
 .customize-table {
-    --easy-table-border: 1px solid #7a4c4c;
-    --easy-table-row-border: 1px solid #7a4c4c;
+    --easy-table-border: 3px solid #7a4c4c;
+    --easy-table-row-border: 3px solid #7a4c4c;
 
     --easy-table-header-font-size: 14px;
     --easy-table-header-height: 50px;

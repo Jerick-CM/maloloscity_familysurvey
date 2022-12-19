@@ -69,7 +69,7 @@ export default {
                 sortable: true,
             },
             { text: "ID Number", value: "id_number", sortable: true },
-            { text: "Renewed Year", value: "latestyear.year", sortable: true },
+            { text: "Renewed Year", value: "latestyear", sortable: true },
             {
                 text: "Year to Renew",
                 value: "computed_renewal_year",
@@ -116,10 +116,21 @@ export default {
             server_sided();
         };
 
-        const compute_renew_year = (year, addend) => {
-            return parseInt(year) + parseInt(addend);
+        const computeRenewYear = (item, addend) => {
+            try {
+                return parseInt(item.year) + parseInt(addend);
+            } catch (error) {
+                console.dir(error);
+            }
         };
 
+        const getRenewalYear = (item) => {
+            try {
+                return item.year;
+            } catch (error) {
+                console.log(error);
+            }
+        };
         const removePWD = async (id) => {
             if (!window.confirm(" Are you sure ? ")) {
                 return;
@@ -174,8 +185,9 @@ export default {
             fetchSelectfield,
             searchButton,
             removePWD,
-            compute_renew_year,
+            computeRenewYear,
             exportData,
+            getRenewalYear,
         };
     },
 };
@@ -613,10 +625,11 @@ export default {
                                 </div>
                             </template>
 
+                            <template #item-latestyear="item">
+                                {{ getRenewalYear(item.latestyear) }}
+                            </template>
                             <template #item-computed_renewal_year="item">
-                                {{
-                                    compute_renew_year(item.latestyear.year, 5)
-                                }}
+                                {{ computeRenewYear(item.latestyear, 5) }}
                             </template>
                             <template #item-action="item">
                                 <div class="operation-wrapper flex">
@@ -632,7 +645,6 @@ export default {
                                             </button>
                                         </Link>
                                     </div>
-
                                     <div
                                         class="p-1"
                                         v-if="

@@ -1,6 +1,6 @@
 <script>
 import BreezeAuthenticatedLayout from "./../../Layouts/Form.vue";
-import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
+import { Head, Link } from "@inertiajs/inertia-vue3";
 import { ref, reactive, computed, onMounted, watch } from "vue";
 import useSoloParent from "./../../composables/soloparent";
 import { useToast } from "vue-toastification";
@@ -23,6 +23,7 @@ export default {
         Multiselect,
     },
     props: ["barangays", "municipalities"],
+
     setup(props, { attrs, slots, emit, expose }) {
         const toast = useToast();
         const brgys = computed(() => props.barangays);
@@ -70,7 +71,8 @@ export default {
             form.municipality = 10;
             form.lalawigan = "BULACAN";
             await getSoloParent(route().params.id);
-            form.application_date = soloparent_application_date.value;
+            soloparent.value.date_of_application =
+                soloparent_application_date.value;
         });
 
         const filterBrgys = async (munId) => {
@@ -118,6 +120,23 @@ export default {
         };
 
         /* watch events */
+
+        watch(
+            () => muxsel_barangay.value,
+            (currentValue, oldValue) => {
+                soloparent.value.barangay = currentValue.value;
+            },
+            { deep: true }
+        );
+
+        watch(
+            () => soloparent_application_date.value,
+            (currentValue, oldValue) => {
+                soloparent.value.application_date = currentValue.value;
+            },
+            { deep: true }
+        );
+
         watch(
             () => form.municipality,
             (value) => {
@@ -316,7 +335,7 @@ export default {
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                             >
-                                Filing Date
+                                Filing Date ()
                             </label>
                             <input
                                 :class="inputClass"

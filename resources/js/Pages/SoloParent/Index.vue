@@ -617,7 +617,7 @@ export default {
                             </template>
                             <template #item-computed_renewal_year="item">
                                 {{
-                                    compute_renew_year(item.latestyear.year, 5)
+                                    compute_renew_year(item.latestyear.year, 1)
                                 }}
                             </template>
                             <template #item-action="item">

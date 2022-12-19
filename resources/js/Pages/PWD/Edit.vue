@@ -14,7 +14,6 @@ export default {
         inputClass:
             "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5",
     }),
-
     components: {
         BreezeAuthenticatedLayout,
         Head,
@@ -23,9 +22,7 @@ export default {
         Modal,
         Multiselect,
     },
-
     props: ["barangays", "municipalities"],
-
     setup(props, { attrs, slots, emit, expose }) {
         const toast = useToast();
         const brgys = computed(() => props.barangays);
@@ -34,27 +31,23 @@ export default {
         const modal_show = ref(false);
         const data = ref(false);
         const multiselect_street = ref(null);
-
         /* init */
         const form = reactive({
             province: 14,
             municipality: null,
             region: "III",
         });
-
         const year_group = reactive([
             { value: "2022", label: "2022" },
             { value: "2023", label: "2023" },
             { value: "2050", label: "2050" },
         ]);
-
         const year_selection = ref([
             { value: "2022", label: "2022" },
             { value: "2023", label: "2023" },
             { value: "2024", label: "2024" },
             { value: "2025", label: "2025" },
         ]);
-
         const {
             pwd_renewals,
             pwd,
@@ -68,7 +61,6 @@ export default {
             muxsel_remarks,
             muxsel_notes,
             muxsel_barangay,
-
             getPWD,
             updatePWD,
         } = usePWD();
@@ -79,6 +71,7 @@ export default {
             form.lalawigan = "BULACAN";
             await getPWD(route().params.id);
             form.application_date = pwd_application_date.value;
+            pwd.value.date_of_application = form.application_date;
         });
 
         const filterBrgys = async (munId) => {
@@ -125,6 +118,15 @@ export default {
         };
 
         /* watch events */
+
+        
+        watch(
+            () => muxsel_barangay.value,
+            (currentValue, oldValue) => {
+                pwd.value.barangay = currentValue.value;
+            },
+            { deep: true }
+        );
 
         watch(
             () => form.municipality,
@@ -229,7 +231,6 @@ export default {
             year_group,
             year_selection,
             pwd_application_date,
-            familysurvey_application_date,
             toggleModal,
             editPWD,
             fetchSelectfield,
@@ -328,7 +329,6 @@ export default {
                                 :create-option="true"
                                 :options="year_selection"
                             />
-
                         </div>
 
                         <div class="w-full md:w-1/4 px-3 py-1">
@@ -542,23 +542,6 @@ export default {
                                     }
                                 "
                             />
-
-                            <!-- <select
-                                v-model="pwd.barangay"
-                                id="barangays"
-                                class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                            >
-                                <option value="0" selected="" disabled>
-                                    Select
-                                </option>
-                                <option
-                                    v-for="barangay in filteredBrgys"
-                                    :key="barangay.id"
-                                    :value="barangay.value"
-                                >
-                                    {{ barangay.value }}
-                                </option>
-                            </select> -->
                         </div>
                     </div>
 

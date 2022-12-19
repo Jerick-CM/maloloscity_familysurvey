@@ -2,6 +2,7 @@ import { ref } from "vue";
 import axios from "axios";
 
 export default function usePWD() {
+
     const pwd = ref([]);
     const pwd_renewals = ref([]);
     const pwds = ref([]);
@@ -17,6 +18,7 @@ export default function usePWD() {
     const muxsel_barangay = ref(null);
 
     const getPWD = async (id) => {
+        
         let response = await axios.get(route("pwd-request-edit", id));
         pwd.value = response.data.data;
         let data = [];
@@ -62,6 +64,7 @@ export default function usePWD() {
             value: response.data.data.barangay,
             label: response.data.data.barangay,
         };
+
     };
 
     const getISFs = async () => {
