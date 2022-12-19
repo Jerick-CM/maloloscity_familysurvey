@@ -214,6 +214,10 @@ class PwdListController extends Controller
         $limit =  $options['rowsPerPage'] ? $options['rowsPerPage'] : 10;
 
         $reqs = PWD::query();
+        $reqs =  $reqs->leftJoin('pwd_renewals', function ($join) {
+            $join->on('pwd_renewals.pwd_id', '=', 'pwd_list.id')
+                ->on('pwd_renewals.id', '=', DB::raw("(SELECT max(id) from pwd_renewals WHERE pwd_renewals.pwd_id = pwd_list.id)"));
+        })->select(array('pwd_list.*', 'pwd_renewals.year as renew_year'));
 
         if (isset($params['filterField'])) {
             if ($params['filterField'] != "") {
@@ -237,20 +241,16 @@ class PwdListController extends Controller
 
         if ($request->options['sortBy']) {
 
-            if ($request->options['sortBy'] == "latestyear.year") {
+            if ($request->options['sortBy'] == "latestyear") {
 
-                $query =  $reqs->orderBy("pwd_list.date_applied", strtoupper($request->options['sortType']))->offset(($options['page'] - 1) * $limit);
-
+                $query =  $reqs->orderBy("year", strtoupper($request->options['sortType']))->offset(($options['page'] - 1) * $limit);
             } else if ($request->options['sortBy'] == "computed_renewal_year") {
 
-                $query =  $reqs->orderBy("pwd_list.date_applied", strtoupper($request->options['sortType']))->offset(($options['page'] - 1) * $limit);
-
+                $query =  $reqs->orderBy("year", strtoupper($request->options['sortType']))->offset(($options['page'] - 1) * $limit);
             } else {
 
                 $query =  $reqs->orderBy($request->options['sortBy'], strtoupper($request->options['sortType']))->offset(($options['page'] - 1) * $limit);
-
             }
-
         } else {
             $query =  $reqs->orderBy('id', 'DESC')->offset(($options['page'] - 1) * $limit);
         }

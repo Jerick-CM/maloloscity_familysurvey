@@ -43,6 +43,6 @@ class PWD extends Model
     public function getlatestyearAttribute()
     {
         $year = Pwd_renewal::select('year')->where('pwd_id', $this->id)->latest()->first();
-        return $year;
+        return $year['year'];
     }
 }

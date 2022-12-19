@@ -29,6 +29,7 @@ export default {
     }),
 
     setup(props) {
+
         const Auth_user = computed(() => usePage().props.value.auth.user);
         const permissions = usePage().props.value.auth.user.PermissionList;
         const toast = useToast();
@@ -69,7 +70,7 @@ export default {
                 sortable: true,
             },
             { text: "ID Number", value: "id_number", sortable: true },
-            { text: "Renewed Year", value: "latestyear", sortable: true },
+            { text: "Renewed Year", value: "renew_year", sortable: true },
             {
                 text: "Year to Renew",
                 value: "computed_renewal_year",
@@ -118,7 +119,7 @@ export default {
 
         const computeRenewYear = (item, addend) => {
             try {
-                return parseInt(item.year) + parseInt(addend);
+                return parseInt(item) + parseInt(addend);
             } catch (error) {
                 console.dir(error);
             }
@@ -126,7 +127,7 @@ export default {
 
         const getRenewalYear = (item) => {
             try {
-                return item.year;
+                return item;
             } catch (error) {
                 console.log(error);
             }
@@ -625,11 +626,11 @@ export default {
                                 </div>
                             </template>
 
-                            <template #item-latestyear="item">
-                                {{ getRenewalYear(item.latestyear) }}
+                            <template #item-renew_year="item">
+                                {{ getRenewalYear(item.renew_year) }}
                             </template>
                             <template #item-computed_renewal_year="item">
-                                {{ computeRenewYear(item.latestyear, 5) }}
+                                {{ computeRenewYear(item.renew_year, 5) }}
                             </template>
                             <template #item-action="item">
                                 <div class="operation-wrapper flex">

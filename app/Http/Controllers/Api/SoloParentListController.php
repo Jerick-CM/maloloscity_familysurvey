@@ -61,6 +61,7 @@ class SoloParentListController extends Controller
                 'soloparent_id' =>  $SoloParent->id,
                 'date_of_application' => $request->date_of_application,
             ]);
+
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json($e, 500);
@@ -71,6 +72,7 @@ class SoloParentListController extends Controller
         return response()->json([
             'success' => true,
         ]);
+        
     }
 
 
@@ -121,7 +123,7 @@ class SoloParentListController extends Controller
         } else {
 
             $query =  $reqs->orderBy('id', 'DESC')->offset(($options['page'] - 1) * $limit);
-            
+
         }
 
         $reqs =  $query->get();
