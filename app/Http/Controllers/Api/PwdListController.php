@@ -70,6 +70,7 @@ class PwdListController extends Controller
                 'date_of_application' => $request->date_of_application,
             ]);
         } catch (\Exception $e) {
+
             DB::rollBack();
             return response()->json($e, 500);
         }
@@ -85,7 +86,7 @@ class PwdListController extends Controller
     {
         $data = PWD::where('id', $id)->first();
         $pwd_renewals  = PWD::find($id)->renewal;
-        $date = Pwd_renewal::where('pwd_id', $id)->select('date_of_application')->orderBy('id', 'DESC')->first();
+        $date = Pwd_renewal::where('pwd_id', $id)->where('deleted_at', null)->select('date_of_application')->orderBy('id', 'DESC')->first();
         return response()->json(
             [
                 'data' => $data,
@@ -216,7 +217,7 @@ class PwdListController extends Controller
         $reqs = PWD::query();
         $reqs =  $reqs->leftJoin('pwd_renewals', function ($join) {
             $join->on('pwd_renewals.pwd_id', '=', 'pwd_list.id')
-                ->on('pwd_renewals.id', '=', DB::raw("(SELECT max(id) from pwd_renewals WHERE pwd_renewals.pwd_id = pwd_list.id)"));
+                ->on('pwd_renewals.id', '=', DB::raw("(SELECT max(id) from pwd_renewals WHERE pwd_renewals.pwd_id = pwd_list.id AND pwd_renewals.deleted_at is null)"));
         })->select(array('pwd_list.*', 'pwd_renewals.year as renew_year'));
 
         if (isset($params['filterField'])) {
@@ -289,13 +290,6 @@ class PwdListController extends Controller
         $params = $request->params;
 
         $reqs = PWD::query();
-
-        // if ($params['filterField'] != "") {
-
-        //     if ($params['filterField'] == 'user_id') {
-        //         $reqs =  $reqs->where("users.name", $params['filterValue']);
-        //     }
-        // }
 
         if (isset($params['filterField'])) {
             if ($params['filterField'] != "") {

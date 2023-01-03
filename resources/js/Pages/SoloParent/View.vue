@@ -56,6 +56,7 @@ export default {
             errors_soloparent,
             soloparent_renewals,
             muxsel_barangay,
+            muxsel_address,
             muxsel_gender,
             muxsel_remarks,
             muxsel_notes,
@@ -185,6 +186,7 @@ export default {
             year_group,
             year_selection,
             soloparent_renewals,
+            muxsel_address,
             muxsel_barangay,
             muxsel_gender,
             muxsel_remarks,
@@ -209,9 +211,9 @@ export default {
             <Modal :showmodal="modal_show" @toggle="toggleModal()" :info="data">
             </Modal>
 
-            <div v-if="errors_pwd">
+            <div v-if="errors_soloparent">
                 <div
-                    v-for="(v, k) in errors_pwd"
+                    v-for="(v, k) in errors_soloparent"
                     :key="k"
                     class="bg-red-500 text-white rounded font-bold mb-4 shadow-lg py-2 px-4 pr-0"
                 >
@@ -422,7 +424,7 @@ export default {
                                 :object="true"
                                 ref="multiselect_address"
                                 mode="single"
-                                v-model="muxsel_complete_address"
+                                v-model="muxsel_address"
                                 class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 placeholder=""
                                 :filter-results="false"

@@ -10,7 +10,9 @@ use Carbon\Carbon;
 class SoloParent extends Model
 {
     use HasFactory, SoftDeletes;
+
     protected $table = "soloparents_list";
+    
     public $timestamps = true;
 
     protected $appends = ['latestyear'];

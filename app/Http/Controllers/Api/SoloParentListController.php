@@ -86,6 +86,12 @@ class SoloParentListController extends Controller
 
         $reqs = SoloParent::query();
 
+        $reqs =  $reqs->leftJoin('soloparent_renewals', function ($join) {
+            $join->on('soloparent_renewals.soloparent_id', '=', 'soloparents_list.id')
+                ->on('soloparent_renewals.id', '=', DB::raw("(SELECT max(id) from soloparent_renewals WHERE soloparent_renewals.soloparent_id = soloparents_list.id AND soloparent_renewals.deleted_at is null)"));
+        })->select(array('soloparents_list.*', 'soloparent_renewals.year as renew_year'));
+
+
         if (isset($params['filterField'])) {
             if ($params['filterField'] != "") {
                 $reqs =  $reqs->where($params['filterField'], $params['filterValue']);
@@ -233,7 +239,7 @@ class SoloParentListController extends Controller
 
                 // remove 
                 foreach ($diff_array_0 as $key => $val) {
-                    SoloParent_renewal::where('pwd_id', $id)->where('year', $val)->delete();
+                    SoloParent_renewal::where('soloparent_id', $id)->where('year', $val)->delete();
                 }
 
                 // add
@@ -241,7 +247,7 @@ class SoloParentListController extends Controller
 
                     SoloParent_renewal::create([
                         'year' => $val,
-                        'pwd_id' =>   $id,
+                        'soloparent_id' =>   $id,
                         'date_of_application' => $request->date_of_application,
                     ]);
                 }
@@ -251,7 +257,7 @@ class SoloParentListController extends Controller
 
                     SoloParent_renewal::create([
                         'year' => $val,
-                        'pwd_id' =>   $id,
+                        'soloparent_id' =>   $id,
                         'date_of_application' => $request->date_of_application,
                     ]);
                 }

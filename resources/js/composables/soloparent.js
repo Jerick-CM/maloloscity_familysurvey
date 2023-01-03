@@ -13,6 +13,7 @@ export default function useSoloParent() {
     const muxsel_notes = ref(null);
     const muxsel_address = ref(null);
 
+
     const getSoloParent = async (id) => {
         let response = await axios.get(route("soloparent-request-edit", id));
         soloparent.value = response.data.data;

@@ -43,7 +43,26 @@ fixed - fix soloparent create index warnings.
 fixed - bug in barangay soloparent not updating, create watch method.
 fixed - bug in barangay pwd not updating, create watch method.
 fixed - fix solo parent yearly renewal
+fixed - fix renewal of year, remove bugs in create.
+fixed - gender not working.
+fixed - address is fixed in view page for soloparent
 
+
+QA : test
+
+PWD 
+test the PWD create page working without any error.
+test the PWD Edit done, no problem with multiple date renewals
+test the view PWD done.
+
+Solo Parent
+test the SoloParent create page working without any error. 
+solo parent edit add new year not updating, 
+
+
+
+wip - bug on delete renewal years , the renewal year is still fixed to the last year updated.
+    the deleted is not removed 
 wip - fix pwd yearly renewal
 wip - backup all pdf data for the family survey.
 - fix updating of original table data appliend everytime renewal is done. 
@@ -57,3 +76,6 @@ wip - backup all pdf data for the family survey.
 - implement page testing soloparent all pages.
 - possibly create a sort for renew dates for the two.
 - fix Luningning M. Ba?as,Longos table data issue in pwd.
+
+wip - soloparent left join with renewals for determination of next renewal year.
+
