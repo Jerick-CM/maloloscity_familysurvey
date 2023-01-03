@@ -80,3 +80,4 @@ wip - backup all pdf data for the family survey.
 
 wip - soloparent left join with renewals for determination of next renewal year.
 
+wip - on created on entry , cannot reset and recreate a new year must exit and create again.
