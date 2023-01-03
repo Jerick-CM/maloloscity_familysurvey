@@ -55,16 +55,15 @@ fixed - bug on delete renewal years , the renewal year is still fixed to the las
 fixed - backup all pdf data for the family survey.
 fixed - soloparent left join with renewals for determination of next renewal year.
 fixed - fix updating of original table data appliend everytime renewal is done. 
+fixed - update date applied whenever a new renewal year is requested and prompted for pwd  use date_applied.
+fixed - update date applied whenever a new renewal year is requested and prompted for soloparents use date of issuance.
+fixed - implement page testing pwd all pages.
+fixed - implement survey form with download and search.
+fixed - table show last date applied.
+fixed - implement page testing soloparent all pages.
+fixed - possibly create a sort for renew dates for the two.
 
-- implement survey form with download and search.
 - implement filling up fname, mname and lname with suffixed in fields in all existing datas.
-- table show last date applied.
-- i forgot the task here maybe tag all todo seeder to run in the application.
-- update date uplied whenever a new renewal year is requested and prompted for pwd  use date_applied.
-- update date uplied whenever a new renewal year is requested and prompted for soloparents use date of issuance.
-- implement page testing pwd all pages.
-- implement page testing soloparent all pages.
-- possibly create a sort for renew dates for the two.
 
 ------------------------------------------------------------------------
 
