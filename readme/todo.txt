@@ -46,7 +46,7 @@ fixed - fix solo parent yearly renewal
 fixed - fix renewal of year, remove bugs in create.
 fixed - gender not working.
 fixed - address is fixed in view page for soloparent
-
+fixed - soloparent renewal years issue.
 
 QA : test
 
@@ -60,11 +60,12 @@ test the SoloParent create page working without any error.
 solo parent edit add new year not updating, 
 
 
-
+issue - on create soloparent address ,number of daughters not storing to database, fix in edit , fix in view
 wip - bug on delete renewal years , the renewal year is still fixed to the last year updated.
     the deleted is not removed 
 wip - fix pwd yearly renewal
 wip - backup all pdf data for the family survey.
+
 - fix updating of original table data appliend everytime renewal is done. 
 - implement survey form with download and search.
 - implement filling up fname, mname and lname with suffixed in fields in all existing datas.

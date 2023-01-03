@@ -28,7 +28,7 @@ class SoloParent extends Model
         'date_of_birth',
         'id_number',
         'sons',
-        'daugthers',
+        'daughters',
         'date_of_issuance',
         'barangay',
         'gender',

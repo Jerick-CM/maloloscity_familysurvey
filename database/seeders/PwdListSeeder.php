@@ -589,7 +589,7 @@ class PwdListSeeder extends Seeder
             (565, 'Alyssa Gabrielle B. Reyes', 'Longos ', 'F', '1995-08-13', 'Cancer ', 'Lymphoma ', '03-1410-000-000-2580', '2022-06-10', '', 'LONGOS '),
             (566, 'Marita P. Cape ', 'Bangkal ', 'F', '1967-04-12', 'Cancer ', 'B. Cancer  ', '03-1410-000-000-2581', '2022-06-10', '', 'BANGKAL '),
             (567, 'Jesse Rian C. Marcelo ', 'Sto. Rosario ', 'F', '2017-05-10', 'Visual Disability ', 'Blurred Vision ', '03-1410-000-000-2582', '2022-06-10', '', 'SANTO ROSARIO (POB.)'),
-            (568, 'Luningning  M. Ba?as','Longos ', 'F', '', 'Physical Disability ', 'Lumbar ', '03-1410-000-000-2583', '2022-07-10', '', 'LONGOS '),
+            (568, 'Luningning  M. Bañas','Longos ', 'F', '', 'Physical Disability ', 'Lumbar ', '03-1410-000-000-2583', '2022-07-10', '', 'LONGOS '),
             (569, 'Maryam M. Albin Ali ', ' Barihan ', 'F', '2022-03-04', 'Mental Disability', 'Mental Ill ', '03-1410-000-000-2584', '2022-06-10', '', 'BARIHAN'),
             (570, 'Michael B. Bacoy ', 'Barihan ', 'M', '1970-12-03', 'Physical Disability ', 'Stoke ', '03-1410-000-000-2585', '2022-06-10', '', 'BARIHAN '),
             (571, '  Arnel R. Garcia ', 'San Vicente ', 'M', '1962-04-14', 'Physical Disability ', 'Stroke ', '03-1410-000-000-2586', '2022-06-10', '', 'SAN VICENTE (POB.)'),

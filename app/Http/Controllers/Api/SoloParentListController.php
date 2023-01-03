@@ -61,7 +61,6 @@ class SoloParentListController extends Controller
                 'soloparent_id' =>  $SoloParent->id,
                 'date_of_application' => $request->date_of_application,
             ]);
-
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json($e, 500);
@@ -72,7 +71,6 @@ class SoloParentListController extends Controller
         return response()->json([
             'success' => true,
         ]);
-        
     }
 
 
@@ -117,19 +115,15 @@ class SoloParentListController extends Controller
             if ($request->options['sortBy'] == "latestyear.year") {
 
                 $query =  $reqs->orderBy("date_of_issuance", strtoupper($request->options['sortType']))->offset(($options['page'] - 1) * $limit);
-
             } else if ($request->options['sortBy'] == "computed_renewal_year") {
 
                 $query =  $reqs->orderBy("date_of_issuance", strtoupper($request->options['sortType']))->offset(($options['page'] - 1) * $limit);
-
             } else {
                 $query =  $reqs->orderBy($request->options['sortBy'], strtoupper($request->options['sortType']))->offset(($options['page'] - 1) * $limit);
-
             }
         } else {
 
             $query =  $reqs->orderBy('id', 'DESC')->offset(($options['page'] - 1) * $limit);
-
         }
 
         $reqs =  $query->get();
@@ -274,7 +268,8 @@ class SoloParentListController extends Controller
 
             'success' => true,
             'id' => $id,
-            'all_year' =>  $all_years
+            'all_year' =>  $all_years,
+            'year_renewals' => $request->year_renewal
 
         ]);
     }

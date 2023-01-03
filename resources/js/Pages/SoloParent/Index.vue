@@ -27,7 +27,6 @@ export default {
             "border-slate-200 rounded-t rounded-t mb-0 px-4 py-3 border-0 bg-slate-600",
     }),
     setup(props) {
-
         const Auth_user = computed(() => usePage().props.value.auth.user);
         const permissions = usePage().props.value.auth.user.PermissionList;
         const toast = useToast();
@@ -37,7 +36,7 @@ export default {
             destroySoloParent,
             errors_soloparent,
             loadFromServer,
-            exportRequests
+            exportRequests,
         } = useSoloParent();
 
         /* Datatable */
@@ -63,6 +62,7 @@ export default {
         /* Datatable */
 
         const headers = ref([
+            { text: "Id", value: "id", sortable: true },
             { text: "Name", value: "full_name", sortable: true },
             { text: "Barangay", value: "barangay", sortable: true },
             { text: "Gender", value: "gender", sortable: true },
@@ -104,7 +104,7 @@ export default {
             await server_sided();
             await toast.success("Delete success.");
         };
-        
+
         const fetchSelectfield = async (query, field) => {
             let data;
             await axios
@@ -173,7 +173,7 @@ export default {
             searchButton,
             removeSoloParent,
             compute_renew_year,
-            exportData
+            exportData,
         };
     },
 };

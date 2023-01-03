@@ -195,7 +195,6 @@ class PwdListController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        /* delete isf */
         $respondent = PWD::findOrfail($id);
         $respondent->delete();
 
@@ -215,6 +214,7 @@ class PwdListController extends Controller
         $limit =  $options['rowsPerPage'] ? $options['rowsPerPage'] : 10;
 
         $reqs = PWD::query();
+
         $reqs =  $reqs->leftJoin('pwd_renewals', function ($join) {
             $join->on('pwd_renewals.pwd_id', '=', 'pwd_list.id')
                 ->on('pwd_renewals.id', '=', DB::raw("(SELECT max(id) from pwd_renewals WHERE pwd_renewals.pwd_id = pwd_list.id AND pwd_renewals.deleted_at is null)"));
@@ -253,6 +253,7 @@ class PwdListController extends Controller
                 $query =  $reqs->orderBy($request->options['sortBy'], strtoupper($request->options['sortType']))->offset(($options['page'] - 1) * $limit);
             }
         } else {
+
             $query =  $reqs->orderBy('id', 'DESC')->offset(($options['page'] - 1) * $limit);
         }
 
