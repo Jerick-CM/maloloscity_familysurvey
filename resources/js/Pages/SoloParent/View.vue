@@ -30,7 +30,9 @@ export default {
         const submission_process = ref(false);
         const modal_show = ref(false);
         const data = ref(false);
+
         /* init */
+        
         const form = reactive({
             province: 14,
             municipality: null,

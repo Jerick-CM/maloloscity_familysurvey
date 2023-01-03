@@ -104,7 +104,6 @@ class SoloParentListController extends Controller
             $reqs =  $reqs->whereDate('soloparents_list.date_applied', '<=', $params['dateto']);
         }
 
-
         $reqs = $reqs->where(function ($query) use ($params) {
             $word = str_replace(" ", "%", $params['searchValue']);
             $query->where([['full_name', 'LIKE', "%" . $word . "%"]]);

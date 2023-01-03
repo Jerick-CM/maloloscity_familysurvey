@@ -337,7 +337,9 @@ export default {
                             </div>
                         </div>
                     </div>
+                    
                     <!-- Search -->
+
                     <div class="py-2 pb-8 md:grid md:grid-cols-3 md:gap-6">
                         <div class="col-span-1 sm:col-span-1">
                             <label
@@ -407,6 +409,7 @@ export default {
                     </div>
 
                     <div class="grid grid-cols-3 gap-6 py-2 hidden">
+
                         <div class="col-span-1 sm:col-span-1">
                             <label
                                 for="company-website"
@@ -455,6 +458,7 @@ export default {
                                 </select>
                             </div>
                         </div>
+
                     </div>
                     <div>
                         <EasyDataTable
@@ -615,11 +619,13 @@ export default {
                                     <span>Loading...</span>
                                 </div>
                             </template>
+
                             <template #item-computed_renewal_year="item">
                                 {{
                                     compute_renew_year(item.latestyear.year, 1)
                                 }}
                             </template>
+
                             <template #item-action="item">
                                 <div class="operation-wrapper flex">
                                     <div class="p-1">
@@ -681,6 +687,7 @@ export default {
                                     </div>
                                 </div>
                             </template>
+
                         </EasyDataTable>
                     </div>
                 </div>

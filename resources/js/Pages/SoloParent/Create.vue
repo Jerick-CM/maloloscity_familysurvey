@@ -24,7 +24,6 @@ export default {
     },
     props: ["barangays", "municipalities"],
     setup(props, { attrs, slots, emit, expose }) {
-        
         const toast = useToast();
         const brgys = computed(() => props.barangays);
         const filteredBrgys = ref([]);
@@ -85,7 +84,7 @@ export default {
             form.sons = "";
             form.daughters = "";
 
-            // multiselect_yearrenewal.value.clear();
+            multiselect_yearrenewal.value.clear();
             multiselect_civilstatus.value.clear();
             multiselect_gender.value.clear();
             multiselect_address.value.clear();
@@ -122,17 +121,16 @@ export default {
         };
 
         const year_selection = ref([
-            // { value: "2020", label: "2020" },
+            { value: "", label: "" },
             // { value: "2021", label: "2021" },
             // { value: "2022", label: "2022" },
-            // { value: "2023", label: "2023" },
-            // { value: "2024", label: "2024" },
-            // { value: "2025", label: "2025" },
-            // { value: "2026", label: "2026" },
+            { value: "2023", label: "2023" },
+            { value: "2024", label: "2024" },
+            { value: "2025", label: "2025" },
+            { value: "2026", label: "2026" },
             // { value: "2027", label: "2027" },
             // { value: "2028", label: "2028" },
             // { value: "2029", label: "2029" },
-
             // { value: "2030", label: "2030" },
             // { value: "2031", label: "2031" },
             // { value: "2032", label: "2032" },
@@ -143,7 +141,6 @@ export default {
             // { value: "2037", label: "2037" },
             // { value: "2038", label: "2038" },
             // { value: "2039", label: "2039" },
-
             // { value: "2040", label: "2040" },
             // { value: "2041", label: "2041" },
             // { value: "2042", label: "2042" },
@@ -154,7 +151,6 @@ export default {
             // { value: "2047", label: "2047" },
             // { value: "2048", label: "2048" },
             // { value: "2049", label: "2049" },
-
             // { value: "2050", label: "2050" },
             // { value: "2051", label: "2051" },
             // { value: "2052", label: "2052" },
@@ -165,7 +161,6 @@ export default {
             // { value: "2057", label: "2057" },
             // { value: "2058", label: "2058" },
             // { value: "2059", label: "2059" },
-
             // { value: "2060", label: "2060" },
             // { value: "2061", label: "2061" },
             // { value: "2062", label: "2062" },
@@ -176,7 +171,6 @@ export default {
             // { value: "2067", label: "2067" },
             // { value: "2068", label: "2068" },
             // { value: "2069", label: "2069" },
-
             // { value: "2070", label: "2070" },
             // { value: "2071", label: "2071" },
             // { value: "2072", label: "2072" },
@@ -187,7 +181,6 @@ export default {
             // { value: "2077", label: "2077" },
             // { value: "2078", label: "2078" },
             // { value: "2079", label: "2079" },
-
             // { value: "2080", label: "2080" },
             // { value: "2081", label: "2081" },
             // { value: "2082", label: "2082" },
@@ -198,7 +191,6 @@ export default {
             // { value: "2087", label: "2087" },
             // { value: "2088", label: "2088" },
             // { value: "2089", label: "2089" },
-
             // { value: "2090", label: "2090" },
             // { value: "2091", label: "2091" },
             // { value: "2092", label: "2092" },
@@ -209,7 +201,6 @@ export default {
             // { value: "2097", label: "2097" },
             // { value: "2098", label: "2098" },
             // { value: "2099", label: "2099" },
-
             // { value: "2100", label: "2100" },
             // { value: "2101", label: "2101" },
             // { value: "2102", label: "2102" },
@@ -232,7 +223,11 @@ export default {
         watch(
             () => soloparent_year.value,
             (value) => {
-                form.year = value["label"];
+                // console.log(value);
+                // console.log(value[0])
+                // form.year = value["label"];
+                form.year = value[0];
+                console.log(form.year);
             },
             { deep: true }
         );
@@ -340,13 +335,21 @@ export default {
                             >
                                 New / Renewal Year
                             </label>
+                            <!-- :options="year_selection"  -->
 
-                            <Multiselect
-                                ref="multiselect_yearrenewal"
-                                mode="single"
+                            <!-- mode="single"
                                 v-model="soloparent_year"
                                 class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
                                 :object="true"
+                                :close-on-select="false"
+                                :searchable="true"
+                                :create-option="true" -->
+
+                            <Multiselect
+                                v-model="soloparent_year"
+                                class="focus:ring-2 focus:ring-blue-500 focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 ring-1 ring-slate-200 shadow-sm"
+                                ref="multiselect_yearrenewal"
+                                mode="tags"
                                 :close-on-select="false"
                                 :searchable="true"
                                 :create-option="true"
@@ -370,7 +373,7 @@ export default {
                             <label
                                 class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                             >
-                                Filing Date
+                                Filing Date (YYYY-MM-DD)
                             </label>
                             <input
                                 :class="inputClass"
