@@ -195,7 +195,6 @@ Route::group(['prefix' => 'pwd', 'middleware' => ['permission:Access-Page-PWD', 
 });
 
 Route::group(['prefix' => 'soloparent', 'middleware' => ['permission:Access-Page-SoloParent', 'throttle:500,1']], function () {
-
     /* fetch */
     Route::post('/fetch', [\App\Http\Controllers\Api\SoloParentListController::class, 'fetch'])->name('soloparent-fetch');
 
