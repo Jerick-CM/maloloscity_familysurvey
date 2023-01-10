@@ -194,7 +194,7 @@ Route::group(['prefix' => 'pwd', 'middleware' => ['permission:Access-Page-PWD', 
 
 });
 
-Route::group(['prefix' => 'soloparent', 'middleware' => ['permission:Access-Page-ISF', 'throttle:500,1']], function () {
+Route::group(['prefix' => 'soloparent', 'middleware' => ['permission:Access-Page-SoloParent', 'throttle:500,1']], function () {
 
     /* fetch */
     Route::post('/fetch', [\App\Http\Controllers\Api\SoloParentListController::class, 'fetch'])->name('soloparent-fetch');
@@ -228,7 +228,7 @@ Route::group(['prefix' => 'soloparent', 'middleware' => ['permission:Access-Page
 
     /* export */
     Route::post('/export', [\App\Http\Controllers\Api\SoloParentListController::class, 'export'])->name('soloparent-export');
-    
+
 });
 
 require __DIR__ . '/auth.php';
